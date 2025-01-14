@@ -15,7 +15,7 @@ const SideNav = () => {
 
   const closeLogout = () => {
     setisLogoutOpen(false);
-  };
+  }
 
   return (
     <>
