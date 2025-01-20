@@ -9,9 +9,8 @@ import DataNotFound from "./DataNotFound";
 import { fetchUserById } from "../../Util/UtilityFunction";
 import Loader from "../Components/Loader";
 import RejectPopUp from "../Components/RejectPopUp";
-import ManufacturerTab from "../Components/ManufacturerTab";
 
-const ApprovalComponent = () => {
+const PolicyApproval = () => {
   const dispatch = useDispatch();
   const { pendingPolicy, status, totalPagesCount, totalPoliciesCount } =
     useSelector((state) => state.policy);
@@ -19,19 +18,16 @@ const ApprovalComponent = () => {
   const perPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [selectedManufacturer, setSelectedManufacturer] = useState(
-    localStorage.getItem("selectedManufacturer") || "Mercedes-Benz"
-  );
+
 
   useEffect(() => {
     dispatch(
       fetchAllPendingPolicy({
         page: currentPage,
         limit: perPage,
-        manufacturer: selectedManufacturer,
       })
     );
-  }, [dispatch, currentPage, selectedManufacturer]);
+  }, [dispatch, currentPage]);
 
   useEffect(() => {
     if (status === "loading") {
@@ -45,34 +41,16 @@ const ApprovalComponent = () => {
     setCurrentPage(pageNumber);
   };
 
-  const handleTabClick = (manufacturer) => {
-    if (manufacturer === "MG") {
-      setSelectedManufacturer("Morris Garage");
-      localStorage.setItem("selectedManufacturer", "Morris Garage");
-    }
-    if (manufacturer === "MB") {
-      setSelectedManufacturer("Mercedes-Benz");
-      localStorage.setItem("selectedManufacturer", "Mercedes-Benz");
-    }
 
-    setCurrentPage(1);
-  };
 
   return (
     <>
-      <div className="fixed">
-        <span className="absolute">
-          <Nav />
-        </span>
-      </div>
-      <div className="mt-6">
-        <ManufacturerTab
-          selectedManufacturer={selectedManufacturer}
-          handleTabClick={handleTabClick}
-        />
+   
+      <div>
+      
       </div>
 
-      <p className="font-semibold text-[28px] md:ml-72 sm:ml-72 ml-6 pt-12">
+      <p className="font-semibold text-[24px] md:ml-72 sm:ml-72 ml-6 ">
         Pending Approval List
       </p>
       <div className="overflow-x-scroll w-full md:w-full md:overflow-hidden ">
@@ -135,7 +113,6 @@ const ApprovalCard = ({ item, index }) => {
   const getAgentData = async () => {
     const data = await fetchUserById(item.userId);
     setAgentData(data);
-    console.log(data);
   };
 
   useEffect(() => {
@@ -219,4 +196,4 @@ const ApprovalCard = ({ item, index }) => {
   );
 };
 
-export default ApprovalComponent;
+export default PolicyApproval;

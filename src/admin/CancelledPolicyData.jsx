@@ -8,7 +8,6 @@ import PdfPage from "../Components/pdfPage";
 import Pagination from "../Components/Pagination";
 import DataNotFound from "./DataNotFound";
 import Loader from "../Components/Loader";
-import ManufacturerTab from "../Components/ManufacturerTab";
 import MgPdf from "../Components/Mgpdf";
 
 const CancelledPolicyData = () => {
@@ -22,7 +21,6 @@ const CancelledPolicyData = () => {
   const [selectedManufacturer, setSelectedManufacturer] = useState(
     localStorage.getItem("selectedManufacturer") || "Mercedes-Benz"
   );
-  const [filteredPolicies, setFilteredPolicies] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
@@ -36,27 +34,8 @@ const CancelledPolicyData = () => {
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    const filtered = policies?.filter(
-      (item) =>
-        item?.vehicleManufacturer === selectedManufacturer && item?.isDisabled
-    );
-    setFilteredPolicies(filtered || []);
-  }, [policies, selectedManufacturer]);
 
-  const handleTabClick = (manufacturer) => {
-    if (manufacturer === "MG") {
-      setSelectedManufacturer("Morris Garage");
-      localStorage.setItem("selectedManufacturer", "Morris Garage");
-    }
-    if (manufacturer === "MB") {
-      setSelectedManufacturer("Mercedes-Benz");
-      localStorage.setItem("selectedManufacturer", "Mercedes-Benz");
-    }
 
-    // Reset to the first page when switching manufacturers
-    setCurrentPage(1);
-  };
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -72,10 +51,7 @@ const CancelledPolicyData = () => {
       <p className="pt-6 text-[20px] font-semibold md:ml-[22%] mt-16 ml-6 md:mt-6 sm:mt-9 sm:ml-[35%]">
         Cancelled Policy Lists -
       </p>
-      <ManufacturerTab
-        selectedManufacturer={selectedManufacturer}
-        handleTabClick={handleTabClick}
-      />
+  
 
       <div className="font-head pt-9">
         {/* Show loading state */}
@@ -84,7 +60,7 @@ const CancelledPolicyData = () => {
             {/* <Loading customText={"Loading"} /> */}
             <Loader />
           </div>
-        ) : filteredPolicies.length === 0 ? (
+        ) : policies.length === 0 ? (
           // Show "No Data" message if no policies are found
           <DataNotFound
             className="flex justify-center flex-col w-full items-center mt-20 ml-28"
@@ -100,7 +76,7 @@ const CancelledPolicyData = () => {
               <p className="md:w-32 w-[16%]">View / Download</p>
               <p className="md:w-40 md:text-start  w-[18%]">Status</p>
             </div>
-            {filteredPolicies.map((item, index) => (
+            {policies.map((item, index) => (
               <AgentTableData
                 key={index}
                 item={item}

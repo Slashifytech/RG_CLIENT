@@ -1,0 +1,151 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import Pagination from "../Components/Pagination";
+import Loader from "../Components/Loader";
+import DataNotFound from "../admin/DataNotFound";
+import { CustomTableFour } from "../Components/Table";
+import { FaPencil } from "react-icons/fa6";
+import Nav from "../admin/Nav";
+import { fetchBuyBackLists } from "../features/BuyBackSlice";
+import SideNav from "../agent/SideNav";
+import Header from "../Components/Header";
+
+const BuyBackLists = () => {
+   const { _id, roleType } = useSelector(
+        (state) => state.users?.users
+      );
+      const userId =  _id 
+  const { BuyBackLists } = useSelector((state) => state.buyBack);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(1);
+  const perPage = 10;
+  const currentPage = BuyBackLists?.pagination?.currentPage;
+  const totalPagesCount = BuyBackLists?.pagination?.totalPages;
+  const totalCount = BuyBackLists?.pagination?.totalItems;
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+  if (roleType === "2" && userId) {
+  dispatch(
+    fetchBuyBackLists({ page, perPage, searchTerm, userId, option: null })
+  );
+} else if (roleType === "0" || roleType === "1") {
+  dispatch(
+    fetchBuyBackLists({ page, perPage, searchTerm, userId: null, option: null })
+  );
+}
+
+    setLoading(false);
+  }, [page, perPage, searchTerm, userId]);
+
+  const TABLE_HEAD = [
+    "S.No.",
+    "Name",
+    "Email",
+    "VIN No.",
+    "AMC Issue date",
+    "View/Download",
+    "Status",
+    "Action",
+  ];
+
+  const TABLE_ROWS = BuyBackLists?.data?.map((data, index) => ({
+    sno: (currentPage - 1) * perPage + index + 1,
+    data: data || "NA",
+    status: data?.buyBackStatus || "NA",
+    type: "buyBack",
+  }));
+
+  return (
+    <>
+      <div className="fixed">
+        <span className="absolute">
+          {roleType === "2" ? <SideNav /> : <Nav />}
+        </span>
+      </div>
+      <div>
+      <Header/>
+    </div>
+      <div className="flex items-center gap-3 justify-center md:ml-28 text-[18px] md:mt-10 sm:mt-10 mt-20">
+        <span className="font-head font-semibold">Morris Garage</span>
+      </div>
+
+      <div className="md:pt-6 sm:pt-14 pt-6 flex md:flex-row sm:flex-row flex-col-reverse justify-between md:items-center sm:items-center md:px-20 mx-6">
+        <Link
+          to={roleType === "2" ? "/agent/buyback-form" : "/admin/add-buyback"}
+          state={{ addNew: "isNew" }}
+          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[16%] sm:ml-[33%] mt-4 sm:mt-4 md:mt-4"
+        >
+          + Add New Buy Back
+        </Link>
+       
+      </div>
+
+      <div className="px-6 flex justify-center md:ml-28 sm:ml-60 mt-6">
+        <input
+          type="text"
+          placeholder="Search by VIN number"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-[30rem] py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
+        />
+      </div>
+
+      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[33%] ml-6">
+        Buy Back Lists-
+      </p>
+
+      <div className="font-head pt-4">
+        {loading ? (
+          <div className="mt-16 flex justify-center md:ml-32 sm:ml-32">
+            {/* <Loading customText={"Loading"} /> */}
+            <Loader />
+          </div>
+        ) : !totalCount ? (
+          <div className="flex justify-center items-center h-[300px]">
+            <DataNotFound
+              className="flex justify-center flex-col w-full items-center md:mt-20 mt-12 md:ml-28 sm:ml-28"
+              message="No Buy Back found"
+            />
+          </div>
+        ) : (
+          <>
+            <div className="md:ml-[19.5%] sm:ml-[36%] mt-6 mr-6  ">
+              <CustomTableFour
+                tableHead={TABLE_HEAD}
+                tableRows={TABLE_ROWS}
+                link={
+                  roleType === "2"
+                    ? "/agent/edit-buyback"
+                    : "/admin/update-buyback"
+                }
+                action="Edit"
+                icon={<FaPencil />}
+                redirectLink={"/buyback-view"}
+              />
+            </div>
+            {totalPagesCount > 1 && (
+              <div className="flex justify-center items-center mt-3 mb-5 ml-52">
+                <Pagination
+                  currentPage={currentPage}
+                  hasNextPage={currentPage * perPage < totalCount}
+                  hasPreviousPage={currentPage > 1}
+                  onPageChange={handlePageChange}
+                  totalPagesCount={totalPagesCount}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default BuyBackLists;

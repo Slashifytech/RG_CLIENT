@@ -146,11 +146,11 @@ export const approvalStatusChange = async(invoiceId, approvalStatus, message) =>
 }
 
 
-export const getAllInvoiceByStatus = async (page, perPage, invoiceStatus, search, createdBy) => {
+export const getAllInvoiceByStatus = async (page, perPage, invoiceType, search, createdBy) => {
   try {
     const response = await apiurl.get('/invoice-all', {
       params: {
-        invoiceStatus: invoiceStatus,
+        invoiceType: invoiceType,
         page: page,
         limit: perPage,
         searchTerm: search,

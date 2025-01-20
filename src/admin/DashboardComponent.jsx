@@ -7,6 +7,7 @@ import {
   getCancelledCountPolicy,
   getCountPolicy,
 } from "../../Util/UtilityFunction";
+import Header from "../Components/Header";
 
 const DashboardComponent = () => {
   const [cancelPolicyCount, setCancelPolicyCount] = useState();
@@ -33,7 +34,10 @@ const DashboardComponent = () => {
           <Nav />
         </span>
       </div>
-      <div className="ml-0 sm:ml-[28%] md:ml-[23%]">
+      <div>
+      <Header/>
+    </div>
+    <div className="ml-0 sm:ml-[28%] md:ml-[23%] mt-16">
         <HeaderTab />
       </div>
 

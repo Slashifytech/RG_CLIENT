@@ -1,7 +1,9 @@
 import React, { useEffect,  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { SiMercedes, SiMg } from "react-icons/si";
+import { SiMg } from "react-icons/si";
+import { SiMercedes } from "react-icons/si";
+
 import SideNav from "./SideNav";
 import Pagination from "../Components/Pagination";
 import Loader from "../Components/Loader";

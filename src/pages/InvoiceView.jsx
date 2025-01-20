@@ -6,11 +6,11 @@ import React, {
   useState,
 } from "react";
 import { useLocation } from "react-router-dom";
-import { formatDate } from "../helper/commonHelperFunc";
 import Loader from "../Components/Loader";
 import html2pdf from "html2pdf.js";
 import { getInvoiceById } from "../features/InvoiceApi";
-import { invoicelogo } from "../assets";
+import { mgBlack } from "../assets";
+import { formatDate } from "../helper/commonHelperFunc";
 
 const InvoiceView = forwardRef(({ id }, ref) => {
   const [data, setData] = useState();
@@ -28,7 +28,6 @@ const InvoiceView = forwardRef(({ id }, ref) => {
     };
     fetchData();
   }, [invoiceId]);
-
   const pdfRef = useRef();
   const handleDownloadPDF = () => {
     const input = pdfRef.current;
@@ -55,592 +54,306 @@ const InvoiceView = forwardRef(({ id }, ref) => {
     );
   }
   return (
-    <div
-      ref={pdfRef}
-      className="border border-black p-6 font-body m-3 text-[13px]"
-    >
-       <div className="flex flex-row items-start gap-[20%] text-[14px] font-bold">
-        <img src={invoicelogo} alt="logo" style={{ width: "11%" }} />
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <h2 style={{ margin: 0 }}>360 Car Protect India LLP</h2>
-          <h3 style={{ margin: 0 }}>
-            3-4-138, A/Flat No. 501, Royal Elegance, Barkatpura, Hyderabad,
-            Telangana
-          </h3>
-          <h3 style={{ margin: 0 }}>TS-500027</h3>
-          <h3 style={{ margin: 0 }}>State Code: 36, GSTIN: 36AADFZ5034G1Z5</h3>
-          <h3 style={{ margin: 0 }}>PAN: AADFZ5034G</h3>
-        </div>
-      </div>
-      {/* Invoice Header */}
-      <table
+    <div ref={pdfRef}>
+      <div
         style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          border: "1px solid black",
-          marginBottom: "20px",
+          fontFamily: "Arial, sans-serif",
+          border: "1px solid #000",
+          padding: "30px",
+          margin: "20px",
         }}
       >
-        <tbody>
-          <tr>
-            <td
+        {/* Header Section */}
+        <div
+          style={{
+            display: "flex",
+            // justifyContent: 'space-between',
+            justifyContent: "center",
+            gap: "50px",
+            alignItems: "center",
+            borderBottom: "2px solid #000",
+            paddingBottom: "10px",
+            marginBottom: "10px",
+          }}
+        >
+          <div className="text-center">
+            <h2 style={{ margin: "0", fontSize: "18px", fontWeight: "bold" }}>
+              RAAM4WHEELERS LLP
+            </h2>
+            <p
               style={{
-                width: "60%",
-                border: "1px solid black",
-                padding: "8px",
+                textAlign: "center",
+                fontSize: "12px",
+                lineHeight: "1.5",
+                margin: "3px, 0",
               }}
             >
-              <h2 className="font-bold text-[20px] ">Tax Invoice</h2>
-            </td>
-            <td style={{ width: "40%", padding: 0 }}>
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              8-2-120/86/10,10A,11B,11C and 11D,
+              <br />
+              Opp: Hotel Park Hyatt,
+              <br />
+              Road Number 2, Banjara Hills Hyderabad, PIN-500033
+              <br />
+              Ph: 7799935258, Email Id: hyderabad.crmhead@mgdealer.co.in
+              <br />
+              Website: https://www.mghyderabad.co.in
+              <br />
+              GSTIN: 36AAYFR9176L1ZY, CIN NO: AAN-7654, PAN: AAYFR9176L
+            </p>
+          </div>
+          <div className="flex flex-col items-center">
+            <img src={mgBlack} alt="MG Logo" style={{ height: "80px" }} />
+            <p className="font-medium ">Morris Garages</p>
+          </div>
+        </div>
+
+        {/* Invoice Details Section */}
+        <div
+          style={{
+            borderBottom: "1px solid #000",
+            paddingBottom: "10px",
+            marginBottom: "10px",
+          }}
+        >
+          <h3 style={{ margin: "0", fontSize: "16px" }}>
+            Vehicle - Tax Invoice
+          </h3>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              fontSize: "12px",
+            }}
+          >
+            <p>Invoice No: {data?.invoiceId}</p>
+            <p>Invoice Date: {formatDate(data?.createdAt)}</p>
+          </div>
+        </div>
+
+        {/* Billed, Shipped, and Delivery Section */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            fontSize: "12px",
+            marginBottom: "10px",
+            borderBottom: "1px solid #000",
+            paddingBottom: "10px",
+          }}
+        >
+          {/* Billed To */}
+          <div style={{ width: "30%" }}>
+            <h4 style={{ margin: "0", fontSize: "14px" }}>Billed To:</h4>
+            <p style={{ margin: "5px 0", lineHeight: "1.5" }}>
+              Name: {data?.billingDetail?.customerName || "Not Available"}
+              <br />
+              Address: {data?.billingDetail?.address || "Not Available"}
+              <br />
+              Pin: {data?.billingDetail?.zipCode || "Not Available"}
+              <br />
+              Mobile: {data?.billingDetail?.contact || "Not Available"}
+              <br />
+              PAN No: {data?.billingDetail?.pan || "Not Available"}
+              <br />
+              State Code: {data?.billingDetail?.stateCode || "Not Available"}
+              <br />
+              GSTIN: {data?.billingDetail?.customerGst || "Not Available"}
+            </p>
+          </div>
+
+          {/* Shipped To */}
+          <div style={{ width: "30%" }}>
+            <h4 style={{ margin: "0", fontSize: "14px" }}>Shipped To:</h4>
+           <p style={{ margin: "5px 0", lineHeight: "1.5" }}>
+              Name: {data?.shippingDetails?.customerName || "Not Available"}
+              <br />
+              Address: {data?.shippingDetails?.address || "Not Available" || "Not Available"}
+              <br />
+              Pin: {data?.shippingDetails?.zipCode || "Not Available" || "Not Available"}
+              <br />
+              Mobile: {data?.shippingDetails?.contact || "Not Available" || "Not Available"}
+              <br />
+              PAN No: {data?.shippingDetails?.pan || "Not Available" || "Not Available"}
+              <br />
+              State Code: {data?.shippingDetails?.stateCode || "Not Available" || "Not Available"}
+              <br />
+              GSTIN: {data?.shippingDetails?.customerGst || "Not Available" || "Not Available"}
+            </p>
+          </div>
+
+          {/* Address of Delivery */}
+          <div style={{ width: "30%" }}>
+            <h4 style={{ margin: "0", fontSize: "14px" }}>
+              Address Of Delivery:
+            </h4>
+            <p style={{ margin: "5px 0", lineHeight: "1.5" }}>
+           {data?.addressOfDelivery || "Not Available"}
+            </p>
+          </div>
+        </div>
+
+        {/* Footer Section */}
+        <div
+          style={{
+            fontSize: "12px",
+            marginTop: "10px",
+            lineHeight: "1.5",
+          }}
+        >
+          <p style={{ margin: "0" }}>
+            <span className="flex flex-row items-center justify-between">
+              <span className="flex flex-col">
+                <span>Hypothecated To: {data?.vehicleDetails?.hypothecated || "Not Available"} </span>
+                <span>Branch Name: {data?.vehicleDetails?.branchName || "Not Available"}</span>
+              </span>
+              {/* <span className="flex flex-col">
+                <span>Order No: SS04117599</span>
+                <span> Order Date: 25.11.2024</span>{" "}
+              </span> */}
+            </span>
+          </p>
+        </div>
+
+        {/* Invoice Details Section */}
+
+        {/* Invoice Header */}
+
+        {/* Table Section */}
+        <hr className="border border-black mt-2" />
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            marginBottom: "20px",
+            fontSize: "13px",
+          }}
+        >
+          <thead>
+            <tr
+              className="border border-b border-black"
+              style={{
+                padding: "5px",
+              }}
+            >
+              <th style={{ padding: "5px" }}>S.No</th>
+              <th style={{ padding: "5px" }}>Description</th>
+              {/* <th style={{ padding: "5px" }}>HSN</th> */}
+              <th style={{ padding: "5px" }}>Qty.</th>
+              <th style={{ padding: "5px" }}>Details</th>
+              <th style={{ padding: "5px" }}>Rate (₹)</th>
+              <th style={{ padding: "5px" }}>Amount (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <td style={{ padding: "5px" }}>1</td>
+              <td style={{ padding: "5px" }}>
+                <span> {data?.vehicleDetails?.model || "Not Available"}</span> <br />
+              </td>
+              {/* <td style={{ padding: "5px" }}>87038030</td> */}
+              <td style={{ padding: "5px" }}>1</td>
+              <td style={{ padding: "5px" }}>Basic Price</td>
+              <td style={{ padding: "5px" }}>{data?.vehicleDetails?.gstAmount || "Not Available"}</td>
+              <td style={{ padding: "5px" }}>{data?.vehicleDetails?.gstAmount || "Not Available"}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Additional Information */}
+        <div
+          style={{
+            marginTop: "20px",
+            fontSize: "14px",
+            lineHeight: "1.6",
+          }}
+        >
+          <p
+            style={{
+              marginLeft: "93px",
+              fontWeight: "lighter",
+              fontSize: "12px",
+            }}
+          >
+            {" "}
+            VIN : {data?.vehicleDetails?.vinNumber || "Not Available"} <br />
+            {/* MOTOR NO : U1RB060152 <br /> */}
+            {/* EXTERIOR COLOUR : Turquoise Green <br /> */}
+            {/* INTERIOR COLOUR : Black <br /> */}
+            {/* KEY NO : A1RA200142 <br /> */}
+            {/* ENGINE TYPE : {data?.vehicleDetails?.fuelType} <br /> */}
+            {/* TRANSMISSION TYPE: Automatic <br /> */}
+            {/* SEATING CAPACITY : 05 <br /> */}
+          </p>
+
+          <div>
+            <hr className="border border-black ml-[60%]" />
+
+            <p className="flex flex-row justify-end   ">
+              {" "}
+              <table
+                style={{
+                  width: "40%",
+                  borderCollapse: "collapse",
+                  marginTop: "9px",
+                  fontSize: "12px",
+                }}
+              >
                 <tbody>
-                  <tr>
-                    <th
-                      className="fornt-semibold"
-                      style={{
-                        border: "1px solid black",
-                        padding: "5px",
-                        textAlign: "left",
-                      }}
-                    >
-                      Invoice Type:
-                    </th>
-                    <td style={{ border: "1px solid black", padding: "5px" }}>
-                      360 Car Protect
+                   <tr>
+                    <td style={{ padding: "3px", fontWeight: "bold" }}>
+                       Basic Price after discount
+
                     </td>
+                    <td style={{ padding: "3px" }}>{data?.vehicleDetails?.gstAmount}</td>
                   </tr>
                   <tr>
-                    <th
-                      className="fornt-semibold"
-                      style={{
-                        border: "1px solid black",
-                        padding: "5px",
-                        textAlign: "left",
-                      }}
-                    >
-                      Invoice Number:
-                    </th>
-                    <td style={{ border: "1px solid black", padding: "5px" }}>
-                      {data?.invoiceId}
+                    <td style={{ padding: "3px", fontWeight: "bold" }}>
+                      CGST@ 9%
                     </td>
+                    <td style={{ padding: "3px" }}>{data?.vehicleDetails?.cgst}</td>
                   </tr>
                   <tr>
-                    <th
-                      className="fornt-semibold"
+                    <td style={{ padding: "3px", fontWeight: "bold" }}>
+                      SGST@ 9%
+                      
+                    </td>
+                    <td style={{ padding: "3px" }}>{data?.vehicleDetails?.sgst}</td>
+                  </tr>
+               
+                  
+                  <tr>
+                    <td
                       style={{
-                        border: "1px solid black",
-                        padding: "5px",
-                        textAlign: "left",
+                        border: "1px solid #000",
+                        padding: "8px",
+                        fontWeight: "bold",
                       }}
                     >
-                      Invoice Date:
-                    </th>
-                    <td style={{ border: "1px solid black", padding: "5px" }}>
-                      {formatDate(data?.createdAt)}
+                      Total
+                    </td>
+                    <td style={{ border: "1px solid #000", padding: "8px" }}>
+                      {data?.vehicleDetails?.totalAmount}
                     </td>
                   </tr>
                 </tbody>
               </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </p>
+          </div>
 
-      {/* Billing Details */}
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          border: "1px solid black",
-          marginBottom: "20px",
-        }}
-      >
-        <tbody>
-          <tr>
-            <td
-              style={{
-                width: "33%",
-                border: "1px solid black",
-                padding: "8px",
-              }}
-            >
-              <b>Bill To:</b>
-              <br />
-              {data?.billingDetail?.address}
-              <br />
-              {data?.billingDetail?.city}, {data.billingDetail?.state}
-              <br />
-              State Code: {data.billingDetail?.stateCode}
-              <br />
-              GST Registration Type: {data?.billingDetail?.gstRegType}
-              <br />
-              GSTIN: {data?.billingDetail?.gstInNumber}
-              <br />
-              PAN: {data?.billingDetail?.pan}
-              <br />
-              Contact No: {data?.billingDetail?.contact}
-            </td>
-            <td
-              style={{
-                width: "33%",
-                border: "1px solid black",
-                padding: "8px",
-              }}
-            >
-              <b>Place of Supply:</b>
-              <br />
-              {data.supplyDetails.address}
-              <br />
-              {data.supplyDetails.city}, {data.supplyDetails.state}
-              <br />
-              State Code: {data.supplyDetails.stateCode}
-              <br />
-              GST Registration Type: {data?.supplyDetails?.gstRegType}
-              <br />
-              GSTIN: {data.supplyDetails.gstInNumber}
-              <br />
-              PAN: {data.supplyDetails.pan}
-              <br />
-              Contact No: {data.supplyDetails.contact}
-            </td>
-            <td
-              style={{
-                width: "33%",
-                border: "1px solid black",
-                padding: "8px",
-              }}
-            >
-              <b>Place of Delivery:</b>
-              <br />
-              {data.deliveryDetails.address}
-              <br />
-              {data.deliveryDetails.city}, {data.deliveryDetails.state}
-              <br />
-              State Code: {data.deliveryDetails.stateCode}
-              <br />
-              GST Registration Type: {data?.deliveryDetails?.gstRegType}
-              <br />
-              GSTIN: {data.deliveryDetails.gstInNumber}
-              <br />
-              PAN: {data.deliveryDetails.pan}
-              <br />
-              Contact No: {data.deliveryDetails.contact}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      {/* Invoice Items */}
-      <div className={`overflow-x-auto ${id ? "mt-12" : "mt-0"}`}>
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            border: "1px solid black",
-            marginBottom: "20px",
-          }}
-        >
-          <thead>
-            {/* Main Header Row */}
-            <tr style={{ backgroundColor: "#f2f2f2" }}>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                S.No
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Description
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                HSN/SAC Code
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Qty
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Rate
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Total
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Discount
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Taxable Value
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                colSpan="2"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                CGST
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                colSpan="2"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                SGST
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                colSpan="2"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                IGST
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                colSpan="2"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                CESS
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                colSpan="2"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                UGST
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Total Amount (INR)
-              </th>
-            </tr>
-            {/* Sub-header Row */}
-            <tr style={{ backgroundColor: "#f2f2f2" }}>
-              {/* Empty cells for alignment */}
-              <th
-                className="fornt-semibold text-[13px]"
-                colSpan="8"
-                style={{ border: "none" }}
-              ></th>
-              {/* Sub-columns for CGST, SGST, IGST, CESS, UGST */}
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Rate
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Amount
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Rate
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Amount
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Rate
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Amount
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Rate
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Amount
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Rate
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                Amount
-              </th>
-              <th
-                className="fornt-semibold text-[13px]"
-                style={{ border: "none" }}
-              ></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                1
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.description}
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.hsnCode}
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.quantity}
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.rate}
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.total}
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.discount}
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.taxValue}
-              </td>
-              {/* Values for CGST */}
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.cgstpercentage}%
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.cgst}
-              </td>
-              {/* Values for SGST */}
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.sgstpercentage}%
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.sgst}
-              </td>
-              {/* Values for IGST */}
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.igstpercentage}%
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.igst}
-              </td>
-              {/* Values for CESS */}
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.cesspercentage}%
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.cess}
-              </td>
-              {/* Values for UGST */}
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.ugstpercentage}%
-              </td>
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.ugst}
-              </td>
-              {/* Total Amount */}
-              <td
-                className="text-[13px]"
-                style={{ border: "1px solid black", padding: "6px" }}
-              >
-                {data.customerBillingDetails.totalinvoiceamount}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div style={{ fontFamily: "Arial, sans-serif", marginTop: "20px" }}>
-          <table style={{ borderCollapse: "collapse", width: "100%" }}>
-            <tbody>
-              <tr>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  Veh No:
-                </td>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  {data.vehicleDetails.vehnumber}
-                </td>
-                <td style={{ border: "none", padding: "6px" }}></td>
-              </tr>
-              <tr>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  VIN NO:
-                </td>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  {data.vehicleDetails.vinnumber}
-                </td>
-                <td style={{ border: "none", padding: "6px" }}></td>
-              </tr>
-              <tr>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  Engine No:
-                </td>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  {data.vehicleDetails.enginenumber}
-                </td>
-                <td style={{ border: "none", padding: "6px" }}></td>
-              </tr>
-              <tr>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  Model:
-                </td>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  {data.vehicleDetails.vehiclemodel}
-                </td>
-                <td style={{ border: "none", padding: "6px" }}></td>
-              </tr>
-              <tr>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  Total Invoice Price Value (in figure):
-                </td>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  {data.vehicleDetails.totalpriceinfigure}
-                </td>
-                <td style={{ border: "none", padding: "6px" }}></td>
-              </tr>
-              <tr>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  Whether Reverse Charge Applicable (Y/N):
-                </td>
-                <td style={{ border: "1px solid black", padding: "6px" }}>
-                  {data.vehicleDetails.reversechargeapplication}
-                </td>
-                <td style={{ border: "none", padding: "6px" }}></td>
-              </tr>
-            </tbody>
-          </table>
+          <p style={{ marginTop: "20px" }}>
+            Amount In Words:{" "}
+            <b>
+              Rupees Fifteen Lakh Sixty Five Thousand Two Hundred Ninety Eight
+              Only
+            </b>
+          </p>
+          <p>
+            Whether tax is payable on reverse charge basis - <b>No</b>
+          </p>
+          <p style={{ textAlign: "right", marginTop: "20px" }}>
+            For <b>RAAM4WHEELERS LLP</b>
+          </p>
         </div>
-
-        <p style={{ marginTop: "20px" }}>Declaration/Terms and Conditions:</p>
-        <p>
-          Above package can be availed only at all branches of Silver Star
-          (Hyderabad, Vizag, Pune, Kolhapur, Nashik, Aurangabad)
-        </p>
-
-        <table
-          style={{
-            borderCollapse: "collapse",
-            width: "100%",
-            marginTop: "20px",
-          }}
-        >
-          <thead>
-            <tr>
-              <th style={{ border: "1px solid black", padding: "8px" }}>
-                Warranty Validity:
-              </th>
-              <th style={{ border: "1px solid black", padding: "8px" }}>
-                Start Date
-              </th>
-              <th style={{ border: "1px solid black", padding: "8px" }}>
-                End Date
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style={{ border: "1px solid black", padding: "8px" }}></td>
-              <td style={{ border: "1px solid black", padding: "8px" }}>
-                {data.vehicleDetails.warrantystartdate}
-              </td>
-              <td style={{ border: "1px solid black", padding: "8px" }}>
-                {data.vehicleDetails.warrantyenddate}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <p>Certified that the particulars given above are true and correct</p>
-        <p>All Disputes Subject to Jurisdiction of Hyderabad</p>
-
-        <p style={{ textAlign: "right" }}>For 360 Car Protect India LLP</p>
-        <p className="mb-3" style={{ textAlign: "right" }}>
-          Authorized Signatory
-        </p>
       </div>
     </div>
   );

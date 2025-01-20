@@ -4,6 +4,24 @@ export const invoiceOption = [
     { id: 2, value: "4th, 5th & 6th Year EW", label: "4th, 5th & 6th Year EW" },
   ];
 
+
+  export const fuelType = [
+    
+    { id: 0, value: "Petrol", label: "Petrol" },
+    { id: 1, value: "Diesel", label: "Diesel" },
+    { id: 2, value: "Electric Vehicle", label: "Electric Vehicle" },
+  ];
+  export const modelOption = [
+    
+    { id: 0, value: "Hector", label: "Hector" },
+    { id: 1, value: "Astor", label: "Astor" },
+    { id: 2, value: "Comet", label: "Comet" },
+    { id: 2, value: "ZS EV", label:"ZS EV" },
+    { id: 2, value: "Gloster", label: "Gloster" },
+    { id: 2, value: "Windsor", label: "Windsor" },
+
+
+  ];
   export const locationOption = [
     { id: 0, value: "Hyderabad SR", label: "Hyderabad SR" },
     { id: 1, value: "Hyderabad WS", label: "Hyderabad WS" },

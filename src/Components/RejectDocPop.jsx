@@ -21,7 +21,7 @@ const RejectDocPop = ({
             isReasonPopUp ? "block" : "hidden"
           }`}
         >
-          <div className="bg-white pb-9  rounded-lg md:w-[50%] w-full  relative p-9   ">
+          <div className="bg-white pb-9  rounded-lg md:w-[50%] w-full  relative p-9  app-open-animation ">
             <p className="text-center font-DMsans text-black font-semibold text-[16px]">
               {subTitle}
             </p>

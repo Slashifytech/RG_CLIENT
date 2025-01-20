@@ -12,7 +12,6 @@ import Policy from "./pages/Policy";
 import ActivePolicy from "./pages/ActivePolicy";
 import CancelledPolicy from "./pages/CancelledPolicy";
 import AdminPolicy from "./pages/AdminPolicy";
-import AgentPolicy from "./pages/AgentPolicy";
 import Approval from "./pages/Approval";
 import AgentForm from "./pages/AgentForm";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -22,7 +21,6 @@ import InvoiceForm from "./admin/InvoiceForm";
 import MbinvoiceApproval from "./admin/MbinvoiceApproval";
 import InvoiceList from "./admin/InvoiceList";
 import DocumentList from "./admin/DocumentList";
-import ApprovalPage from "./agent/ApprovalPage";
 import CustomerApproval from "./pages/CustomerApproval";
 import InvoiceView from "./pages/InvoiceView";
 import AgentList from "./admin/AgentList";
@@ -30,10 +28,19 @@ import AddTeam from "./admin/AddTeam";
 import TeamList from "./admin/TeamList";
 import TeamInvoices from "./admin/TeamInvoices";
 import ProtectedAdminTeam from "./Components/ProtectedAdminTeam";
+import AMCForm from "./pages/AmcForm";
+import BuyBackForm from "./pages/BuyBackForm";
+import AdminAmcList from "./pages/AmcList";
+import BuyBackLists from "./pages/BuyBackLists";
+import ViewAmc from "./pages/ViewAmc";
+import ViewBuyBack from "./pages/viewBuyBack";
+import AgentDocLists from "./pages/AgentDocLists";
+import Header from "./Components/Header";
+import CancelledApprovals from "./admin/CancelledApprovals";
 
 const router = createBrowserRouter([
   {
-    path: "/360policy/login",
+    path: "/raamgroup-policy/login",
     element: <Login></Login>,
   },
   {
@@ -85,10 +92,134 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/admin/add-AMC",
+    element: (
+      <ProtectedAdmin>
+        <AMCForm></AMCForm>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/agent/amc-form",
+    element: (
+      <ProtectedAgent>
+        <AMCForm></AMCForm>
+      </ProtectedAgent>
+    ),
+  },
+  {
+    path: "/admin/update-AMC",
+    element: (
+      <ProtectedAdmin>
+        <AMCForm></AMCForm>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/agent/edit-AMC",
+    element: (
+      <ProtectedAgent>
+        <AMCForm></AMCForm>
+      </ProtectedAgent>
+    ),
+  },
+  {
+    path: "/admin/amc-lists",
+    element: (
+      <ProtectedAdmin>
+        <AdminAmcList></AdminAmcList>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/agent/amcs-list",
+    element: (
+      <ProtectedAgent>
+        <AdminAmcList></AdminAmcList>
+      </ProtectedAgent>
+    ),
+  },
+  {
+    path: "/amc-view",
+    element: (
+        <ViewAmc></ViewAmc>
+    ),
+  },
+  {
+    path: "/buyback-view",
+    element: (
+        <ViewBuyBack></ViewBuyBack>
+    ),
+  },
+  {
+    path: "/admin/add-buyback",
+    element: (
+      <ProtectedAdmin>
+        <BuyBackForm></BuyBackForm>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/agent/buyback-form",
+    element: (
+      <ProtectedAgent>
+        <BuyBackForm></BuyBackForm>
+      </ProtectedAgent>
+    ),
+  },
+  {
+    path: "/admin/update-buyback",
+    element: (
+      <ProtectedAdmin>
+        <BuyBackForm></BuyBackForm>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/admin/edit-buyback",
+    element: (
+      <ProtectedAgent>
+        <BuyBackForm></BuyBackForm>
+      </ProtectedAgent>
+    ),
+  },
+  {
+    path: "/admin/buyBack-lists",
+    element: (
+      <ProtectedAdmin>
+        <BuyBackLists></BuyBackLists>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/agent/buyBacks-list",
+    element: (
+      <ProtectedAgent>
+        <BuyBackLists></BuyBackLists>
+      </ProtectedAgent>
+    ),
+  },
+  {
     path: "/new-policy",
     element: (
       <ProtectedAgent>
         <Policy></Policy>
+      </ProtectedAgent>
+    ),
+  },
+  {
+    path: "/new-AMC",
+    element: (
+      <ProtectedAgent>
+        <AMCForm></AMCForm>
+      </ProtectedAgent>
+    ),
+  },
+  {
+    path: "/new-buyback",
+    element: (
+      <ProtectedAgent>
+        <BuyBackForm></BuyBackForm>
       </ProtectedAgent>
     ),
   },
@@ -105,7 +236,7 @@ const router = createBrowserRouter([
     path: "/admin/agent-policies",
     element: (
       <ProtectedAdmin>
-        <AgentPolicy></AgentPolicy>
+        <AgentDocLists></AgentDocLists>
       </ProtectedAdmin>
     ),
   },
@@ -145,14 +276,7 @@ const router = createBrowserRouter([
       </ProtectedAgent>
     ),
   },
-  {
-    path: "/agent/approval",
-    element: (
-      <ProtectedAgent>
-        <ApprovalPage/>
-      </ProtectedAgent>
-    ),
-  },
+ 
   {
     path: "/customer-consent",
     element: (
@@ -160,21 +284,14 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/invoice-form",
+    path: "/admin/invoice-form",
     element: (
       <ProtectedAdmin>
         <InvoiceForm/>
       </ProtectedAdmin>
     ),
   },
-  {
-    path: "/mb-invoice",
-    element: (
-      <ProtectedAdminTeam>
-        <MbinvoiceApproval/>
-      </ProtectedAdminTeam>
-    ),
-  },
+ 
   {
     path: "/admin/invoice-lists",
     element: (
@@ -183,14 +300,7 @@ const router = createBrowserRouter([
       </ProtectedAdminTeam>
     ),
   },
-  {
-    path: "/admin/documents",
-    element: (
-      <ProtectedAdmin>
-        <DocumentList/>
-      </ProtectedAdmin>
-    ),
-  },
+
   {
     path: "/invoice",
     element: (
@@ -229,6 +339,14 @@ const router = createBrowserRouter([
       <ProtectedAdmin>
         <TeamInvoices/>
       </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/admin/cancel-approval-lists",
+    element: (
+      <CancelledApprovals>
+        <TeamInvoices/>
+      </CancelledApprovals>
     ),
   },
   {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { IoArrowBackOutline } from 'react-icons/io5';
 import { dnf } from '../assets';
 
 const DataNotFound = ({ message, linkText, linkDestination, className }) =>
@@ -30,7 +29,7 @@ function BackArrow({ className , LinkData})
     <span className={className}>
       <span onClick={goBack}>
       <span className='flex items-center bg-primary md:bg-transparent sm:bg-transparent  text-white py-6 px-6'>
-        <IoArrowBackOutline className="md:text-primary sm:text-primary text-[28px] cursor-pointer" />
+        <span className="md:text-primary sm:text-primary text-[28px] cursor-pointer" ></span>
         <span> Back</span>
         </span>
       </span>

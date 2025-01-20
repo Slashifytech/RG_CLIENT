@@ -8,6 +8,9 @@ import PdfPage from "./pdfPage";
 import MgPdf from "./Mgpdf";
 import { TbPencilCancel } from "react-icons/tb";
 import InvoiceView from "../pages/InvoiceView";
+import ViewAmc from "../pages/ViewAmc";
+import ViewBuyBack from "../pages/viewBuyBack";
+import { useSelector } from "react-redux";
 
 export function CustomTableOne({
   tableHead = [],
@@ -15,11 +18,7 @@ export function CustomTableOne({
   action,
   icon,
   link,
-  handleResubmit,
-  customClass,
-  SecondLink,
-  secondCustomState,
-  SecondAction,
+
 }) {
   const pdfRefs = useRef({});
   const getPdfRef = (id) => {
@@ -79,6 +78,15 @@ export function CustomTableOne({
                   {row.id}
                 </Typography>
               </td>
+              <td className="p-4">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="font-normal"
+                >
+                  {row.data.billingDetail?.customerName}
+                </Typography>
+              </td>
 
               <td className="p-4">
                 <Typography
@@ -86,7 +94,16 @@ export function CustomTableOne({
                   color="blue-gray"
                   className="font-normal"
                 >
-                  {row.data.email}
+                  {row.data.billingDetail?.email}
+                </Typography>
+              </td>
+              <td className="p-4">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="font-normal"
+                >
+                  {row?.data?.vehicleDetails?.vinNumber}
                 </Typography>
               </td>
               <td className="p-4">
@@ -129,29 +146,7 @@ export function CustomTableOne({
                   </span>
                 </Typography>
               </td>
-              <td className="p-4">
-                <Typography
-                  variant="small"
-                  color="blue-gray"
-                  className={`font-light text-[13px] text-white rounded-xl w-28 px-2 py-[3px] text-center ${
-                    row.status === "yetToApproved"
-                      ? "bg-[#096D98] "
-                      : row.status === "approved"
-                      ? "bg-[#09985C]"
-                      : row.status === "rejected"
-                      ? "bg-[#D33131]"
-                      : "bg-primary"
-                  }`}
-                >
-                  {row.status === "yetToApproved"
-                    ? "Under Review"
-                    : row.status === "rejected"
-                    ? "Rejected"
-                    : row.status === "approved"
-                    ? "Approved"
-                    : "NA"}
-                </Typography>
-              </td>
+
               <td className="p-4">
                 <Typography
                   as="a"
@@ -162,7 +157,7 @@ export function CustomTableOne({
                 >
                   <Link
                     to={link}
-                    state={row?.data?._id}
+                    state={{invoiceId:row?.data?._id}}
                     className="flex flex-row items-center gap-2"
                   >
                     <span className="text-primary">{icon}</span>
@@ -170,24 +165,7 @@ export function CustomTableOne({
                   </Link>
                 </Typography>
               </td>
-              <td className="p-4">
-                <Typography
-                  variant="small"
-                  color="blue-gray"
-                  className="font-normal"
-                >
-                  {row.status === "rejected" ? (
-                    <span
-                      onClick={() => handleResubmit(row?.data?._id)}
-                      className="bg-primary text-white px-6 py-1 rounded-md cursor-pointer"
-                    >
-                      Resubmit
-                    </span>
-                  ) : (
-                    "_"
-                  )}
-                </Typography>
-              </td>
+             
               <span className="hidden">
                 <InvoiceView
                   ref={getPdfRef(row?.data?._id)}
@@ -216,7 +194,7 @@ export function CustomTableTwo({
   secondCustomState,
   SecondAction,
 }) {
-  const role = localStorage.getItem('roleType');
+  const role = localStorage.getItem("roleType");
   return (
     <Card className="h-full w-full overflow-scroll scrollbar-hide font-poppins">
       <table className="w-full min-w-max table-auto text-left">
@@ -357,40 +335,38 @@ export function CustomTableTwo({
                 </Typography>
               </td>
               <td className="p-4">
-             
-              <Typography
-  onClick={() => {
-    if (!loading && row?.clientApprovalStatus !== "approved") {
-      sendCustomerDoc(
-        row?.data?.invoiceDbId,
-        row?.data?.policyDbId,
-        row?.data?.customerName,
-        "pending",
-        row?.data?.commonEmail
-      );
-    }
-  }}
-  variant="small"
-  color="blue-gray"
-  className={`text-white rounded-md w-28 px-2 py-[3px] text-center font-normal cursor-pointer ${
-    loading
-      ? "bg-gray-400 cursor-not-allowed"
-      : row?.clientApprovalStatus === "pending"
-      ? "bg-[#fa9c30]"
-      : row?.clientApprovalStatus === "approved"
-      ? "bg-[#09985C]"
-      : "bg-primary"
-  }`}
->
-  {loading
-    ? "Sending ..."
-    : row?.clientApprovalStatus === "pending"
-    ? "Pending"
-    : row?.clientApprovalStatus === "approved"
-    ? "Approved"
-    : "Send"}
-</Typography>
-
+                <Typography
+                  onClick={() => {
+                    if (!loading && row?.clientApprovalStatus !== "approved") {
+                      sendCustomerDoc(
+                        row?.data?.invoiceDbId,
+                        row?.data?.policyDbId,
+                        row?.data?.customerName,
+                        "pending",
+                        row?.data?.commonEmail
+                      );
+                    }
+                  }}
+                  variant="small"
+                  color="blue-gray"
+                  className={`text-white rounded-md w-28 px-2 py-[3px] text-center font-normal cursor-pointer ${
+                    loading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : row?.clientApprovalStatus === "pending"
+                      ? "bg-[#fa9c30]"
+                      : row?.clientApprovalStatus === "approved"
+                      ? "bg-[#09985C]"
+                      : "bg-primary"
+                  }`}
+                >
+                  {loading
+                    ? "Sending ..."
+                    : row?.clientApprovalStatus === "pending"
+                    ? "Pending"
+                    : row?.clientApprovalStatus === "approved"
+                    ? "Approved"
+                    : "Send"}
+                </Typography>
               </td>
 
               <td className="p-4">
@@ -517,7 +493,7 @@ export function CustomTableThree({
                     {row.data.policyId || "Waiting"}
                   </Typography>
                 </td>
-               
+
                 <td className="p-4">
                   <Typography
                     variant="small"
@@ -678,6 +654,199 @@ export function CustomTableThree({
         item={isId}
         cancelPolicyRequest={cancelPolicyRequest}
       />
+    </>
+  );
+}
+
+export function CustomTableFour({
+  tableHead = [],
+  tableRows = [],
+  action,
+  icon,
+  link,
+  redirectLink,
+}) {
+  const pdfRef = useRef();
+  const { _id,  roleType } = useSelector(
+    (state) => state.users?.users
+  );
+  const handleDownloadClick = (id) => {
+    
+    if (pdfRef.current[id]) {
+      pdfRef.current[id].handleDownloadPDF();
+    }
+  };
+
+  return (
+    <>
+      <Card className="h-full w-full overflow-scroll scrollbar-hide font-poppins">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              {tableHead.map((head) => (
+                <th
+                  key={head}
+                  className="border-b border-blue-gray-100 bg-input p-4"
+                >
+                  <Typography
+                    variant="small"
+                    color="sidebar"
+                    className="font-medium leading-none opacity-70 "
+                  >
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {tableRows.map((row, index) => (
+              <tr key={index} className="even:bg-blue-gray-50/50">
+                {/* Render only the values you want to display */}
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row?.sno || "NA"}
+                  </Typography>
+                </td>
+
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row.data?.customerDetails?.customerName}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row.data.customerDetails?.email || "Waiting"}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row.data?.vehicleDetails?.vinNumber || "Waiting"}
+                  </Typography>
+                </td>
+
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {formatDate(row.data.createdAt)}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    <span className="flex flex-row items-center gap-3">
+                      <Link
+                        to={redirectLink}
+                        state={{ id: row?.data?._id }}
+                        className="border border-primary text-primary px-6 py-1 rounded-md cursor-pointer"
+                      >
+                        View
+                      </Link>
+                      <span
+                        onClick={() => handleDownloadClick(row?.data?._id)}
+                        className="bg-primary text-white px-6 py-1.5 rounded-md cursor-pointer"
+                      >
+                        Download
+                      </span>
+                    </span>
+                  </Typography>
+                </td>
+
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className={`font-light text-[13px] text-white rounded-xl w-28 px-2 py-[3px] text-center ${
+                      row?.status === "pending"
+                        ? "bg-[#096D98] "
+                        : row?.status === "approved"
+                        ? "bg-[#09985C]"
+                        : row?.status === "rejected"
+                        ? "bg-[#D33131]"
+                        : "bg-primary"
+                    }`}
+                  >
+                    {row?.status === "pending"
+                      ? "Pending"
+                      : row?.status === "rejected"
+                      ? "Rejected"
+                      : row?.status === "approved"
+                      ? "Approved"
+                      : "NA"}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography
+                    as="a"
+                    href="#"
+                    variant="small"
+                    color="blue-gray"
+                    className="font-medium"
+                  >
+                    <Link
+                      to={link}
+                      state={{docId:row?.data?._id}}
+                      className="flex flex-row items-center gap-2"
+                    >
+                      <span className="text-primary">{icon}</span>
+                      <span className="font-body">{action}</span>
+                    </Link>
+                  </Typography>
+                </td>
+                {row.type === "amc" ? (
+                  <span className="hidden">
+                    <ViewAmc
+                      ref={(el) => {
+                        // Initialize pdfRefs.current if it's undefined
+                        if (!pdfRef.current) {
+                          pdfRef.current = {};
+                        }
+                        pdfRef.current[row?.data?._id] = el; // Store the reference
+                      }}
+                      id={row?.data?._id}
+                    />
+                  </span>
+                ) : row.type === "buyBack" ? (
+                  <span className="hidden">
+                    <ViewBuyBack
+                      ref={(el) => {
+                        // Initialize pdfRefs.current if it's undefined
+                        if (!pdfRef.current) {
+                          pdfRef.current = {};
+                        }
+                        pdfRef.current[row?.data?._id] = el; // Store the reference
+                      }}
+                      id={row?.data?._id}
+                    />
+                  </span>
+                ) : null}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
     </>
   );
 }

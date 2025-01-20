@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { close, logo, menu } from "../assets";
+
+import { Link, useLocation } from "react-router-dom";
+import { RiLogoutBoxRLine } from "react-icons/ri";
 import LogoutPop from "../Components/LogoutPop";
+import { logo } from "../assets";
+import { BiSolidCarMechanic } from "react-icons/bi";
+import { FaCarOn } from "react-icons/fa6";
 
 const SideNav = () => {
   const location = useLocation();
   const path = location.pathname;
+  const [isOpen, setIsOpen] = useState(
+    JSON.parse(localStorage.getItem("isOpen")) ?? true
+  );
   const [isLogoutOpen, setisLogoutOpen] = useState(false);
-  const [toggle, SetToggle] = useState(false);
 
   const openLogoutPopup = () => {
     setisLogoutOpen(true);
@@ -15,98 +21,120 @@ const SideNav = () => {
 
   const closeLogout = () => {
     setisLogoutOpen(false);
-  }
+  };
+  const sidebarList = [
+    {
+      pathPage: "/agent/amcs-list",
+      icon: <BiSolidCarMechanic />,
+      label: "AMC Lists",
+      otherPath: "/agent/edit-AMC",
+      otherPathTwo: "/agent/amc-form",
+    },
 
+    {
+      pathPage: "/agent/buybacks-list",
+      icon: <FaCarOn />,
+      label: "Buyback Lists",
+      otherPath: "/agent/buyback-form",
+      otherPathTwo: "/agent/edit-buyback",
+    },
+  ];
+
+  useEffect(() => {
+    localStorage.setItem("isOpen", JSON.stringify(isOpen));
+  }, [isOpen]);
   return (
     <>
-      <LogoutPop isLogoutOpen={isLogoutOpen} closeLogout={closeLogout} />
-      <div className="bg-navcolor  px-9 py-9 text-start w-60 h-screen rounded-r-3xl hidden md:block sm:block  ">
-        <img src={logo} alt="" loading="lazy" className="w-40 h-28" />
-
-        <div className="flex  items-center relative gap-3"></div>
-
+      <div className="bg-white md:w-[17.5vw] sm:w-[24vw] h-[100vh]    overflow-y-auto scrollbar-hide border-r-2 border-[#E8E8E8]">
         <span>
-          <Link to="/agent-dashboard">
-            {" "}
-            <p
-              className={` cursor-pointer text-white hover:bg-white hover:text-primary  py-2 px-3  mt-6 rounded-xl text-[17px] "  ${
-                (path === "/agent-dashboard" || path === "/new-policy" || path === "/update-policies") &&
-                "adminnav"
-              }`}
-            >
-              Dashboard
-            </p>
-          </Link>
-
-          <Link to="/agent/approval">
-            {" "}
-            <p
-              className={` cursor-pointer text-white hover:bg-white hover:text-primary  py-2 px-3  mt-6 rounded-xl text-[17px] "  ${
-                path === "/agent/approval" &&
-                "adminnav"
-              }`}
-            >
-              Approvals
-            </p>
-          </Link>
-
-          <Link to="">
-            {" "}
-            <p
-              onClick={openLogoutPopup}
-              className=" cursor-pointer text-white hover:bg-white hover:text-primary  py-2 px-3  mt-6 rounded-xl text-[17px]"
-            >
-              Logout
-            </p>
-          </Link>
-        </span>
-      </div>
-      {/* // responsive nav */}
-
-      <div className=" flex flex-row items-center justify-between w-[43vh]  fixed">
-        <span>
-          <img src={logo} alt="logo" className="w-24 h-20" />
-        </span>
-        <div className="md:hidden sm:hidden ">
           <img
-            src={toggle ? close : menu}
-            alt="menu"
-            className="w-[25px] h-[25px]  object-contain "
-            onClick={() => SetToggle(!toggle)}
+            loading="lazy"
+            src={logo}
+            alt="logo"
+            className="md:w-44 sm:w-32 md:h-32 sm:h-16 ml-6 "
           />
-
+        </span>
+        {sidebarList.map((item, index) => (
           <div
-            className={`${!toggle ? "hidden" : "flex"}
-      p-6 absolute top-20 right-0  min-w-[200px] rounded-xl  admin_sidebar z-50 bg-[#0A1629] text-black`}
+            key={index}
+            className={`cursor-pointer py-4 hover:bg-[#d3d3d3] hover:text-primary hover:border-l-4 hover:font-medium ${
+              path === item.pathPage ||
+              path === item?.otherPath ||
+              path === item?.otherPathTwo ||
+              path === item?.otherPathThree
+                ? "bg-[#c0c0c0] text-primary border-l-4 border-primary font-medium"
+                : "text-sidebar"
+            }`}
           >
-            <ul className="list-none flex justify-end items-start font-DMsans flex-1 flex-col z-50">
-              <span>
-                <div className="flex  items-center relative gap-3"></div>
-                <Link to="/admin/dashboard">
-                  {" "}
-                  <p
-                    className={` cursor-pointer text-white hover:bg-primary hover:text-white  py-2 px-3  mt-6 rounded-xl text-[17px] "  ${
-                      path === "/agent-dashboard" && "adminresnav"
-                    }`}
-                  >
-                    Dashboard
-                  </p>
-                </Link>
+            <Link
+              to={item.pathPage}
+              className="flex items-center gap-3 md:pl-6 lg:px-6 sm:pl-6 "
+            >
+              <span className="text-[20px]"> {item.icon}</span>{" "}
+              <span>{item.label}</span>
+            </Link>
+          </div>
+        ))}
+        {/* <div
+          className={`cursor-pointer py-4 hover:bg-[#d3d3d3] hover:text-primary hover:border-l-4 hover:font-medium ${
+            path === "/admin/ticket"
+              ? "bg-[#c0c0c0] text-primary border-l-4 border-primary font-medium"
+              : "text-sidebar"
+          }`}
+        >
+          <Link
+            to="/admin/ticket"
+            className="flex items-center gap-3 md:pl-6 lg:px-6 sm:pl-6 "
+          >
+            <span className="text-[20px]">
+              {" "}
+              <BsFillTicketPerforatedFill />
+            </span>{" "}
+            <span>Ticket Support</span>
+          </Link>
+        </div> */}
 
-                <span>
-                  {" "}
-                  <p
-                    onClick={openLogoutPopup}
-                    className=" cursor-pointer  hover:bg-primary hover:text-white text-white  py-2 px-3  mt-6 rounded-xl text-[17px]"
-                  >
-                    Logout
-                  </p>
-                </span>
-              </span>
-            </ul>
+        {/* <div
+          className={`cursor-pointer py-4 hover:bg-[#f5ebeb] hover:text-primary hover:border-l-4 hover:font-medium ${
+            path === "/student/payment-details"
+              ? "bg-[#c0c0c0] text-primary border-l-4 border-primary font-medium"
+              : "text-sidebar"
+          }`}
+        >
+          <Link
+            to="/student/payment-details"
+            className="flex items-center gap-3 px-6"
+          >
+            <span className="text-[20px]">
+              {" "}
+              <MdOutlineHistory />
+            </span>{" "}
+            <span>Payment Details</span>
+          </Link>
+        </div> */}
+
+        <div
+          className={`cursor-pointer py-4 hover:bg-[#d3d3d3] hover:text-primary hover:border-l-4 hover:font-medium text-primary`}
+        >
+          <div
+            className="flex items-center gap-3 px-6 "
+            onClick={openLogoutPopup}
+          >
+            <span className="text-[20px]">
+              {" "}
+              <RiLogoutBoxRLine />
+            </span>{" "}
+            <span>Logout</span>
           </div>
         </div>
+        <p className="text-primary pl-6 pt-8 font-bold text-[14px]">
+          Raam Group
+        </p>
+        <p className="font-light text-primary pl-6 text-[12px] pt-1 mb-20">
+          © 2025 All Rights Reserved
+        </p>
       </div>
+      <LogoutPop isLogoutOpen={isLogoutOpen} closeLogout={closeLogout} />
     </>
   );
 };

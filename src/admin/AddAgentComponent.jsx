@@ -17,14 +17,14 @@ const AddAgentComponent = () => {
   const [isEmailValid, setEmailValid] = useState("");
 
   const [agentData, setAgentData] = useState({
-    brandName: "",
+    brandName: "MG",
     agentId: "",
     agentName: "",
     email: "",
     contact: "",
     password: "",
     confirmPassword: "",
-    roleType: "",
+    roleType: "2",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -180,25 +180,7 @@ useEffect(()=>{
         <form onSubmit={handleSubmit}>
           <div className="flex md:flex-row sm:flex-row flex-col font-body md:gap-12 sm:gap-12">
             <span className="md:w-[40%] sm:w-[40%]">
-              <div className="pt-3 pb-2">
-                <label className="font-semibold">Brand Name <span className="text-red-500">*</span></label>
-                <select
-                  className="w-full h-10 bg-secondary rounded-md px-3 mt-2"
-                  name="brandName"
-                  value={agentData.brandName}
-                  onChange={handleInput}
-                  autoComplete="off"
-                >
-                  <option value="">Select Brand</option>
-                  <option value="MG">Morris Garages (MG)</option>
-                  <option value="MB">Mercedes-Benz</option>
-                </select>
-                {errors.brandName && (
-                  <p className="text-red-500 mt-1 text-sm">
-                    {errors.brandName}
-                  </p>
-                )}
-              </div>
+            
               <div className="pt-3 pb-2">
                 <label className="font-semibold">Agent Name <span className="text-red-500">*</span></label>
                 <InputField

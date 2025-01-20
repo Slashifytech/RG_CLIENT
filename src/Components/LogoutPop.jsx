@@ -11,7 +11,7 @@ const LogoutPop = ({ isLogoutOpen, closeLogout }) => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/360policy/login");
+    navigate("/raam-group/login");
     closeLogout();
   };
 
@@ -21,8 +21,8 @@ const LogoutPop = ({ isLogoutOpen, closeLogout }) => {
         title: "Do you want to logout?",
         icon: "warning",
         showCancelButton: true,
-        cancelButtonColor: "#d33",
-        confirmButtonColor: "#6149CD",
+        cancelButtonColor: "#000000",
+        confirmButtonColor: "#000000",
         confirmButtonText: "Yes",
         cancelButtonText: "No",
         backdrop: true,

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import AdminCards from "../Components/AdminCards";
-import { SiMercedes, SiMg } from "react-icons/si";
 import {
   deleteAgentData,
   fetchAllMbAgents,
@@ -12,6 +11,11 @@ import { toast } from "react-toastify";
 import Nav from "./Nav";
 import DataNotFound from "./DataNotFound";
 import { Link } from "react-router-dom";
+import { SiMercedes } from "react-icons/si";
+
+
+import { SiMg } from 'react-icons/si';
+import Header from "../Components/Header";
 
 const TeamList = () => {
   const dispatch = useDispatch();
@@ -47,7 +51,8 @@ const TeamList = () => {
           <Nav />
         </span>
       </div>
-      <div className="flex flex-row items-start justify-between mr-9  mt-9">
+      <div><Header/></div>
+      <div className="flex flex-row items-start justify-between mr-9  mt-20">
         <p className="md:ml-[22%] sm:ml-[36%] ml-6  text-[23px] font-medium">
           Team Lists -{" "}
         </p>
@@ -62,28 +67,6 @@ const TeamList = () => {
         </Link>
       </div>
       <div className="mx-6 md:mx-0 sm:mx-0 md:ml-[22%] sm:ml-[36%] flex md:gap-20 gap-3 ">
-        <div
-          className={`rounded-xl flex items-center gap-3 border border-primary text-black mb-9 font-medium md:px-6 sm:px-6 w-48 px-6 text-center py-2 cursor-pointer ${
-            toggle === "MB"
-              ? "bg-primary text-white"
-              : "bg-secondary text-black shadow"
-          }`}
-          onClick={() => toggleTab("MB")}
-        >
-          <SiMercedes />
-          <span>Mercedes-Benz</span>
-        </div>
-        <div
-          className={`rounded-xl flex items-center gap-3 border border-primary text-black mb-9 font-medium md:px-6 sm:px-6 w-48 px-6 text-center py-2 cursor-pointer ${
-            toggle === "MG"
-              ? "bg-primary text-white"
-              : "bg-secondary text-black shadow"
-          }`}
-          onClick={() => toggleTab("MG")}
-        >
-          <SiMg />
-          <span>Morris Garage</span>
-        </div>
       </div>
 
       <div className="md:ml-[22%] sm:ml-[33%] ml-6 mb-20">
@@ -105,7 +88,7 @@ const TeamList = () => {
             <div className="mt-20 font-medium text-body ml-[12%] mr-[15%] mb-20">
               <DataNotFound
                 className="flex justify-center flex-col w-full items-center  ml-28"
-                message="No agents found"
+                message="No Teams found"
               />
             </div>
           )}

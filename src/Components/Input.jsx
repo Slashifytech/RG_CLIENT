@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { extractFileNames } from "../helper/commonHelperFunc";
+import { ImBin } from "react-icons/im";
 
 const InputField = ({
   type,
@@ -105,49 +105,70 @@ const CustomInput = ({
 
 
 
-const GroupedInput = ({ title, stateName, errors , onChange, leftFields, rightFields}) => {
- 
+const GroupedInput = ({
+  title,
+  stateName,
+  errors,
+  onChange,
+  leftFields,
+  rightFields,
+}) => {
+  const renderField = (field) => {
+    if (field.type === "select") {
+      return (
+        <div key={field.name} className="flex flex-col gap-2">
+          <label className="font-medium">{field.label}</label>
+          <select
+            name={field.name}
+            value={stateName[field.name]}
+            onChange={onChange}
+            className="w-full h-10 bg-white rounded-md px-3 outline-none mt-2"
+          >
+            <option value="" >
+              {field.placeholder || "Select an option"}
+            </option>
+            {field.options?.map((option, index) => (
+              <option key={index} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+          {errors[field.name] && (
+            <span className="text-red-500 text-sm">{errors[field.name]}</span>
+          )}
+        </div>
+      );
+    }
 
- 
+    // Default: Render input field
+    return (
+      <CustomInput
+        key={field.name}
+        title={field.label}
+        imp={field.required}
+        className="w-full h-10 bg-white rounded-md px-3 outline-none mt-2"
+        type={field.type}
+        name={field.name}
+        placeHolder={field.placeholder}
+        value={stateName[field.name]}
+        onChange={onChange}
+        errorMessage={errors[field.name]}
+      />
+    );
+  };
 
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-bold">{title}</h3>
-      <div className="flex  gap-20 items-start">
+      <div className="flex gap-20 items-start">
         {/* Left Column */}
         <div className="flex flex-col gap-4 w-[30%]">
-          {leftFields?.map((field, index) => (
-            <CustomInput
-              key={index}
-              title={field.label}
-              imp={true}
-              className="w-full h-10 bg-secondary rounded-md px-3 outline-none mt-2"
-              type={field.type}
-              name={field.name}
-              placeHolder={field.placeholder}
-              value={stateName[field.name]}
-              onChange={onChange}
-              errorMessage={errors[field.name]}
-            />
-          ))}
+          {leftFields?.map((field) => renderField(field))}
         </div>
 
         {/* Right Column */}
         <div className="flex flex-col gap-4 w-[30%]">
-          {rightFields?.map((field, index) => (
-            <CustomInput
-              key={index}
-              title={field.label}
-              imp={true}
-              className="w-full h-10 bg-secondary rounded-md px-3 outline-none mt-2"
-              type={field.type}
-              name={field.name}
-              placeHolder={field.placeholder}
-              value={stateName[field.name]}
-              onChange={onChange}
-              errorMessage={errors[field.name]}
-            />
-          ))}
+          {rightFields?.map((field) => renderField(field))}
         </div>
       </div>
     </div>
@@ -255,7 +276,7 @@ const FileUpload = ({
             onClick={handleDelete}
             className="px-2 py-2 bg-primary text-white rounded"
           >
-            <RiDeleteBin6Line/>
+            <ImBin />
           </button>
         )}
       </div>

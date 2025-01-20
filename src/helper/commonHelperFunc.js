@@ -132,3 +132,26 @@ export function extractFileNames(filePath) {
 
   return `${formattedName}.${extension}`; // Combine formatted name with the extension
 }
+
+
+
+export function convertToIST(isoTime) {
+  const date = new Date(isoTime);
+
+  const istOffset = 5 * 60 + 30; 
+
+  const istTime = new Date(date.getTime() + istOffset * 60 * 1000);
+
+  const options = {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  };
+
+  return istTime.toLocaleString("en-IN", options);
+}

@@ -3,7 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+body{
+  background-color: #f7f7f8;
+}
 input[type="radio"] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -19,11 +21,21 @@ input[type="radio"]:checked {
   background: radial-gradient(circle at center, #e01d1d 50%, transparent 20.5%);
 }
 
-.bg-Image{
+.bg-Image {
   background-image: url('./assets/loginBanner.png');
-
-  background-size:cover;
+  background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
+  overflow: hidden; 
+}
+
+.glass {
+  background: rgba(0, 0, 0, 0.2); 
+  /* backdrop-filter: blur(0px); 
+  -webkit-backdrop-filter: blur(2px); Safari compatibility */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+  color: rgb(255, 255, 255); 
 }
 
 /* Chat.css */
@@ -556,8 +568,8 @@ input[type="file"] {
 .swal-cancel {
   font-size: 14px;
   padding: 8px 36px;
-  color: #6149CD;
-  border: 1px solid #6149CD;
+  color: #000000;
+  border: 1px solid #000000;
   background-color: transparent;
   border-radius: 5px;
   cursor: pointer;
@@ -568,7 +580,22 @@ input[type="file"] {
   font-size: 14px;
   padding: 8px 36px;
   color: #fff;
-  background-color: #6149CD;
+  background-color: #000000;
   border-radius: 5px;
   cursor: pointer;
+}
+
+@keyframes openAnimation {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.app-open-animation {
+  animation: openAnimation 0.3s ease-out;
 }

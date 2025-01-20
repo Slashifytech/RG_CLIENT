@@ -10,7 +10,12 @@ import greenCheck from "./greenCheck.png";
 import tlogo from "./360logo.png";
 import mobile from "./mobile.png";
 import invoicelogo from "./invoicelogo.png";
+import mgLogo from "./mg.webp";
+import mgBlack from "./mgBlack.png";
 
 
 
-export {logo, close, menu, dnf, loginBanner, error, mgpdf, colorLogo, greenCheck, mobile, tlogo, invoicelogo}
+
+
+
+export {logo,mgBlack, mgLogo, close, menu, dnf, loginBanner, error, mgpdf, colorLogo, greenCheck, mobile, tlogo, invoicelogo}

@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import DataNotFound from "./DataNotFound";
 import Pagination from "../Components/Pagination";
 import { CustomTableOne } from "../Components/Table";
-import { FaPencil, FaRegEye } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
 import { setEmptyInvoiceData } from "../features/InvoiceSlice";
 import { toast } from "react-toastify";
 import { reSubmitInvoice } from "../features/InvoiceApi";
 import { fetchInvoiceByStatus } from "./../features/adminDashboardSlice";
+import { HiPencil } from "react-icons/hi2";
 
 const TeamInvoices = () => {
   const dispatch = useDispatch();
@@ -100,7 +100,7 @@ const TeamInvoices = () => {
               tableRows={TABLE_ROWS}
               link="/invoice-form"
               action={"Edit"}
-              icon={<FaPencil />}
+              icon={<HiPencil />}
               handleResubmit={handleResubmit}
             />
           </div>

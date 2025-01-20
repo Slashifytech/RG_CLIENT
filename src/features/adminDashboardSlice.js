@@ -118,9 +118,9 @@ export const fetchInvoices = createAsyncThunk(
 
 export const fetchInvoiceByStatus = createAsyncThunk(
   'admin/fetchInvoiceByStatus',
-  async ({page, perPage, invoiceStatus, search, createdBy}, { rejectWithValue }) => {
+  async ({page, perPage, invoiceType, search, createdBy}, { rejectWithValue }) => {
     try {
-      const response = await getAllInvoiceByStatus(page, perPage, invoiceStatus, search, createdBy);
+      const response = await getAllInvoiceByStatus(page, perPage, invoiceType, search, createdBy);
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

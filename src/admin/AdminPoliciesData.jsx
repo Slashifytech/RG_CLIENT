@@ -7,7 +7,6 @@ import { MdCancel, MdOutlineEdit } from "react-icons/md";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import PdfPage from "../Components/pdfPage";
-import { SiMercedes, SiMg } from "react-icons/si";
 import CancelPolicyPopUp from "../Components/cancelPolicyPopUp";
 import { getFilteredPolicyById, getPolicyById } from "../../Util/UtilityFunction";
 import Pagination from "../Components/Pagination";

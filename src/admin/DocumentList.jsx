@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import DataNotFound from "./DataNotFound";
 import Pagination from "../Components/Pagination";
 import { CustomTableTwo } from "../Components/Table";
-import { FaPencil } from "react-icons/fa6";
+import { HiPencil } from "react-icons/hi2";
+
 
 import { fetchDocumentData } from "../features/DocumentSlice";
 import { toast } from "react-toastify";
@@ -140,7 +141,7 @@ const InvoiceList = () => {
               tableRows={TABLE_ROWS}
               link="/invoice-form"
               action={"Edit"}
-              icon={<FaPencil />}
+              icon={<HiPencil  />}
               documentStatus={documentStatus}
               sendCustomerDoc={sendCustomerDoc}
               loading={loading}

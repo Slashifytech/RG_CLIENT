@@ -1,4 +1,6 @@
-import { SiMercedes, SiMg } from "react-icons/si";
+import {  SiMg } from "react-icons/si";
+import { SiMercedes } from "react-icons/si";
+
 import { Link, useLocation } from 'react-router-dom';
 
 const ManufacturerTab = ({ selectedManufacturer, handleTabClick }) => {

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { logo } from "../assets";
+import { logo, mgLogo } from "../assets";
 import { signin, useAuth } from "../features/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchUsers } from "../features/getUserSlice";
-import { FaRegEyeSlash, FaRegEye  } from "react-icons/fa6";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa6";
 import Mobile from "../Components/MobileUI";
 const Login = () => {
   const dispatch = useDispatch();
@@ -44,14 +44,9 @@ const Login = () => {
 
           if (res?.payload?.user?.roleType === "0") {
             navigate("/admin/dashboard");
-          } else if (
-            res?.payload?.user?.roleType === "2" 
-          ) {
+          } else if (res?.payload?.user?.roleType === "2") {
             navigate("/agent-dashboard");
-          }
-           else if (
-            res?.payload?.user?.roleType === "1" 
-          ) {
+          } else if (res?.payload?.user?.roleType === "1") {
             navigate("/admin/active-policy");
           }
         } else {
@@ -67,51 +62,59 @@ const Login = () => {
 
   return (
     <>
-    <Mobile/>
-      <div className="bg-Image h-screen hidden sm:block md:block">
-        <div>
-          <img src={logo} alt="" loading="lazy" className="w-44 h-32" />
-        </div>
-
-        <div className="bg-secondary md:mt-6 sm:mt-28 mt-20  flex flex-col justify-center md:mx-[30%] mx-6 sm:mx-36  p-14  rounded-md">
-          <span className="font-semibold">
+      <Mobile />
+      <div className="bg-Image h-screen hidden sm:block md:block ">
+      <div className="glass h-screen">
+        <div className="text-white md:pt-12 sm:pt-16 pt-20 w-[40%] flex flex-col justify-center   p-14  rounded-md ">
+        <span className="flex flex-row items-center ">
+        <img src={mgLogo} alt="logo" className="w-28" />
+        <p className="text-white text-[30px] leading-9">
+          {" "}
+          <span className="font-bold text-[32px] flex flex-col">RAAM</span>{" "}
+          GROUP
+        </p></span>
+        <div className="mt-9">
+        <p className="font-semibold  text-center italic text-[22px]">Welcome back to RG Portal</p>
+          <div className="font-semibold  mt-6">
             Email <span className="text-red-500">*</span>
-          </span>
+          </div>
           <input
             type="email"
             name="email"
-            className="bg-input w-full px-3 py-3 mt-2 rounded-md outline-none"
+            className="bg-white/20 backdrop-blur-md w-full mt-3 px-3 py-3 rounded-md outline-none border border-white/30 placeholder-white text-white"
             placeholder="Email"
             onChange={handleInput}
           />
-          <span className="font-semibold mt-6">
+          <div className="mt-6">
+          <span className="font-semibold ">
             Password <span className="text-red-500">*</span>
           </span>
-          <div className="pt-3 pb-2 relative">
+          <div className="pt-3 pb-2 relative ">
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              className="bg-input w-full px-3 py-3  rounded-md outline-none"
+              className="bg-white/20 backdrop-blur-md w-full px-3 py-3 rounded-md outline-none border border-white/30 placeholder-white text-white"
               placeholder="Password"
               onChange={handleInput}
             />
             <button
               type="button"
               onClick={togglePasswordVisibility}
-              className="absolute inset-y-0 right-3 top-0 text-[20px] flex items-center"
+              className="absolute inset-y-0 right-3 top-0 text-[20px] flex items-center "
             >
               {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
-            </button>
+            </button></div>
           </div>
           <button
             onClick={handleLogin}
-            className="bg-primary text-white rounded-md py-3 mt-9"
+            className="bg-primary text-white  rounded-md py-3 mt-9 w-full"
             disabled={loading}
           >
             {loading ? "Logging in..." : "Submit"}
           </button>
         </div>
-      </div>
+        </div>
+      </div></div>
     </>
   );
 };

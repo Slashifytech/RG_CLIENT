@@ -87,13 +87,9 @@ const AgentPoliciesData = () => {
 
   return (
     <>
-      <div className="fixed">
-        <span className="absolute">
-          <Nav />
-        </span>
-      </div>
+    
 
-      <div className="font-head pt-9">
+      <div className="font-head ">
       <p className="pt-14 text-[20px] font-semibold md:ml-[22%] ml-6 sm:ml-[33%]">
               {agentData?.agentName || "NA"} {agentData?.agentId || "NA"}
             </p>
