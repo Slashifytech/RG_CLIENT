@@ -10,7 +10,6 @@ import ErrorPage from "./Components/ErrorPage";
 import ProtectedAdmin from "./Components/ProtectedAdmin";
 import Policy from "./pages/Policy";
 import ActivePolicy from "./pages/ActivePolicy";
-import CancelledPolicy from "./pages/CancelledPolicy";
 import AdminPolicy from "./pages/AdminPolicy";
 import Approval from "./pages/Approval";
 import AgentForm from "./pages/AgentForm";
@@ -18,9 +17,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AgentDashboard from "./pages/AgentDashboard";
 import ProtectedAgent from "./Components/ProtectedAgent"  
 import InvoiceForm from "./admin/InvoiceForm";
-import MbinvoiceApproval from "./admin/MbinvoiceApproval";
 import InvoiceList from "./admin/InvoiceList";
-import DocumentList from "./admin/DocumentList";
 import CustomerApproval from "./pages/CustomerApproval";
 import InvoiceView from "./pages/InvoiceView";
 import AgentList from "./admin/AgentList";
@@ -35,12 +32,12 @@ import BuyBackLists from "./pages/BuyBackLists";
 import ViewAmc from "./pages/ViewAmc";
 import ViewBuyBack from "./pages/viewBuyBack";
 import AgentDocLists from "./pages/AgentDocLists";
-import Header from "./Components/Header";
 import CancelledApprovals from "./admin/CancelledApprovals";
+import CancelledPolicy from "./admin/CancelledPolicy";
 
 const router = createBrowserRouter([
   {
-    path: "/raamgroup-policy/login",
+    path: "/raam-group/login",
     element: <Login></Login>,
   },
   {
@@ -176,7 +173,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/admin/edit-buyback",
+    path: "/agent/edit-buyback",
     element: (
       <ProtectedAgent>
         <BuyBackForm></BuyBackForm>

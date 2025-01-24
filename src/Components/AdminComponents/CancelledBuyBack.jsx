@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import Pagination from "../Components/Pagination";
-import Loader from "../Components/Loader";
-import DataNotFound from "../admin/DataNotFound";
-import { CustomTableFour } from "../Components/Table";
+import Loader from "../Loader";
+import DataNotFound from "../../admin/DataNotFound";
+import { CustomTableFour } from "../Table";
 import { FaPencil } from "react-icons/fa6";
-import Nav from "../admin/Nav";
-import { fetchBuyBackLists } from "../features/BuyBackSlice";
-import SideNav from "../agent/SideNav";
-import Header from "../Components/Header";
-import { buyBackCancelByAdmin, buyBackResubmit } from "../features/BuybackApi";
-import { toast } from "react-toastify";
+import Pagination from "../Pagination";
+import { fetchBuyBackLists } from "../../features/BuyBackSlice";
+import Header from "../Header";
 
-const BuyBackLists = () => {
+const CancelledBuyBack = () => {
   const { _id, roleType } = useSelector((state) => state.users?.users);
   const userId = _id;
   const { BuyBackLists } = useSelector((state) => state.buyBack);
@@ -31,24 +26,17 @@ const BuyBackLists = () => {
 
   useEffect(() => {
     setLoading(true);
-    if (roleType === "2" && userId) {
-      dispatch(
-        fetchBuyBackLists({ page, perPage, searchTerm, userId, option: null })
-      );
-    } else if (roleType === "0" || roleType === "1") {
-      dispatch(
-        fetchBuyBackLists({
-          page,
-          perPage,
-          searchTerm,
-          userId: null,
-          option: null,
-        })
-      );
-    }
-
+    dispatch(
+      fetchBuyBackLists({
+        page,
+        perPage,
+        searchTerm,
+        userId: null,
+        status: "approvedReq",
+      })
+    );
     setLoading(false);
-  }, [page, perPage, searchTerm, userId]);
+  }, [page, perPage, searchTerm]);
 
   const TABLE_HEAD = [
     "S.No.",
@@ -68,74 +56,19 @@ const BuyBackLists = () => {
     type: "buyBack",
   }));
 
-  const handleResubmit = async (id) => {
-    try {
-      const res = await buyBackResubmit(id);
-      toast.success(res?.message || "Buyback resubmitted successfully");
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.message || "Something Went Wrong");
-    }
-  };
-   const handleCancel = async (id) => {
-      try {
-        const res = await buyBackCancelByAdmin(id);
-        toast.success(res?.message || "Amc cancelled successfully");
-      } catch (error) {
-        console.log(error);
-        toast.error(error?.message || "Something Went Wrong");
-      }
-    };
-   const handleStatus = async (userId, type, reason) => {
-      try {
-        const response = await updatBuyBackStatus(userId, type, reason);
-  
-        toast.success(response?.message || "Buyback Updated Successfully");
-        dispatch(
-          fetchBuyBackLists({
-            option: null,
-            option: null,
-            option: null,
-            option: null,
-            status: "reqCancel",
-          })
-        );
-      } catch (error) {
-        console.error(error, "Something went wrong");
-        toast.error(error?.message || "Something Went Wrong");
-      }
-    };
   return (
     <>
-      <div className="fixed">
-        <span className="absolute">
-          {roleType === "2" ? <SideNav /> : <Nav />}
-        </span>
-      </div>
-      <div>
-        <Header />
-      </div>
       <div className="flex items-center gap-3 justify-center md:ml-28 text-[18px] md:mt-10 sm:mt-10 mt-20">
         <span className="font-head font-semibold">Morris Garage</span>
       </div>
 
-      <div className="md:pt-6 sm:pt-14 pt-6 flex md:flex-row sm:flex-row flex-col-reverse justify-between md:items-center sm:items-center md:px-20 mx-6">
-        <Link
-          to={roleType === "2" ? "/agent/buyback-form" : "/admin/add-buyback"}
-          state={{ addNew: "isNew" }}
-          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[14.5%] sm:ml-[33%] mt-4 sm:mt-4 md:mt-4"
-        >
-          + Add New Buy Back
-        </Link>
-      </div>
-
-      <div className="px-6 flex justify-start md:ml-60 sm:ml-60 mt-6">
+      <div className="px-6 flex justify-center md:ml-28 sm:ml-60 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-[20rem] py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
+          className="w-[30rem] py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
         />
       </div>
 
@@ -170,10 +103,6 @@ const BuyBackLists = () => {
                 action="Edit"
                 icon={<FaPencil />}
                 redirectLink={"/buyback-view"}
-                handleResubmit={handleResubmit}
-                handleStatus={handleStatus}
-                handleCancel={handleCancel}
-
               />
             </div>
             {totalPagesCount > 1 && (
@@ -194,4 +123,4 @@ const BuyBackLists = () => {
   );
 };
 
-export default BuyBackLists;
+export default CancelledBuyBack;

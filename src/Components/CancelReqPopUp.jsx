@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const CancelReqPopUp = ({ isPopUpOpen, closePopUp, item, cancelPolicyRequest}) => {
+const CancelReqPopUp = ({ isPopUpOpen, closePopUp, item, cancelPolicyRequest, text}) => {
 
   return (
     <>
@@ -13,7 +13,7 @@ const CancelReqPopUp = ({ isPopUpOpen, closePopUp, item, cancelPolicyRequest}) =
         >
           <div className="bg-white pb-9  rounded-lg md:w-[38%] w-full  relative p-9 app-open-animation  ">
             <p className="text-center font-DMsans text-black font-semibold text-[16px]">
-              Are you sure to request the cancellation for this policy ?
+{text}
             </p>
             <div className="flex justify-center items-center font-DMsans gap-5 mt-5">
               <span

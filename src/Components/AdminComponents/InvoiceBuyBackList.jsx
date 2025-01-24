@@ -6,13 +6,13 @@ import { CustomTableOne } from "../Table";
 import { FaPencil } from "react-icons/fa6";
 import { fetchInvoiceByStatus } from "../../features/adminDashboardSlice";
 
-
-const InvoiceBuyBackList = () => {
+const InvoiceBuyBackList = ({createdBy}) => {
   const dispatch = useDispatch();
+ 
   const { invoicesByStatus } = useSelector((state) => state.admin);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-
+  console.log(location);
   const perPage = 10;
   const currentPage = invoicesByStatus?.data?.currentPage;
   const totalPagesCount = invoicesByStatus?.data?.totalPagesCount;
@@ -21,10 +21,22 @@ const InvoiceBuyBackList = () => {
     setPage(pageNumber);
   };
   useEffect(() => {
-    dispatch(
-      fetchInvoiceByStatus({ page, perPage, invoiceType: "Buyback", search })
-    );
-  }, [dispatch, page, perPage, search]);
+    if (createdBy) {
+      dispatch(
+        fetchInvoiceByStatus({
+          page,
+          perPage,
+          invoiceType: "Buyback",
+          search,
+          createdBy,
+        })
+      );
+    } else if (!createdBy) {
+      dispatch(
+        fetchInvoiceByStatus({ page, perPage, invoiceType: "Buyback", search })
+      );
+    }
+  }, [dispatch, page, perPage, search, createdBy]);
 
   const TABLE_HEAD = [
     "S.No.",
@@ -51,13 +63,12 @@ const InvoiceBuyBackList = () => {
     // <div>InvoiceList</div>
 
     <>
-     
       <input
         type="text"
         placeholder="Search by Invoice Id"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-[27rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none md:ml-[20%] sm:ml-[22%] sm:mt-6"
+        className="w-[20rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none md:ml-[20%] sm:ml-[22%] sm:mt-6"
       />
 
       {totalCount > 0 ? (

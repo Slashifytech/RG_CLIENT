@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import Nav from "../admin/Nav";
-import BuyBackApproval from "../admin/BuyBackApproval";
-import AgentAmcsData from "../admin/AgentAmcsData";
-import AgentBuybacks from "../admin/AgentBuybacks";
 import Header from "../Components/Header";
+import CancelledAmc from "../Components/AdminComponents/CancelledAmc";
+import CancelledBuyBack from "../Components/AdminComponents/CancelledBuyBack";
 
-const AgentDocLists = () => {
+const CancelledPolicy = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
-    { id: 0, label: "AMC Approval", component: <AgentAmcsData /> },
-    { id: 1, label: "Buyback Approval", component: <AgentBuybacks /> },
-    // { id: 2, label: "Policy Approval", component: <AgentPoliciesData /> },
+    { id: 0, label: "AMC Cancelled Policy", component: <CancelledAmc /> },
+    { id: 1, label: "Buyback Cancelled Policy", component: <CancelledBuyBack /> },
+    // { id: 2, label: "Policy Approval", component: <PolicyApproval /> },
 
   ];
 
@@ -23,8 +22,8 @@ const AgentDocLists = () => {
         </span>
       </div>
       <div>
-        <Header/>
-      </div>
+      <Header/>
+    </div>
       <div className="w-full p-4 mt-20">
         <div className="flex justify-center gap-4 mb-6">
           {tabs.map((tab) => (
@@ -48,4 +47,4 @@ const AgentDocLists = () => {
   );
 };
 
-export default AgentDocLists;
+export default CancelledPolicy;

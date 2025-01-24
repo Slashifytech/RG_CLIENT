@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { logo, mgLogo } from "../assets";
-import { signin, useAuth } from "../features/authSlice";
+import { mgLogo } from "../assets";
+import { signin } from "../features/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -45,7 +45,7 @@ const Login = () => {
           if (res?.payload?.user?.roleType === "0") {
             navigate("/admin/dashboard");
           } else if (res?.payload?.user?.roleType === "2") {
-            navigate("/agent-dashboard");
+            navigate("/agent/amcs-list");
           } else if (res?.payload?.user?.roleType === "1") {
             navigate("/admin/active-policy");
           }

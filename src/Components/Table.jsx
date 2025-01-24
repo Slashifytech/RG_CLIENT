@@ -18,7 +18,6 @@ export function CustomTableOne({
   action,
   icon,
   link,
-
 }) {
   const pdfRefs = useRef({});
   const getPdfRef = (id) => {
@@ -157,7 +156,7 @@ export function CustomTableOne({
                 >
                   <Link
                     to={link}
-                    state={{invoiceId:row?.data?._id}}
+                    state={{ invoiceId: row?.data?._id }}
                     className="flex flex-row items-center gap-2"
                   >
                     <span className="text-primary">{icon}</span>
@@ -165,7 +164,7 @@ export function CustomTableOne({
                   </Link>
                 </Typography>
               </td>
-             
+
               <span className="hidden">
                 <InvoiceView
                   ref={getPdfRef(row?.data?._id)}
@@ -665,13 +664,22 @@ export function CustomTableFour({
   icon,
   link,
   redirectLink,
+  handleResubmit,
+  handleStatus,
+  handleCancel,
 }) {
   const pdfRef = useRef();
-  const { _id,  roleType } = useSelector(
-    (state) => state.users?.users
-  );
+  const { _id, roleType } = useSelector((state) => state.users?.users);
+  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+  const [isId, setIsId] = useState();
+
+  const openPopUp = useCallback((id) => {
+    setIsId(id);
+    setIsPopUpOpen(true);
+  }, []);
+
+  const closePopUp = useCallback(() => setIsPopUpOpen(false), []);
   const handleDownloadClick = (id) => {
-    
     if (pdfRef.current[id]) {
       pdfRef.current[id].handleDownloadPDF();
     }
@@ -797,24 +805,69 @@ export function CustomTableFour({
                       : "NA"}
                   </Typography>
                 </td>
-                <td className="p-4">
-                  <Typography
-                    as="a"
-                    href="#"
-                    variant="small"
-                    color="blue-gray"
-                    className="font-medium"
-                  >
-                    <Link
-                      to={link}
-                      state={{docId:row?.data?._id}}
-                      className="flex flex-row items-center gap-2"
+                {row?.status === "rejected" ? (
+                  <td className="p-4">
+                    <Typography
+                      as="a"
+                      variant="small"
+                      color="blue-gray"
+                      className="font-medium"
                     >
-                      <span className="text-primary">{icon}</span>
-                      <span className="font-body">{action}</span>
-                    </Link>
-                  </Typography>
-                </td>
+                      <div className="flex flex-ro items-center gap-4">
+                        <Link
+                          to={link}
+                          state={{ docId: row?.data?._id }}
+                          className="flex flex-row items-center gap-2"
+                        >
+                          <span className="text-primary">{icon}</span>
+                          <span className="font-body">{action}</span>
+                        </Link>
+
+                        <span
+                          onClick={() => handleResubmit(row?.data?._id)}
+                          className="bg-primary text-white rounded-md px-6 py-1 cusror-pointer"
+                        >
+                          Resubmit
+                        </span>
+                      </div>
+                    </Typography>
+                  </td>
+                ) : row?.status === "approved" && roleType === "2" ? (
+                  <td className="p-4">
+                    <Typography
+                      as="a"
+                      variant="small"
+                      color="blue-gray"
+                      className="font-medium"
+                    >
+                      <span
+                        onClick={() =>
+                          handleStatus(row?.data?._id, "reqCancel", null)
+                        }
+                        className="bg-primary text-white rounded-md px-6 py-1 cusror-pointer"
+                      >
+                        Request Cancel
+                      </span>
+                    </Typography>
+                  </td>
+                ) : row?.status === "approved" ? (
+                  <td className="p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-medium"
+                    >
+                      <span
+                        onClick={() => openPopUp(row?.data?._id)}
+                        className="bg-primary text-white rounded-md px-6 py-1 cursor-pointer"
+                      >
+                        Cancel
+                      </span>
+                    </Typography>
+                  </td>
+                ) : (
+                  <span>__</span>
+                )}
                 {row.type === "amc" ? (
                   <span className="hidden">
                     <ViewAmc
@@ -847,6 +900,20 @@ export function CustomTableFour({
           </tbody>
         </table>
       </Card>
+      <CancelReqPopUp
+        closePopUp={closePopUp}
+        isPopUpOpen={isPopUpOpen}
+        item={isId}
+        text="Are you sure to request the cancellation for this policy ?"
+        cancelPolicyRequest={handleStatus}
+      />
+      <CancelReqPopUp
+        closePopUp={closePopUp}
+        isPopUpOpen={isPopUpOpen}
+        item={isId}
+        text="Are you sure to cancel the policy ?"
+        cancelPolicyRequest={handleCancel}
+      />
     </>
   );
 }

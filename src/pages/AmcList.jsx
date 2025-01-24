@@ -10,12 +10,11 @@ import { fetchamcLists, setEmptyAMC } from "../features/amcSLice";
 import Loader from "../Components/Loader";
 import SideNav from "../agent/SideNav";
 import Header from "../Components/Header";
+import { amcCancelByAdmin, amcResubmit, updateAMCStatus } from "../features/AMCapi";
 
 const AdminAmcList = () => {
-  const { _id,  roleType } = useSelector(
-      (state) => state.users?.users
-    );
-    const userId = roleType === "2" ?  _id : null
+  const { _id, roleType } = useSelector((state) => state.users?.users);
+  const userId = roleType === "2" ? _id : null;
   const { amcLists } = useSelector((state) => state.amc);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -66,34 +65,72 @@ const AdminAmcList = () => {
     dispatch(setEmptyAMC());
   };
 
+  const handleResubmit = async (id) => {
+    try {
+      const res = await amcResubmit(id);
+      toast.success(res?.message || "Amc resubmitted successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message || "Something Went Wrong");
+    }
+  };
+  const handleCancel = async (id) => {
+    try {
+      const res = await amcCancelByAdmin(id);
+      toast.success(res?.message || "Amc cancelled successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message || "Something Went Wrong");
+    }
+  };
+    const handleStatus = async (userId, type, reason) => {
+      try {
+        const response = await updateAMCStatus(userId, type, reason);
+  
+        toast.success(response?.message || "AMC Updated Successfully");
+        dispatch(
+          fetchamcLists({
+            option: null,
+            option: null,
+            option: null,
+            option: null,
+            status: "reqCancel",
+          })
+        );
+      } catch (error) {
+        console.error(error, "Something went wrong");
+        toast.error(error?.message || "Something Went Wrong");
+      }
+    };
+  
+
   return (
     <>
       <div className="fixed">
-
         <span className="absolute">
-       {roleType === "2" ? <SideNav/>  : <Nav />}
+          {roleType === "2" ? <SideNav /> : <Nav />}
         </span>
       </div>
       <div>
-      <Header/>
-    </div>
+        <Header />
+      </div>
       <div className="md:pt-20 sm:pt-20 pt-6 flex md:flex-row sm:flex-row flex-col-reverse justify-between md:items-center sm:items-center md:px-20 mx-6">
         <Link
           onClick={handleDispatch}
-          to=   {roleType === "2" ?"/agent/amc-form" :"/admin/add-amc"}
-          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[16%] sm:ml-[33%] mt-4 sm:mt-4 md:mt-4"
+          to={roleType === "2" ? "/agent/amc-form" : "/admin/add-amc"}
+          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[14.5%] sm:ml-[33%] mt-4 sm:mt-4 md:mt-4"
         >
           + Add New Amc
         </Link>
       </div>
 
-      <div className="px-6 flex justify-center md:ml-28 sm:ml-60 mt-6">
+      <div className="px-6 flex justify-start md:ml-60 sm:ml-60 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-[30rem] py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
+          className="w-[20rem] py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
         />
       </div>
 
@@ -120,10 +157,15 @@ const AdminAmcList = () => {
               <CustomTableFour
                 tableHead={TABLE_HEAD}
                 tableRows={TABLE_ROWS}
-                link={roleType === "2" ? "/agent/edit-AMC": "/admin/update-AMC"}
+                link={
+                  roleType === "2" ? "/agent/edit-AMC" : "/admin/update-AMC"
+                }
                 redirectLink={"/amc-view"}
                 action="Edit"
                 icon={<FaPencil />}
+                handleResubmit={handleResubmit}
+                handleStatus={handleStatus}
+                handleCancel={handleCancel}
               />
             </div>
             {totalPagesCount > 1 && (

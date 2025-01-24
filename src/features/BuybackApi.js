@@ -38,15 +38,21 @@ export const getBuyBackById = async (id, status) => {
   }
 };
 
-export const getAllBuyBackLists = async (page, perPage, searchTerm, userId, status) => {
+export const getAllBuyBackLists = async (
+  page,
+  perPage,
+  searchTerm,
+  userId,
+  status
+) => {
   try {
     const response = await apiurl.get(`/buy-back-lists`, {
       params: {
-       id: userId,
+        id: userId,
         status: status,
         search: searchTerm,
         page: page,
-        perPage: perPage
+        perPage: perPage,
       },
     });
 
@@ -56,11 +62,7 @@ export const getAllBuyBackLists = async (page, perPage, searchTerm, userId, stat
     throw error;
   }
 };
-export const updatBuyBackStatus = async (
-  buybackId,
-  type,
-  reason
-) => {
+export const updatBuyBackStatus = async (buybackId, type, reason) => {
   try {
     const response = await apiurl.patch(
       "/update-buyback-status",
@@ -82,4 +84,35 @@ export const updatBuyBackStatus = async (
       error.response?.data || error.message
     );
     throw error;
-  }};
+  }
+};
+
+export const buyBackResubmit = async (id) => {
+  try {
+    const response = await apiurl.patch(`/buyback-resubmit/${id}`, {
+      params: {
+        buyBackId: id,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log("Error in resubmitting Buy Back:", error);
+    throw error;
+  }
+};
+
+export const buyBackCancelByAdmin = async (id) => {
+  try {
+    const response = await apiurl.patch(`/disable-buyBack`, {
+      params: {
+        buyBackId: id,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log("Error in cancellation Buy Back:", error);
+    throw error;
+  }
+};

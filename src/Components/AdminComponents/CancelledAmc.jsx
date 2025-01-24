@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import Pagination from "../Components/Pagination";
-import DataNotFound from "./DataNotFound";
-import { CustomTableFour } from "../Components/Table";
+import { fetchamcLists } from "../../features/amcSLice";
+import Loader from "../Loader";
+import DataNotFound from "../../admin/DataNotFound";
+import { CustomTableFour } from "../Table";
 import { FaPencil } from "react-icons/fa6";
-import { fetchamcLists, setEmptyAMC } from "../features/amcSLice";
-import Loader from "../Components/Loader";
+import Pagination from "../Pagination";
+import Header from "../Header";
+import Nav from "../../admin/Nav";
 
-const AgentAmcsData = () => {
-  const location = useLocation();
-  const userId = location?.state?.agentId;
-
+const CancelledAmc = () => {
+  const { _id,  roleType } = useSelector(
+      (state) => state.users?.users
+    );
   const { amcLists } = useSelector((state) => state.amc);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -27,14 +28,12 @@ const AgentAmcsData = () => {
 
   useEffect(() => {
     setLoading(true);
-    if (userId) {
       dispatch(
-        fetchamcLists({ page, perPage, searchTerm, userId, option: null })
+        fetchamcLists({ page, perPage, searchTerm, userId: null, status: "approvedReq" })
       );
-    }
 
     setLoading(false);
-  }, [page, perPage, searchTerm, userId]);
+  }, [page, perPage, searchTerm]);
 
   const TABLE_HEAD = [
     "S.No.",
@@ -54,26 +53,19 @@ const AgentAmcsData = () => {
     type: "amc",
   }));
 
-  const handleDispatch = () => {
-    dispatch(setEmptyAMC());
-  };
 
   return (
     <>
     
+     
 
-      <div className="flex items-center gap-3 justify-center md:ml-28 text-[18px] md:mt-10 sm:mt-10 mt-20">
-      </div>
-
-  
-
-      <div className="px-6 flex justify-start md:ml-60 sm:ml-60 ">
+      <div className="px-6 flex justify-start md:ml-60 sm:ml-60 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-[20rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none"
+          className="w-[20rem] py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
         />
       </div>
 
@@ -100,7 +92,7 @@ const AgentAmcsData = () => {
               <CustomTableFour
                 tableHead={TABLE_HEAD}
                 tableRows={TABLE_ROWS}
-                link="/admin/update-AMC"
+                link={roleType === "2" ? "/agent/edit-AMC": "/admin/update-AMC"}
                 redirectLink={"/amc-view"}
                 action="Edit"
                 icon={<FaPencil />}
@@ -124,4 +116,4 @@ const AgentAmcsData = () => {
   );
 };
 
-export default AgentAmcsData;
+export default CancelledAmc;

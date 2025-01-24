@@ -58,6 +58,8 @@ const InvoiceForm = () => {
       cgst: "",
       sgst: "",
       totalAmount: "",
+      rmEmail: "",
+      gmEmail: "",
     },
   });
   console.log(typeData);
@@ -133,6 +135,12 @@ const InvoiceForm = () => {
       placeholder: "SGST 9%",
       label: "SGST 9%",
     },
+    {
+      name: "gmEmail",
+      type: "email",
+      placeholder: "General Manager Email",
+      label: "General Manager Email",
+    },
   ];
   const leftVehicleFields = [
     {
@@ -159,6 +167,12 @@ const InvoiceForm = () => {
       type: "number",
       placeholder: "Total Amount",
       label: "Total Amount",
+    },
+    {
+      name: "rmEmail",
+      type: "email",
+      placeholder: "Regional Manager Email",
+      label: "Regional Manager Email",
     },
   ];
 
@@ -323,6 +337,12 @@ const InvoiceForm = () => {
             incomingData.vehicleDetails?.total ||
             incomingData.vehicleDetails?.totalPayment ||
             prevState.vehicleDetails.gstAmount,
+          rmEmail:
+            incomingData.vehicleDetails?.rmEmail ||
+            prevState.vehicleDetails.rmEmail,
+          gmEmail:
+            incomingData.vehicleDetails?.gmEmail ||
+            prevState.vehicleDetails.gmEmail,
         },
       }));
     }
@@ -352,7 +372,7 @@ const InvoiceForm = () => {
     const role = localStorage.getItem("roleType");
     try {
       let res;
-    
+
       if (invoiceId) {
         res = await editInovoice(payload, invoiceId);
         toast.success(res?.message || "Invoice updated successfully");
@@ -361,14 +381,14 @@ const InvoiceForm = () => {
           typeData === "Buyback"
             ? await updatBuyBackStatus(id, "approved", null)
             : await updateAMCStatus(id, "approved", null);
-    
+
         if (updateResponse.status === 200) {
           res = await addNewInovoice(payload, role);
           toast.success(res?.message || "Invoice added successfully");
         }
       }
-    
-      navigate("/admin/invoice-lists");
+
+      // navigate("/admin/invoice-lists");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message || "Something went wrong");

@@ -6,8 +6,9 @@ import { CustomTableOne } from "../Table";
 import { FaPencil } from "react-icons/fa6";
 import { fetchInvoiceByStatus } from "../../features/adminDashboardSlice";
 
-const InvoiceAmcList = () => {
+const InvoiceAmcList = ({createdBy}) => {
   const dispatch = useDispatch();
+  console.log(createdBy);
   const { invoicesByStatus } = useSelector((state) => state.admin);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -20,10 +21,23 @@ const InvoiceAmcList = () => {
     setPage(pageNumber);
   };
   useEffect(() => {
-    dispatch(fetchInvoiceByStatus({ page, perPage, invoiceType:"AMC", search }));
-  }, [dispatch, page, perPage, search]);
+    if (createdBy) {
+      dispatch(
+        fetchInvoiceByStatus({
+          page,
+          perPage,
+          invoiceType: "AMC",
+          search,
+          createdBy,
+        })
+      );
+    } else if(!createdBy) {
+      dispatch(
+        fetchInvoiceByStatus({ page, perPage, invoiceType: "AMC", search })
+      );
+    }
+  }, [dispatch, page, perPage, search, createdBy]);
 
- 
   const TABLE_HEAD = [
     "S.No.",
     "Invoice Id",
@@ -49,16 +63,13 @@ const InvoiceAmcList = () => {
     // <div>InvoiceList</div>
 
     <>
-    
-    
-      
       <input
-          type="text"
-          placeholder="Search by Invoice Id"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-[27rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none md:ml-[20%] sm:ml-[22%] sm:mt-6"
-        />
+        type="text"
+        placeholder="Search by Invoice Id"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-[20rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none md:ml-[20%] sm:ml-[22%] sm:mt-6"
+      />
 
       {totalCount > 0 ? (
         <>
@@ -71,22 +82,18 @@ const InvoiceAmcList = () => {
               icon={<FaPencil />}
             />
           </div>
-          <div className="mt-16 mb-10 ml-20">
-        
-          </div>
+          <div className="mt-16 mb-10 ml-20"></div>
           <div className="flex justify-center items-center mt-3 mb-5 ml-52">
-          {totalPagesCount > 1 && (
-
-                <Pagination
-                  currentPage={currentPage}
-                  hasNextPage={currentPage * perPage < totalCount}
-                  hasPreviousPage={currentPage > 1}
-                  onPageChange={handlePageChange}
-                  totalPagesCount={totalPagesCount}
-                />
+            {totalPagesCount > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                hasNextPage={currentPage * perPage < totalCount}
+                hasPreviousPage={currentPage > 1}
+                onPageChange={handlePageChange}
+                totalPagesCount={totalPagesCount}
+              />
             )}
-
-              </div>
+          </div>
         </>
       ) : (
         <div className="mt-36 font-medium text-body ml-[12%] mr-[15%] mb-20">
@@ -94,10 +101,7 @@ const InvoiceAmcList = () => {
             className="flex justify-center flex-col w-full items-center mt-20 ml-28"
             message="No AMC Invoices found"
           />
-             
-            
         </div>
-        
       )}
     </>
   );

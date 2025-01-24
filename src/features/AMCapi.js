@@ -91,3 +91,34 @@ export const updateAMCStatus = async (
     throw error;
   }
 };
+
+
+export const amcResubmit = async (id) => {
+  try {
+    const response = await apiurl.patch(`/amc-resubmit`, {
+      params: {
+        amcId: id,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log("Error in resubmitting Amc:", error);
+    throw error;
+  }
+};
+
+export const amcCancelByAdmin = async (id) => {
+  try {
+    const response = await apiurl.patch(`/disable-amc`, {
+      params: {
+        amcId: id,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log("Error in cancellation Amc:", error);
+    throw error;
+  }
+};

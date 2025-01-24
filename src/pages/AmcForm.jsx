@@ -9,9 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchamcDataById } from "../features/amcSLice";
 import { createdDate, formatDate } from "../helper/commonHelperFunc";
 import { fuelType, modelOption } from "../data";
+import Header from "../Components/Header";
 const AMCForm = () => {
   const location = useLocation();
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formattedDate = createdDate();
@@ -30,7 +31,7 @@ const AMCForm = () => {
     },
     vehicleDetails: {
       model: "",
-      fuelType:"",
+      fuelType: "",
       vinNumber: "",
       agreementPeriod: "",
       agreementStartDate: "",
@@ -40,6 +41,8 @@ const AMCForm = () => {
       MaximumValidPMS: "",
       dealerLocation: "",
       total: "",
+      rmEmail: "",
+      gmEmail: "",
     },
     createdBy: _id,
   });
@@ -51,7 +54,12 @@ const AMCForm = () => {
       placeholder: "Customer Name",
       label: "Customer Name",
     },
-    { name: "contact", type: "number", placeholder: "Contact", label: "Contact" },
+    {
+      name: "contact",
+      type: "number",
+      placeholder: "Contact",
+      label: "Contact",
+    },
     {
       name: "pan",
       type: "text",
@@ -112,6 +120,12 @@ const AMCForm = () => {
       placeholder: "Total Amount",
       label: "Total Amount",
     },
+    {
+      name: "gmEmail",
+      type: "email",
+      placeholder: "General Manager Email",
+      label: "General Manager Email",
+    },
   ];
 
   const leftVehicleFields = [
@@ -152,6 +166,12 @@ const AMCForm = () => {
       type: "text",
       placeholder: "Location of the Dealer",
       label: "Location of the Dealer",
+    },
+    {
+      name: "rmEmail",
+      type: "email",
+      placeholder: "Regional Manager Email",
+      label: "Regional Manager Email",
     },
   ];
   const [errors, setErrors] = useState({});
@@ -329,7 +349,9 @@ const AMCForm = () => {
           {roleType === "0" ? <Nav /> : roleType === "2" ? <SideNav /> : null}
         </div>
       </div>
-
+      <div>
+        <Header />
+      </div>
       <span className="flex md:flex-row flex-col md:items-center justify-between md:mx-36 mx-6 font-head pt-10 ">
         <p className="md:text-[23px] text-[18px] font-semibold pt-12 md:ml-[14%] sm:ml-[34%]">
           {id ? "Update AMC" : "Add New AMC"}

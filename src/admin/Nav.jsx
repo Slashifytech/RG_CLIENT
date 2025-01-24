@@ -9,7 +9,7 @@ import { RiLogoutBoxRLine, RiTeamFill } from "react-icons/ri";
 import { FaCarOn, FaFileInvoiceDollar } from "react-icons/fa6";
 import LogoutPop from "../Components/LogoutPop";
 import { logo } from "../assets";
-import { HiUsers } from "react-icons/hi2";
+import { HiDocumentText, HiUsers } from "react-icons/hi2";
 
 const Nav = () => {
   const location = useLocation();
@@ -32,7 +32,6 @@ const Nav = () => {
       pathPage: "/admin/dashboard",
       icon: <BsPieChartFill />,
       label: "Dashboard",
-      otherPath: "/admin/cancelled-policy",
       otherPathTwo: "/admin/add-policies",
       otherPathThree: "/admin/add-amc",
     },
@@ -43,13 +42,11 @@ const Nav = () => {
       otherPath: "/admin/team-invoices",
       otherPathTwo: "/admin/new-team",
     },
-    // {
-    //   pathPage: "/admin/institute",
-    //   icon: <BsFillBuildingsFill />,
-    //   label: "Institutions",
-    //   otherPath: "/add-institute",
-    //   otherPathTwo: "/institute-view",
-    // },
+    {
+      pathPage: "/admin/cancelled-policy",
+      icon: <HiDocumentText />,
+      label: "Cancelled Policies",
+    },
 
     // {
     //   pathPage: "/admin/agent-directory",

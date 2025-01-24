@@ -60,24 +60,15 @@ const AgentBuybacks = () => {
 
     
 
-      <div className="md:pt-6 sm:pt-14 pt-6 flex md:flex-row sm:flex-row flex-col-reverse justify-between md:items-center sm:items-center md:px-20 mx-6">
-        <Link
-          to="/new-amc"
-          state={{ addNew: "isNew" }}
-          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[16%] sm:ml-[33%] mt-4 sm:mt-4 md:mt-4"
-        >
-          + Add New Buy Back
-        </Link>
+      
 
-      </div>
-
-      <div className="px-6 flex justify-center md:ml-28 sm:ml-60 mt-6">
+      <div className="px-6 flex justify-start md:ml-60 sm:ml-60 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-[30rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none"
+          className="w-[20rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none"
         />
       </div>
 

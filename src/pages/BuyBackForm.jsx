@@ -9,13 +9,14 @@ import { createdDate, formatDate } from "../helper/commonHelperFunc";
 import { addNewBuyBack, updateBuyBack } from "../features/BuybackApi";
 import { fuelType, modelOption } from "../data";
 import { fetchbuyBackDataById } from "../features/BuyBackSlice";
+import Header from "../Components/Header";
 const BuyBackForm = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formattedDate = createdDate();
   const { buyBackByIdorStatus } = useSelector((state) => state.buyBack);
-  
+
   const { _id, roleType } = useSelector((state) => state.users.users);
   const [buyBack, setBuyBack] = useState({
     customerDetails: {
@@ -47,7 +48,12 @@ const BuyBackForm = () => {
       placeholder: "Customer Name",
       label: "Customer Name",
     },
-    { name: "contact", type: "number", placeholder: "Contact", label: "Contact" },
+    {
+      name: "contact",
+      type: "number",
+      placeholder: "Contact",
+      label: "Contact",
+    },
     {
       name: "pan",
       type: "text",
@@ -103,6 +109,12 @@ const BuyBackForm = () => {
       placeholder: "Validity Milage",
       label: "Validity Milage",
     },
+    {
+      name: "gmEmail",
+      type: "email",
+      placeholder: "General Manager Email",
+      label: "General Manager Email",
+    },
   ];
 
   const leftVehicleFields = [
@@ -130,6 +142,12 @@ const BuyBackForm = () => {
       type: "number",
       placeholder: "Total Payment",
       label: "Total Payment",
+    },
+    {
+      name: "rmEmail",
+      type: "email",
+      placeholder: "Regional Manager Email",
+      label: "Regional Manager Email",
     },
   ];
   const [errors, setErrors] = useState({});
@@ -180,7 +198,7 @@ const BuyBackForm = () => {
             updatedSection.validityMilage = 120000;
             break;
           case "Astor":
-            updatedSection.validityMilage = "NA";
+            updatedSection.validityMilage = 0;
             break;
           case "Comet":
             updatedSection.validityMilage = 70000;
@@ -304,6 +322,10 @@ const BuyBackForm = () => {
         <div className="absolute">
           {roleType === "0" ? <Nav /> : roleType === "2" ? <SideNav /> : null}
         </div>
+      </div>
+
+      <div>
+        <Header />
       </div>
 
       <span className="flex md:flex-row flex-col md:items-center justify-between md:mx-36 mx-6 font-head md:pt-10 ">
