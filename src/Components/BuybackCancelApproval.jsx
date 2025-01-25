@@ -44,12 +44,12 @@ const BuybackCancelApproval = () => {
     <>
       <div></div>
 
-      <p className="font-semibold text-[24px] md:ml-72 sm:ml-72 ml-6 ">
+      <p className="font-semibold text-[24px] md:ml-72 sm:ml-44 ml-6 ">
       Pending Cancel Buyback Request 
 
       </p>
       <div className="overflow-x-scroll w-full md:w-full md:overflow-hidden ">
-        <ul className="bg-secondary text-[15px] py-7 flex flex-row justify-around items-center sm:w-[93%] w-[180%]  mr-10 md:ml-72 sm:ml-72 md:w-[75%]  gap-2 rounded-lg mt-8 h-[6vh]  text-black font-medium">
+        <ul className="bg-secondary text-[15px] py-7 flex flex-row justify-around items-center sm:w-[93%] w-[180%]  mr-10 md:ml-72 sm:ml-44 md:w-[75%]  gap-2 rounded-lg mt-8 h-[6vh]  text-black font-medium">
           <li className="md:w-[2%]">S.No</li>
           <li className="w-[32%] md:w-[36%] text-center">Description</li>
           <li className="w-[1%] text-center">Action</li>
@@ -133,7 +133,7 @@ const ApprovalCard = ({ item, index }) => {
 
   return (
     <>
-      <ul className="text-[15px] flex flex-row justify-around items-start mx-6 sm:mx-6 md:mx-10 md:ml-72 sm:ml-72 gap-2 rounded-lg mt-8 text-black font-normal w-[180%] md:w-[80%] sm:w-[100%]">
+      <ul className="text-[15px] flex flex-row justify-around items-start mx-6 sm:mx-6 md:mx-10 md:ml-72 sm:ml-44 gap-2 rounded-lg mt-8 text-black font-normal w-[180%] md:w-[80%] sm:w-[100%]">
         <li className="w-[2%]">{index}</li>
         <li className="w-[36%] px-3 text-start mb-3 py-3 rounded-lg bg-secondary  shadow">
           {agentData?.roleType === "0" ? "Admin" : "Agent"}:{" "}

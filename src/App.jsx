@@ -29,11 +29,11 @@ import AMCForm from "./pages/AmcForm";
 import BuyBackForm from "./pages/BuyBackForm";
 import AdminAmcList from "./pages/AmcList";
 import BuyBackLists from "./pages/BuyBackLists";
-import ViewAmc from "./pages/ViewAmc";
-import ViewBuyBack from "./pages/viewBuyBack";
 import AgentDocLists from "./pages/AgentDocLists";
 import CancelledApprovals from "./admin/CancelledApprovals";
 import CancelledPolicy from "./admin/CancelledPolicy";
+import ViewAmc from "./pages/ViewAmc";
+import ViewBuyBack from "./pages/ViewBuyBack";
 
 const router = createBrowserRouter([
   {

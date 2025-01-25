@@ -157,43 +157,50 @@ const BuyBackForm = () => {
   const handleInput = (e) => {
     const { name, value, dataset } = e.target;
     const section = dataset?.section;
-
+  
     setBuyBack((prev) => {
       const updatedSection = {
         ...prev[section],
         [name]: value,
       };
-
+  
       // Calculate `agreementValidDate` if necessary fields are available
       if (name === "vehicleModel" || name === "agreementStartDate") {
         const vehicleModel =
-          name === "vehicleModel" ? value : updatedSection.vehicleModel;
+          name === "vehicleModel" ? value : updatedSection?.vehicleModel;
         const agreementStartDate =
           name === "agreementStartDate"
             ? value
-            : updatedSection.agreementStartDate;
-
+            : updatedSection?.agreementStartDate;
+  
+        // Handle date parsing safely
         if (vehicleModel === "Astor") {
           updatedSection.agreementValidDate = "NA";
         } else if (vehicleModel === "Comet" && agreementStartDate) {
           const startDate = new Date(agreementStartDate);
-          startDate.setFullYear(startDate.getFullYear() + 5);
-          updatedSection.agreementValidDate = startDate
-            .toISOString()
-            .split("T")[0];
-        } else {
+          if (!isNaN(startDate)) { // Ensure the date is valid
+            startDate.setFullYear(startDate.getFullYear() + 5);
+            updatedSection.agreementValidDate = startDate
+              .toISOString()
+              .split("T")[0];
+          } else {
+            updatedSection.agreementValidDate = null;
+          }
+        } else if (agreementStartDate) {
           const startDate = new Date(agreementStartDate);
-          startDate.setFullYear(startDate.getFullYear() + 8);
-          updatedSection.agreementValidDate = startDate
-            .toISOString()
-            .split("T")[0];
+          if (!isNaN(startDate)) { // Ensure the date is valid
+            startDate.setFullYear(startDate.getFullYear() + 8);
+            updatedSection.agreementValidDate = startDate
+              .toISOString()
+              .split("T")[0];
+          } else {
+            updatedSection.agreementValidDate = null;
+          }
         }
       }
-
-      // Calculate `validityMilage` using switch case
+  
       if (name === "vehicleModel") {
-        const vehicleModel = value;
-        switch (vehicleModel) {
+        switch (value) {
           case "Hector":
             updatedSection.validityMilage = 120000;
             break;
@@ -217,13 +224,14 @@ const BuyBackForm = () => {
             break;
         }
       }
-
+  
       return {
         ...prev,
         [section]: updatedSection,
       };
     });
   };
+  
 
   const validateFields = () => {
     const newErrors = {};
@@ -329,16 +337,17 @@ const BuyBackForm = () => {
       </div>
 
       <span className="flex md:flex-row flex-col md:items-center justify-between md:mx-36 mx-6 font-head md:pt-10 ">
-        <p className="md:text-[23px] text-[18px] font-semibold pt-20 md:ml-[14%] sm:ml-[34%]">
+        <p className="md:text-[23px] text-[18px] font-semibold pt-20 md:ml-[14%] sm:ml-[25%]">
           Add New Buy Back
         </p>
-        <p className="md:text-[18px] text-[16px] font-medium md:pt-12 pt-4 sm:ml-[34%]">
+        <p className="md:text-[18px] text-[16px] font-medium md:pt-12 pt-4 sm:ml-[25%]">
           AMC Issue Date -{" "}
           {id ? formatDate(buyBackByIdorStatus?.createdAt) : formattedDate}
         </p>
       </span>
 
-      <div className="ml-[21%]  w-full">
+      <div className="sm:ml-[26.5%] md:ml-[21%]  w-full">
+      
         <p className="text-[20px] font-head font-semibold mt-5">
           Customer Personal Details
         </p>

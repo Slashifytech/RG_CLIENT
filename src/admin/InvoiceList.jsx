@@ -22,8 +22,8 @@ const InvvoiceList = () => {
           <Nav />
         </span>
       </div>
-      <div className="w-full p-4 mt-20">
-        <div className="flex justify-center gap-4 ">
+      <div className="w-full p-4 mt-20 ">
+        <div className="flex justify-center gap-4 md:ml-0 sm:ml-20">
           {tabs.map((tab) => (
             <button
               key={tab.id}

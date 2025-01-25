@@ -36,7 +36,7 @@ const AdminAmcList = () => {
       );
     } else if (roleType === "0" || roleType === "1") {
       dispatch(
-        fetchamcLists({ page, perPage, searchTerm, userId: null, option: null })
+        fetchamcLists({ page, perPage, searchTerm, userId: null, status:false })
       );
     }
 
@@ -77,6 +77,9 @@ const AdminAmcList = () => {
   const handleCancel = async (id) => {
     try {
       const res = await amcCancelByAdmin(id);
+      dispatch(
+        fetchamcLists({ page, perPage, searchTerm, userId: null, status:false })
+      );
       toast.success(res?.message || "Amc cancelled successfully");
     } catch (error) {
       console.log(error);
@@ -118,13 +121,13 @@ const AdminAmcList = () => {
         <Link
           onClick={handleDispatch}
           to={roleType === "2" ? "/agent/amc-form" : "/admin/add-amc"}
-          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[14.5%] sm:ml-[33%] mt-4 sm:mt-4 md:mt-4"
+          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[14.5%] sm:ml-[26%] mt-4 sm:mt-4 md:mt-4"
         >
           + Add New Amc
         </Link>
       </div>
 
-      <div className="px-6 flex justify-start md:ml-60 sm:ml-60 mt-6">
+      <div className="px-6 flex justify-start md:ml-60 sm:ml-48 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
@@ -134,7 +137,7 @@ const AdminAmcList = () => {
         />
       </div>
 
-      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[33%] ml-6">
+      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[28%] ml-6">
         AMC Lists-
       </p>
 
@@ -153,7 +156,7 @@ const AdminAmcList = () => {
           </div>
         ) : (
           <>
-            <div className="md:ml-[19.5%] sm:ml-[36%] mt-6 mr-6  ">
+            <div className="md:ml-[19.5%] sm:ml-[28%] mt-6 mr-6  ">
               <CustomTableFour
                 tableHead={TABLE_HEAD}
                 tableRows={TABLE_ROWS}

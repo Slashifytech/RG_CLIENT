@@ -68,12 +68,12 @@ const InvoiceBuyBackList = ({createdBy}) => {
         placeholder="Search by Invoice Id"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-[20rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none md:ml-[20%] sm:ml-[22%] sm:mt-6"
+        className="w-[20rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none md:ml-[20%] sm:ml-[27%] sm:mt-6"
       />
 
       {totalCount > 0 ? (
         <>
-          <div className="md:ml-[19.5%] sm:ml-[36%] mt-6 mr-6  ">
+          <div className="md:ml-[19.5%] sm:ml-[27%] mt-6 mr-6  ">
             <CustomTableOne
               tableHead={TABLE_HEAD}
               tableRows={TABLE_ROWS}

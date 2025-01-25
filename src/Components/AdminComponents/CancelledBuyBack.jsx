@@ -32,7 +32,7 @@ const CancelledBuyBack = () => {
         perPage,
         searchTerm,
         userId: null,
-        status: "approvedReq",
+        status: true,
       })
     );
     setLoading(false);
@@ -52,27 +52,25 @@ const CancelledBuyBack = () => {
   const TABLE_ROWS = BuyBackLists?.data?.map((data, index) => ({
     sno: (currentPage - 1) * perPage + index + 1,
     data: data || "NA",
-    status: data?.buyBackStatus || "NA",
+    status: data?.isDisabled || "NA",
     type: "buyBack",
   }));
 
   return (
     <>
-      <div className="flex items-center gap-3 justify-center md:ml-28 text-[18px] md:mt-10 sm:mt-10 mt-20">
-        <span className="font-head font-semibold">Morris Garage</span>
-      </div>
 
-      <div className="px-6 flex justify-center md:ml-28 sm:ml-60 mt-6">
+      <div className="px-6 flex justify-start md:ml-60 sm:ml-44 mt-6">
+
         <input
           type="text"
           placeholder="Search by VIN number"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-[30rem] py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
+          className="w-[20rem] py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
         />
       </div>
 
-      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[33%] ml-6">
+      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[28%] ml-6">
         Buy Back Lists-
       </p>
 

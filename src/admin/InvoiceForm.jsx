@@ -11,6 +11,7 @@ import { fetchamcDataById } from "../features/amcSLice";
 import { fetchbuyBackDataById } from "../features/BuyBackSlice";
 import { updateAMCStatus } from "../features/AMCapi";
 import { updatBuyBackStatus, updateBuyBack } from "../features/BuybackApi";
+import Header from "../Components/Header";
 const InvoiceForm = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const InvoiceForm = () => {
   const { buyBackByIdorStatus } = useSelector((state) => state.buyBack);
   const { amcByIdorStatus } = useSelector((state) => state.amc);
   const { users } = useSelector((state) => state.users);
-
+const [isLoading, setisLoading] = useState(false)
   const createdBy = users?._id;
   const invoiceId = location?.state?.invoiceId;
   const id = location?.state?.id;
@@ -280,7 +281,7 @@ const InvoiceForm = () => {
         dispatch(fetchbuyBackDataById({ id, option: null }));
       }
     }
-  }, []);
+  }, [id, invoiceId]);
 
   useEffect(() => {
     if (invoiceById?.invoice) {
@@ -346,7 +347,7 @@ const InvoiceForm = () => {
         },
       }));
     }
-  }, [amcByIdorStatus]);
+  }, [amcByIdorStatus, buyBackByIdorStatus]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateFields();
@@ -356,7 +357,7 @@ const InvoiceForm = () => {
       console.log("Validation errors:", errors);
       toast.error(errors || "Please fill all required fields");
     }
-
+   
     const getChangedFields = (current, original) => {
       return Object.keys(current).reduce((changes, key) => {
         if (JSON.stringify(current[key]) !== JSON.stringify(original[key])) {
@@ -371,6 +372,7 @@ const InvoiceForm = () => {
       : { ...invoiceData, createdBy: createdBy };
     const role = localStorage.getItem("roleType");
     try {
+      setisLoading(true)
       let res;
 
       if (invoiceId) {
@@ -387,11 +389,17 @@ const InvoiceForm = () => {
           toast.success(res?.message || "Invoice added successfully");
         }
       }
-
-      // navigate("/admin/invoice-lists");
+setisLoading(false)
+      navigate("/admin/invoice-lists");
+      
     } catch (error) {
       console.log(error);
+setisLoading(false)
+
       toast.error(error.response.data.message || "Something went wrong");
+    }finally{
+setisLoading(false)
+
     }
   };
   return (
@@ -399,16 +407,19 @@ const InvoiceForm = () => {
       <div className="fixed">
         <span className="absolute">{<Nav />}</span>
       </div>
-      <span className="flex md:flex-row flex-col md:items-center justify-between md:mx-36 mx-6 font-head md:pt-0 pt-12 ">
-        <p className="md:text-[23px] text-[18px] font-semibold pt-12 md:ml-[14%] sm:ml-[34%]">
+      <div>
+        <Header/>
+      </div>
+      <span className="flex md:flex-row flex-col md:items-center justify-between md:mx-36 mx-6 font-head md:pt-12 pt-12 ">
+        <p className="md:text-[23px] text-[18px] font-semibold pt-12 md:ml-[14%] sm:ml-[25%]">
           Add New Invoice
         </p>
-        <p className="md:text-[18px] text-[16px] font-medium md:pt-12 pt-4 sm:ml-[34%]">
+        <p className="md:text-[18px] text-[16px] font-medium md:pt-12 pt-4 sm:ml-[25%]">
           Invoice Issue Date - {formattedDate}
           {/* id ? formatDate(isCreatedDate) :  */}
         </p>
       </span>
-      <div className="ml-[21%]  w-full">
+      <div className="sm:ml-[26.5%] md:ml-[21%]  w-full">
         <p className="text-[20px] font-head font-semibold mt-5">
           Customer Bill to Details
         </p>
@@ -470,7 +481,7 @@ const InvoiceForm = () => {
             onClick={handleSubmit}
             className="bg-primary text-white px-6 rounded-md py-2 cursor-pointer"
           >
-            Submit
+            {isLoading? "Submitting..." : "Submit"}
           </span>
         </div>
       </div>

@@ -29,7 +29,7 @@ const CancelledAmc = () => {
   useEffect(() => {
     setLoading(true);
       dispatch(
-        fetchamcLists({ page, perPage, searchTerm, userId: null, status: "approvedReq" })
+        fetchamcLists({ page, perPage, searchTerm, userId: null, status: true })
       );
 
     setLoading(false);
@@ -49,7 +49,7 @@ const CancelledAmc = () => {
   const TABLE_ROWS = amcLists?.data?.map((data, index) => ({
     sno: (currentPage - 1) * perPage + index + 1,
     data: data || "NA",
-    status: data?.amcStatus || "NA",
+    status: data?.isDisabled || "NA",
     type: "amc",
   }));
 
@@ -59,7 +59,7 @@ const CancelledAmc = () => {
     
      
 
-      <div className="px-6 flex justify-start md:ml-60 sm:ml-60 mt-6">
+      <div className="px-6 flex justify-start md:ml-60 sm:ml-44 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
@@ -69,7 +69,7 @@ const CancelledAmc = () => {
         />
       </div>
 
-      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[33%] ml-6">
+      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[28%] ml-6">
         AMC Lists-
       </p>
 

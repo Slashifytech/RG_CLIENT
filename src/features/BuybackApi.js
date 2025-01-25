@@ -104,7 +104,7 @@ export const buyBackResubmit = async (id) => {
 
 export const buyBackCancelByAdmin = async (id) => {
   try {
-    const response = await apiurl.patch(`/disable-buyBack`, {
+    const response = await apiurl.patch(`/disable-buyBack`,null, {
       params: {
         buyBackId: id,
       },

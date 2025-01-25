@@ -43,7 +43,7 @@ const Login = () => {
           dispatch(fetchUsers());
 
           if (res?.payload?.user?.roleType === "0") {
-            navigate("/admin/dashboard");
+            navigate("/admin/amcs-list");
           } else if (res?.payload?.user?.roleType === "2") {
             navigate("/agent/amcs-list");
           } else if (res?.payload?.user?.roleType === "1") {
@@ -65,7 +65,7 @@ const Login = () => {
       <Mobile />
       <div className="bg-Image h-screen hidden sm:block md:block ">
       <div className="glass h-screen">
-        <div className="text-white md:pt-12 sm:pt-16 pt-20 w-[40%] flex flex-col justify-center   p-14  rounded-md ">
+        <div className="text-white md:pt-12 sm:pt-16 pt-20 md:w-[40%] sm:w-[60%] flex flex-col justify-center   p-14  rounded-md ">
         <span className="flex flex-row items-center ">
         <img src={mgLogo} alt="logo" className="w-28" />
         <p className="text-white text-[30px] leading-9">

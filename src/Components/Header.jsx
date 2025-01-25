@@ -12,7 +12,7 @@ const Header = () => {
         className={`flex flex-row items-center justify-end w-[82.5vw]  py-2.5 z-10 bg-primary font-poppins pr-6 fixed md:ml-[17.5vw] sm:ml-[23.5vw]
         } `}
       >
-        <span className="w-auto ">
+        <span className="w-auto sm:mr-9 md:mr-0 ">
             <span className="bg-[#dfdede] rounded-full flex items-center gap-3 px-2 pr-6 py-[4px] cursor-pointer">
               <img
                 src={logo}

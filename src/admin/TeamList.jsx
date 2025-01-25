@@ -53,7 +53,7 @@ const TeamList = () => {
       </div>
       <div><Header/></div>
       <div className="flex flex-row items-start justify-between mr-9  mt-20">
-        <p className="md:ml-[22%] sm:ml-[36%] ml-6  text-[23px] font-medium">
+        <p className="md:ml-[22%] sm:ml-[30%] ml-6  text-[23px] font-medium">
           Team Lists -{" "}
         </p>
         <Link to="/admin/new-team" state={{ addNew: "isNew" }}>
@@ -69,7 +69,7 @@ const TeamList = () => {
       <div className="mx-6 md:mx-0 sm:mx-0 md:ml-[22%] sm:ml-[36%] flex md:gap-20 gap-3 ">
       </div>
 
-      <div className="md:ml-[22%] sm:ml-[33%] ml-6 mb-20">
+      <div className="md:ml-[22%] sm:ml-[30%] ml-6 mb-20">
         <div className="flex flex-wrap gap-6 pt-2">
           {TeamMembers?.data?.length > 0 ? (
             TeamMembers?.data?.map((agent) => (

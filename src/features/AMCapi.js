@@ -110,7 +110,7 @@ export const amcResubmit = async (id) => {
 
 export const amcCancelByAdmin = async (id) => {
   try {
-    const response = await apiurl.patch(`/disable-amc`, {
+    const response = await apiurl.patch(`/disable-amc`, null, {
       params: {
         amcId: id,
       },

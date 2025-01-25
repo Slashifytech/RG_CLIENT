@@ -353,16 +353,17 @@ const AMCForm = () => {
         <Header />
       </div>
       <span className="flex md:flex-row flex-col md:items-center justify-between md:mx-36 mx-6 font-head pt-10 ">
-        <p className="md:text-[23px] text-[18px] font-semibold pt-12 md:ml-[14%] sm:ml-[34%]">
+        <p className="md:text-[23px] text-[18px] font-semibold pt-12 md:ml-[14%] sm:ml-[25%]">
           {id ? "Update AMC" : "Add New AMC"}
         </p>
-        <p className="md:text-[18px] text-[16px] font-medium md:pt-12 pt-4 sm:ml-[34%]">
+        <p className="md:text-[18px] text-[16px] font-medium md:pt-12 pt-4 sm:ml-[25%]">
           AMC Issue Date -{" "}
           {id ? formatDate(amcByIdorStatus?.data?.createdAt) : formattedDate}
         </p>
       </span>
 
-      <div className="ml-[21%]  w-full">
+      <div className="sm:ml-[26.5%] md:ml-[21%]  w-full">
+      
         <p className="text-[20px] font-head font-semibold mt-5">
           Customer Personal Details
         </p>

@@ -791,7 +791,7 @@ export function CustomTableFour({
                         ? "bg-[#096D98] "
                         : row?.status === "approved"
                         ? "bg-[#09985C]"
-                        : row?.status === "rejected"
+                        : row?.status === "rejected" || row?.status === true
                         ? "bg-[#D33131]"
                         : "bg-primary"
                     }`}
@@ -802,7 +802,7 @@ export function CustomTableFour({
                       ? "Rejected"
                       : row?.status === "approved"
                       ? "Approved"
-                      : "NA"}
+                      : row?.status === true ? "Cancelled" : row?.status}
                   </Typography>
                 </td>
                 {row?.status === "rejected" ? (

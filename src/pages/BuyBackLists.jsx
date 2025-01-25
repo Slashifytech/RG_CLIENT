@@ -42,7 +42,7 @@ const BuyBackLists = () => {
           perPage,
           searchTerm,
           userId: null,
-          option: null,
+          status: false ,
         })
       );
     }
@@ -80,6 +80,15 @@ const BuyBackLists = () => {
    const handleCancel = async (id) => {
       try {
         const res = await buyBackCancelByAdmin(id);
+        dispatch(
+          fetchBuyBackLists({
+            page,
+            perPage,
+            searchTerm,
+            userId: null,
+            status: false ,
+          })
+        );
         toast.success(res?.message || "Amc cancelled successfully");
       } catch (error) {
         console.log(error);
@@ -123,13 +132,13 @@ const BuyBackLists = () => {
         <Link
           to={roleType === "2" ? "/agent/buyback-form" : "/admin/add-buyback"}
           state={{ addNew: "isNew" }}
-          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[14.5%] sm:ml-[33%] mt-4 sm:mt-4 md:mt-4"
+          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[14.5%] sm:ml-[28%] mt-4 sm:mt-4 md:mt-4"
         >
           + Add New Buy Back
         </Link>
       </div>
 
-      <div className="px-6 flex justify-start md:ml-60 sm:ml-60 mt-6">
+      <div className="px-6 flex justify-start md:ml-60 sm:ml-48 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
@@ -139,7 +148,7 @@ const BuyBackLists = () => {
         />
       </div>
 
-      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[33%] ml-6">
+      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[28%] ml-6">
         Buy Back Lists-
       </p>
 
@@ -158,7 +167,7 @@ const BuyBackLists = () => {
           </div>
         ) : (
           <>
-            <div className="md:ml-[19.5%] sm:ml-[36%] mt-6 mr-6  ">
+            <div className="md:ml-[19.5%] sm:ml-[28%] mt-6 mr-6  ">
               <CustomTableFour
                 tableHead={TABLE_HEAD}
                 tableRows={TABLE_ROWS}

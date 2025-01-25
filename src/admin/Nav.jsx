@@ -10,10 +10,13 @@ import { FaCarOn, FaFileInvoiceDollar } from "react-icons/fa6";
 import LogoutPop from "../Components/LogoutPop";
 import { logo } from "../assets";
 import { HiDocumentText, HiUsers } from "react-icons/hi2";
+import { useSelector } from "react-redux";
 
 const Nav = () => {
+  const { roleType } = useSelector((state) => state.users?.users);
+
   const location = useLocation();
-  const role = localStorage.getItem("roleType");
+  const role = roleType;
   const path = location.pathname;
   const [isOpen, setIsOpen] = useState(
     JSON.parse(localStorage.getItem("isOpen")) ?? true
@@ -28,13 +31,13 @@ const Nav = () => {
     setisLogoutOpen(false);
   };
   const sidebarList = [
-    {
-      pathPage: "/admin/dashboard",
-      icon: <BsPieChartFill />,
-      label: "Dashboard",
-      otherPathTwo: "/admin/add-policies",
-      otherPathThree: "/admin/add-amc",
-    },
+    // {
+    //   pathPage: "/admin/dashboard",
+    //   icon: <BsPieChartFill />,
+    //   label: "Dashboard",
+    //   otherPathTwo: "/admin/add-policies",
+    //   otherPathThree: "/admin/add-amc",
+    // },
     {
       pathPage: "/admin/team-lists",
       icon: <HiUsers />,
@@ -48,14 +51,6 @@ const Nav = () => {
       label: "Cancelled Policies",
     },
 
-    // {
-    //   pathPage: "/admin/agent-directory",
-    //   icon: <FaUserGroup />,
-    //   label: "Agents",
-    //   otherPath: "/admin/agent-student",
-    //   otherPathTwo: "/agent-profile",
-    // },
-
     {
       pathPage: "/admin/agent-lists",
       icon: <RiTeamFill />,
@@ -64,11 +59,7 @@ const Nav = () => {
       otherPathTwo: "/admin/add-agent",
       otherPathThree: "/admin/update-agent",
     },
-    // {
-    //   pathPage: "/admin/active-policy",
-    //   icon: <FaUserCheck />,
-    //   label: "Active Policies",
-    // },
+
     {
       pathPage: "/admin/amc-lists",
       icon: <BiSolidCarMechanic />,
@@ -86,14 +77,6 @@ const Nav = () => {
       otherPath: "/admin/edit-invoice",
       otherPathTwo: "/admin/invoice-form",
     },
-    // {
-    //   pathPage: "/admin/applications-review",
-    //   icon: <MdDocumentScanner />,
-    //   label: "My Policies Lists",
-    //   otherPath: "/admin/policies",
-    //   otherPathTwo: "/admin/update-policies",
-    //   otherPathThree: "/visa-view",
-    // },
     {
       pathPage: "/admin/approval-lists",
       icon: <BsFillClipboard2CheckFill />,
@@ -105,9 +88,13 @@ const Nav = () => {
       label: "Cancelled Approvals",
     },
   ];
-  const filteredSidebarList = sidebarList.filter(
-    (item) => !(role === "1" && item.label === "Team Members")
-  );
+  const filteredSidebarList =
+    roleType === "1"
+      ? sidebarList.filter(
+          (item) =>
+            item.label === "Invoice Lists" || item.label === "Approval Page"
+        )
+      : sidebarList;
 
   useEffect(() => {
     localStorage.setItem("isOpen", JSON.stringify(isOpen));
@@ -163,7 +150,7 @@ const Nav = () => {
           </Link>
         </div> */}
 
-        {role === "0" && (
+        {role === "5" && (
           <>
             <div
               onClick={() => setIsOpen((prev) => !prev)}
