@@ -9,7 +9,7 @@ import MgPdf from "./Mgpdf";
 import { TbPencilCancel } from "react-icons/tb";
 import InvoiceView from "../pages/InvoiceView";
 import ViewAmc from "../pages/ViewAmc";
-import ViewBuyBack from "../pages/viewBuyBack";
+import ViewBuyBack from "../pages/ViewBuyBack";
 import { useSelector } from "react-redux";
 
 export function CustomTableOne({
