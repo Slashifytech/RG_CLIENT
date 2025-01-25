@@ -18,7 +18,7 @@ import SideNav from "../agent/SideNav";
 import { getPolicyById } from "../../Util/UtilityFunction";
 import { toast } from "react-toastify";
 import { editPolicyData, submitPolicyData } from "../features/policyapi";
-import { fetchTeamData } from "../features/TeamSlice";
+import { fetchTeamData } from "../features/teamSlice";
 import { updateTeams } from "../features/teamApi";
 import { locationOption } from "../data";
 
