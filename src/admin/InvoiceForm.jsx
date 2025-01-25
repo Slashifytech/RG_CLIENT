@@ -7,7 +7,7 @@ import { addNewInovoice, editInovoice } from "../features/adminApi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { fetchInvoiceById } from "../features/InvoiceSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchamcDataById } from "../features/amcSLice";
+import { fetchamcDataById } from "../features/AmcSlice";
 import { fetchbuyBackDataById } from "../features/BuyBackSlice";
 import { updateAMCStatus } from "../features/AMCapi";
 import { updatBuyBackStatus, updateBuyBack } from "../features/BuybackApi";

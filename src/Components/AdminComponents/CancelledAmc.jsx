@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchamcLists } from "../../features/amcSLice";
+import { fetchamcLists } from "../../features/AmcSlice";
 import Loader from "../Loader";
 import DataNotFound from "../../admin/DataNotFound";
 import { CustomTableFour } from "../Table";

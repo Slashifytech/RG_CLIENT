@@ -6,7 +6,7 @@ import Nav from "../admin/Nav";
 import SideNav from "../agent/SideNav";
 import { addNewAMC, updateAMC } from "../features/AMCapi";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchamcDataById } from "../features/amcSLice";
+import { fetchamcDataById } from "../features/AmcSlice";
 import { createdDate, formatDate } from "../helper/commonHelperFunc";
 import { fuelType, modelOption } from "../data";
 import Header from "../Components/Header";

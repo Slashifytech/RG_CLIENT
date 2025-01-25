@@ -13,12 +13,12 @@ import {
   fetchAllMgOptions,
 } from "../features/VehcleOptionsSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-import { submitPolicy } from "../features/policySlice";
+import { submitPolicy } from "../features/PolicySlice";
 import SideNav from "../agent/SideNav";
 import { getPolicyById } from "../../Util/UtilityFunction";
 import { toast } from "react-toastify";
 import { editPolicyData, submitPolicyData } from "../features/policyapi";
-import { fetchTeamData } from "../features/teamSlice";
+import { fetchTeamData } from "../features/TeamSlice";
 import { updateTeams } from "../features/teamApi";
 import { locationOption } from "../data";
 

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Nav from "./Nav";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllPendingPolicy, updatePolicy } from "../features/policySlice";
+import { fetchAllPendingPolicy, updatePolicy } from "../features/PolicySlice";
 import { toast } from "react-toastify";
 import Pagination from "../Components/Pagination";
 import { Link } from "react-router-dom";

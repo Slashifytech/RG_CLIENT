@@ -8,13 +8,13 @@ import SideNav from "./SideNav";
 import Pagination from "../Components/Pagination";
 import Loader from "../Components/Loader";
 import DataNotFound from "../admin/DataNotFound";
-import { cancelReqPolicy } from "../features/policySlice";
+import { cancelReqPolicy } from "../features/PolicySlice";
 import { toast } from "react-toastify";
 import { resubmitPolicy } from "../features/agentApi";
 
 import { CustomTableThree } from "../Components/Table";
 import { FaPencil } from "react-icons/fa6";
-import { fetchPolicyAllData } from "./../features/policySlice";
+import { fetchPolicyAllData } from "../features/PolicySlice";
 
 const AgentDashboardComponent = () => {
   const { _id, agentName, brandName, agentId } = useSelector(

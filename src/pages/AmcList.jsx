@@ -6,7 +6,7 @@ import DataNotFound from "../admin/DataNotFound";
 import { CustomTableFour } from "../Components/Table";
 import { FaPencil } from "react-icons/fa6";
 import Nav from "../admin/Nav";
-import { fetchamcLists, setEmptyAMC } from "../features/amcSLice";
+import { fetchamcLists, setEmptyAMC } from "../features/AmcSlice";
 import Loader from "../Components/Loader";
 import SideNav from "../agent/SideNav";
 import Header from "../Components/Header";

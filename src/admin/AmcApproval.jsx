@@ -7,7 +7,7 @@ import DataNotFound from "./DataNotFound";
 import { fetchUserById } from "../../Util/UtilityFunction";
 import Loader from "../Components/Loader";
 import RejectPopUp from "../Components/RejectPopUp";
-import { fetchamcLists } from "../features/amcSLice";
+import { fetchamcLists } from "../features/AmcSlice";
 import { updateAMCStatus } from "../features/AMCapi";
 import InvoicePopUp from "../Components/InvoicePopUp";
 import { setEmptyInvoiceData } from "../features/InvoiceSlice";
