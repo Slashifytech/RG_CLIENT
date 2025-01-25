@@ -20,7 +20,7 @@ const InvoiceForm = () => {
   const { buyBackByIdorStatus } = useSelector((state) => state.buyBack);
   const { amcByIdorStatus } = useSelector((state) => state.amc);
   const { users } = useSelector((state) => state.users);
-const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setisLoading] = useState(false);
   const createdBy = users?._id;
   const invoiceId = location?.state?.invoiceId;
   const id = location?.state?.id;
@@ -357,22 +357,36 @@ const [isLoading, setisLoading] = useState(false)
       console.log("Validation errors:", errors);
       toast.error(errors || "Please fill all required fields");
     }
-   
+
+    // const getChangedFields = (current, original) => {
+    //   return Object.keys(current).reduce((changes, key) => {
+    //     if (JSON.stringify(current[key]) !== JSON.stringify(original[key])) {
+    //       changes[key] = current[key];
+    //     }
+    //     return changes;
+    //   }, {});
+    // };
+
     const getChangedFields = (current, original) => {
       return Object.keys(current).reduce((changes, key) => {
+        if (key === "vehicleDetails" && current[key]?.vinNumber) {
+          changes.vehicleDetails = {
+            ...changes.vehicleDetails,
+            vinNumber: current[key].vinNumber,
+          };
+        }
         if (JSON.stringify(current[key]) !== JSON.stringify(original[key])) {
           changes[key] = current[key];
         }
         return changes;
       }, {});
     };
-
     const payload = invoiceId
       ? getChangedFields(invoiceData, invoiceById?.invoice || {})
       : { ...invoiceData, createdBy: createdBy };
     const role = localStorage.getItem("roleType");
     try {
-      setisLoading(true)
+      setisLoading(true);
       let res;
 
       if (invoiceId) {
@@ -389,17 +403,15 @@ const [isLoading, setisLoading] = useState(false)
           toast.success(res?.message || "Invoice added successfully");
         }
       }
-setisLoading(false)
-      navigate("/admin/invoice-lists");
-      
+      setisLoading(false);
+      // navigate("/admin/invoice-lists");
     } catch (error) {
       console.log(error);
-setisLoading(false)
+      setisLoading(false);
 
       toast.error(error.response.data.message || "Something went wrong");
-    }finally{
-setisLoading(false)
-
+    } finally {
+      setisLoading(false);
     }
   };
   return (
@@ -408,7 +420,7 @@ setisLoading(false)
         <span className="absolute">{<Nav />}</span>
       </div>
       <div>
-        <Header/>
+        <Header />
       </div>
       <span className="flex md:flex-row flex-col md:items-center justify-between md:mx-36 mx-6 font-head md:pt-12 pt-12 ">
         <p className="md:text-[23px] text-[18px] font-semibold pt-12 md:ml-[14%] sm:ml-[25%]">
@@ -481,7 +493,7 @@ setisLoading(false)
             onClick={handleSubmit}
             className="bg-primary text-white px-6 rounded-md py-2 cursor-pointer"
           >
-            {isLoading? "Submitting..." : "Submit"}
+            {isLoading ? "Submitting..." : "Submit"}
           </span>
         </div>
       </div>
