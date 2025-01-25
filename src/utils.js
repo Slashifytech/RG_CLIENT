@@ -27,7 +27,7 @@
 import axios from "axios";
 
 const apiurl = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
+  baseURL: import.meta.env.VITE_APP_DEV_BASE_URL,
   // baseURL: "https://server.360carprotect.in/api/v1"
 
 });
