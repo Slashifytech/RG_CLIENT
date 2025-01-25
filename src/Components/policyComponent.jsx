@@ -13,7 +13,7 @@ import {
   fetchAllMgOptions,
 } from "../features/VehcleOptionsSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-import { submitPolicy } from "../features/PolicySlice";
+import { submitPolicy } from "../features/policySlice";
 import SideNav from "../agent/SideNav";
 import { getPolicyById } from "../../Util/UtilityFunction";
 import { toast } from "react-toastify";
