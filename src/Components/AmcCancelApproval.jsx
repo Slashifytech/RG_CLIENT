@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { fetchamcLists } from "../features/AmcSlice";
+import { fetchamcLists } from "../features/amcSlice";
 import Loader from "./Loader";
 import DataNotFound from "../admin/DataNotFound";
 import Pagination from "./Pagination";
