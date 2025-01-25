@@ -11,7 +11,7 @@ import { fetchbuyBackDataById } from "../features/BuyBackSlice";
 import { updateAMCStatus } from "../features/AMCapi";
 import { updatBuyBackStatus } from "../features/BuybackApi";
 import Header from "../Components/Header";
-import { fetchamcDataById } from "../features/AmcSlice";
+import { fetchamcDataById } from "../features/AmcSlice.js";
 const InvoiceForm = () => {
   const location = useLocation();
   const dispatch = useDispatch();
