@@ -404,7 +404,7 @@ const InvoiceForm = () => {
         }
       }
       setisLoading(false);
-      // navigate("/admin/invoice-lists");
+      navigate("/admin/invoice-lists");
     } catch (error) {
       console.log(error);
       setisLoading(false);

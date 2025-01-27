@@ -17,6 +17,22 @@ export const getAllMgAgents = async () => {
     console.log(err);
   }
 };
+export const updatePassword = async (payload) => {
+  try {
+    const response = await apiurl.patch("/password-update", payload);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const updateEmail = async (payload) => {
+  try {
+    const response = await apiurl.patch("/email-update", payload);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const addNewAgent = async (agentData, update, addNew, aId) => {
   
@@ -46,6 +62,8 @@ export const  deleteAgent  = async (userId) =>{
   }
 
 }
+
+
 
 
 

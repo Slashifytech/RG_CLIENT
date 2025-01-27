@@ -11,6 +11,7 @@ import Loader from "../Components/Loader";
 import SideNav from "../agent/SideNav";
 import Header from "../Components/Header";
 import { amcCancelByAdmin, amcResubmit, updateAMCStatus } from "../features/AMCapi";
+import { toast } from "react-toastify";
 
 const AdminAmcList = () => {
   const { _id, roleType } = useSelector((state) => state.users?.users);
@@ -68,6 +69,15 @@ const AdminAmcList = () => {
   const handleResubmit = async (id) => {
     try {
       const res = await amcResubmit(id);
+      if (roleType === "2" && userId) {
+        dispatch(
+          fetchamcLists({ page, perPage, option:null, userId, option: null })
+        );
+      } else if (roleType === "0" || roleType === "1") {
+        dispatch(
+          fetchamcLists({ page, perPage, option:null, userId: null, status:false })
+        );
+      }
       toast.success(res?.message || "Amc resubmitted successfully");
     } catch (error) {
       console.log(error);
@@ -86,7 +96,9 @@ const AdminAmcList = () => {
       toast.error(error?.message || "Something Went Wrong");
     }
   };
-    const handleStatus = async (userId, type, reason) => {
+    const handleStatus = async(userId, type, reason) => {
+console.log(userId, type, reason)
+
       try {
         const response = await updateAMCStatus(userId, type, reason);
   

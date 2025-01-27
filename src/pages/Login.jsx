@@ -47,7 +47,7 @@ const Login = () => {
           } else if (res?.payload?.user?.roleType === "2") {
             navigate("/agent/amcs-list");
           } else if (res?.payload?.user?.roleType === "1") {
-            navigate("/admin/active-policy");
+            navigate("/admin/approval-lists");
           }
         } else {
           toast.error("Invalid credentials");

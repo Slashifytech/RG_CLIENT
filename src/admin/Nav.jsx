@@ -80,7 +80,7 @@ const Nav = () => {
     {
       pathPage: "/admin/approval-lists",
       icon: <BsFillClipboard2CheckFill />,
-      label: " Approval Page",
+      label: "Approval Page",
     },
     {
       pathPage: "/admin/cancel-approval-lists",
@@ -92,7 +92,7 @@ const Nav = () => {
     roleType === "1"
       ? sidebarList.filter(
           (item) =>
-            item.label === "Invoice Lists" || item.label === "Approval Page"
+            item.label === "Invoice Lists"  ||  item.label === "Approval Page"
         )
       : sidebarList;
 
@@ -131,26 +131,8 @@ const Nav = () => {
             </Link>
           </div>
         ))}
-        {/* <div
-          className={`cursor-pointer py-4 hover:bg-[#d3d3d3] hover:text-primary hover:border-l-4 hover:font-medium ${
-            path === "/admin/ticket"
-              ? "bg-[#c0c0c0] text-primary border-l-4 border-primary font-medium"
-              : "text-sidebar"
-          }`}
-        >
-          <Link
-            to="/admin/ticket"
-            className="flex items-center gap-3 md:pl-6 lg:px-6 sm:pl-6 "
-          >
-            <span className="text-[20px]">
-              {" "}
-              <BsFillTicketPerforatedFill />
-            </span>{" "}
-            <span>Ticket Support</span>
-          </Link>
-        </div> */}
-
-        {role === "5" && (
+       
+        {role === "0" && (
           <>
             <div
               onClick={() => setIsOpen((prev) => !prev)}

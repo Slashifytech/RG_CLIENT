@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Card, Typography } from "@material-tailwind/react";
 import { formatDate } from "../helper/commonHelperFunc";
 import { ToggleButton } from "./Input";
-import CancelReqPopUp from "./CancelReqPopUp";
 import PdfPage from "./pdfPage";
 import MgPdf from "./Mgpdf";
 import { TbPencilCancel } from "react-icons/tb";
@@ -11,6 +10,7 @@ import InvoiceView from "../pages/InvoiceView";
 import ViewAmc from "../pages/ViewAmc";
 import ViewBuyBack from "../pages/ViewBuyBack";
 import { useSelector } from "react-redux";
+import { AgentCancelReqPopUp, CancelReqPopUp } from "./CancelReqPopUp";
 
 export function CustomTableOne({
   tableHead = [],
@@ -669,16 +669,25 @@ export function CustomTableFour({
   handleCancel,
 }) {
   const pdfRef = useRef();
-  const { _id, roleType } = useSelector((state) => state.users?.users);
+  const { roleType } = useSelector((state) => state.users?.users);
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+  const [isAgentPopUpOpen, setIsAgentPopUpOpen] = useState(false);
+
   const [isId, setIsId] = useState();
+  const [isCancelId, setIsCancelId] = useState();
 
   const openPopUp = useCallback((id) => {
     setIsId(id);
     setIsPopUpOpen(true);
   }, []);
+  const agentOpenPopUp = useCallback((id) => {
+    setIsCancelId(id);
+    setIsAgentPopUpOpen(true);
+  }, []);
 
   const closePopUp = useCallback(() => setIsPopUpOpen(false), []);
+  const closeAgentPopUp = useCallback(() => setIsAgentPopUpOpen(false), []);
+
   const handleDownloadClick = (id) => {
     if (pdfRef.current[id]) {
       pdfRef.current[id].handleDownloadPDF();
@@ -802,7 +811,9 @@ export function CustomTableFour({
                       ? "Rejected"
                       : row?.status === "approved"
                       ? "Approved"
-                      : row?.status === true ? "Cancelled" : row?.status}
+                      : row?.status === true
+                      ? "Cancelled"
+                      : row?.status}
                   </Typography>
                 </td>
                 {row?.status === "rejected" ? (
@@ -825,7 +836,7 @@ export function CustomTableFour({
 
                         <span
                           onClick={() => handleResubmit(row?.data?._id)}
-                          className="bg-primary text-white rounded-md px-6 py-1 cusror-pointer"
+                          className="bg-primary text-white rounded-md px-6 py-1 cursor-pointer"
                         >
                           Resubmit
                         </span>
@@ -840,14 +851,20 @@ export function CustomTableFour({
                       color="blue-gray"
                       className="font-medium"
                     >
-                      <span
-                        onClick={() =>
-                          handleStatus(row?.data?._id, "reqCancel", null)
-                        }
-                        className="bg-primary text-white rounded-md px-6 py-1 cusror-pointer"
-                      >
-                        Request Cancel
-                      </span>
+                      {row?.data?.isCancelReq === "noReq" ? (
+                        <span
+                          onClick={() => agentOpenPopUp(row?.data?._id)}
+                          className="bg-primary text-white rounded-md px-6 py-1 cusror-pointer"
+                        >
+                          Request Cancel
+                        </span>
+                      ) : row?.data?.isCancelReq === "reqCancel" ? (
+                        <span className="px-3 rounded-xl py-1 text-white bg-[#09985C]">
+                          Pending
+                        </span>
+                      ) : row?.data?.isCancelReq === "approvedReq" ? (
+                        <span className="px-3 rounded-xl py-1 text-white bg-[#D33131]">Cancelled</span>
+                      ) : "NA"}
                     </Typography>
                   </td>
                 ) : row?.status === "approved" ? (
@@ -900,12 +917,12 @@ export function CustomTableFour({
           </tbody>
         </table>
       </Card>
-      <CancelReqPopUp
-        closePopUp={closePopUp}
-        isPopUpOpen={isPopUpOpen}
-        item={isId}
+      <AgentCancelReqPopUp
+        closeAgentPopUp={closeAgentPopUp}
+        isPopUpAgentOpen={isAgentPopUpOpen}
+        item={isCancelId}
         text="Are you sure to request the cancellation for this policy ?"
-        cancelPolicyRequest={handleStatus}
+        cancelPolicyAgentRequest={handleStatus}
       />
       <CancelReqPopUp
         closePopUp={closePopUp}

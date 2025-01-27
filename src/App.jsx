@@ -34,6 +34,8 @@ import CancelledApprovals from "./admin/CancelledApprovals";
 import CancelledPolicy from "./admin/CancelledPolicy";
 import ViewAmc from "./pages/ViewAmc";
 import ViewBuyBack from "./pages/ViewBuyBack";
+import ChangePassword from "./admin/ChangePassword";
+import ChangeEmail from "./admin/ChangeEmail";
 
 const router = createBrowserRouter([
   {
@@ -253,18 +255,11 @@ const router = createBrowserRouter([
       </ProtectedAdmin>
     ),
   },
-  {
-    path: "/admin/active-policy",
-    element: (
-      <ProtectedAdminTeam>
-        <ActivePolicy></ActivePolicy>
-      </ProtectedAdminTeam>
-    ),
-  },
+
   {
     path: "/policy",
     element: <ViewPolicy></ViewPolicy>,
-  },
+  },  
   {
     path: "/agent-dashboard",
     element: (
@@ -274,12 +269,6 @@ const router = createBrowserRouter([
     ),
   },
  
-  {
-    path: "/customer-consent",
-    element: (
-        <CustomerApproval/>
-    ),
-  },
   {
     path: "/admin/invoice-form",
     element: (
@@ -341,9 +330,25 @@ const router = createBrowserRouter([
   {
     path: "/admin/cancel-approval-lists",
     element: (
-      <CancelledApprovals>
-        <TeamInvoices/>
-      </CancelledApprovals>
+      <ProtectedAdmin>
+        <CancelledApprovals/>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/admin/change-email",
+    element: (
+      <ProtectedAdmin>
+        <ChangeEmail/>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/admin/change-password",
+    element: (
+      <ProtectedAdmin>
+        <ChangePassword/>
+      </ProtectedAdmin>
     ),
   },
   {

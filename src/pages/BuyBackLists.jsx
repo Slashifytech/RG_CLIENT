@@ -42,7 +42,7 @@ const BuyBackLists = () => {
           perPage,
           searchTerm,
           userId: null,
-          status: false ,
+          status: false,
         })
       );
     }
@@ -71,49 +71,70 @@ const BuyBackLists = () => {
   const handleResubmit = async (id) => {
     try {
       const res = await buyBackResubmit(id);
+      if (roleType === "2" && userId) {
+        dispatch(
+          fetchBuyBackLists({
+            page,
+            perPage,
+            option: null,
+            userId,
+            option: null,
+          })
+        );
+      } else if (roleType === "0" || roleType === "1") {
+        dispatch(
+          fetchBuyBackLists({
+            page,
+            perPage,
+            option: null,
+            userId: null,
+            status: false,
+          })
+        );
+      }
       toast.success(res?.message || "Buyback resubmitted successfully");
     } catch (error) {
       console.log(error);
       toast.error(error?.message || "Something Went Wrong");
     }
   };
-   const handleCancel = async (id) => {
-      try {
-        const res = await buyBackCancelByAdmin(id);
-        dispatch(
-          fetchBuyBackLists({
-            page,
-            perPage,
-            searchTerm,
-            userId: null,
-            status: false ,
-          })
-        );
-        toast.success(res?.message || "Amc cancelled successfully");
-      } catch (error) {
-        console.log(error);
-        toast.error(error?.message || "Something Went Wrong");
-      }
-    };
-   const handleStatus = async (userId, type, reason) => {
-      try {
-        const response = await updatBuyBackStatus(userId, type, reason);
-  
-        toast.success(response?.message || "Buyback Updated Successfully");
-        dispatch(
-          fetchBuyBackLists({
-            option: null,
-            option: null,
-            option: null,
-            option: null,
-            status: "reqCancel",
-          })
-        );
-      } catch (error) {
-        console.error(error, "Something went wrong");
-        toast.error(error?.message || "Something Went Wrong");
-      }
-    };
+  const handleCancel = async (id) => {
+    try {
+      const res = await buyBackCancelByAdmin(id);
+      dispatch(
+        fetchBuyBackLists({
+          page,
+          perPage,
+          searchTerm,
+          userId: null,
+          status: false,
+        })
+      );
+      toast.success(res?.message || "Amc cancelled successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message || "Something Went Wrong");
+    }
+  };
+  const handleStatus = async (userId, type, reason) => {
+    try {
+      const response = await updatBuyBackStatus(userId, type, reason);
+
+      toast.success(response?.message || "Buyback Updated Successfully");
+      dispatch(
+        fetchBuyBackLists({
+          option: null,
+          option: null,
+          option: null,
+          option: null,
+          status: "reqCancel",
+        })
+      );
+    } catch (error) {
+      console.error(error, "Something went wrong");
+      toast.error(error?.message || "Something Went Wrong");
+    }
+  };
   return (
     <>
       <div className="fixed">
@@ -182,7 +203,6 @@ const BuyBackLists = () => {
                 handleResubmit={handleResubmit}
                 handleStatus={handleStatus}
                 handleCancel={handleCancel}
-
               />
             </div>
             {totalPagesCount > 1 && (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { extractFileNames } from "../helper/commonHelperFunc";
 import { ImBin } from "react-icons/im";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 const InputField = ({
   type,
@@ -85,7 +86,7 @@ const CustomInput = ({
 }) => {
   return (
     <div className="flex flex-col mt-3">
-    <span className="font-semibold">  {title} <span className="text-red-500">{imp ? "*" : ""}</span></span>
+    <span className="font-semibold pb-3 ">  {title} <span className="text-red-500">{imp ? "*" : ""}</span></span>
       <input
         type={type}
         className={`${className} ${errorMessage ? 'border-red-500' : ''}`}
@@ -328,6 +329,37 @@ const ImageComponent = ({ src, alt, className, fallbackSrc }) => {
     />
   );
 };
-export { SelectInput, InputField, CustomInput, GroupedInput, FileUpload, ToggleButton,  ImageComponent};
+
+
+
+const PasswordField = ({ name, value, handleInput, showPassword, toggleVisibility, error, label }) => {
+  return (
+    <>
+    <div className=" relative font-poppins">
+      <span className="text-black font-semibold text-[14px]">{label}*</span>
+      <CustomInput
+        className="w-full h-12 bg-input text-body rounded-md  px-3 outline-none placeholder:text-[16px]"
+        name={name}
+        value={value}
+        onChange={handleInput}
+        type={showPassword ? "text" : "password"}
+        placeHodler={label}
+      />
+      <button
+        type="button"
+        onClick={toggleVisibility}
+        className="absolute inset-y-0 right-3 top-10 text-[18px] flex items-center"
+      >
+        {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+      </button>
+      {error && <p className="text-red-500 mt-1 text-sm">{error}</p>}
+    </div>
+
+  
+
+    </>
+
+  )}
+export { SelectInput, InputField, CustomInput, GroupedInput, FileUpload, ToggleButton,  ImageComponent, PasswordField};
 
 export default InputField;
