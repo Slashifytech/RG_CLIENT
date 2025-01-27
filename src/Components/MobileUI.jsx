@@ -1,12 +1,12 @@
 import React from "react";
 import { ImageComponent } from "./Input";
-import { colorLogo, mobile } from "../assets";
+import { colorLogo, logo, mobile } from "../assets";
 
 const Mobile = () => {
   return (
     <div className="md:hidden sm:hidden block">
       <div className="bg-primary w-screen">
-        <ImageComponent src={colorLogo} alt="logo" className="w-28  " />
+        <ImageComponent src={logo} alt="logo" className="w-28  " />
       </div>
 
       <div className="flex flex-col justify-center items-center font-poppins">

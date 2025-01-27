@@ -92,11 +92,12 @@ const BuyBackForm = () => {
       options: fuelType,
     },
     {
-      name: "vinNumber",
-      type: "number",
-      placeholder: "Vin Number",
-      label: "Vin Number",
+      name: "agreementStartDate",
+      type: "date",
+      placeholder: "Agreement Start Date",
+      label: "Agreement Start Date",
     },
+  
     {
       name: "deliveryDate",
       type: "date",
@@ -126,10 +127,10 @@ const BuyBackForm = () => {
       options: modelOption,
     },
     {
-      name: "agreementStartDate",
-      type: "date",
-      placeholder: "Agreement Start Date",
-      label: "Agreement Start Date",
+      name: "vinNumber",
+      type: "number",
+      placeholder: "Vin Number",
+      label: "Vin Number",
     },
     {
       name: "agreementValidDate",
@@ -363,7 +364,7 @@ const BuyBackForm = () => {
             });
           }}
         />
-        <p className="text-[20px] font-head font-semibold mt-5">
+        <p className="text-[20px] font-head font-semibold mt-12">
           Vehicle Details
         </p>
 

@@ -89,7 +89,7 @@ export const updatBuyBackStatus = async (buybackId, type, reason) => {
 
 export const buyBackResubmit = async (id) => {
   try {
-    const response = await apiurl.patch(`/buyback-resubmit/${id}`, {
+    const response = await apiurl.patch(`/buyback-resubmit`,null, {
       params: {
         buyBackId: id,
       },

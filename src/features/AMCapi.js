@@ -95,7 +95,7 @@ export const updateAMCStatus = async (
 
 export const amcResubmit = async (id) => {
   try {
-    const response = await apiurl.patch(`/amc-resubmit`, {
+    const response = await apiurl.patch(`/amc-resubmit`,null, {
       params: {
         amcId: id,
       },

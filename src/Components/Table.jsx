@@ -816,7 +816,7 @@ export function CustomTableFour({
                       : row?.status}
                   </Typography>
                 </td>
-                {row?.status === "rejected" ? (
+                {row?.status === "rejected" && roleType === "2" ? (
                   <td className="p-4">
                     <Typography
                       as="a"
@@ -843,6 +843,41 @@ export function CustomTableFour({
                       </div>
                     </Typography>
                   </td>
+                ) : roleType === "0" ? (
+                  <td className="p-4">
+                    <Typography
+                      as="a"
+                      variant="small"
+                      color="blue-gray"
+                      className="font-medium"
+                    >
+                      <div className="flex flex-ro items-center gap-4">
+                        <Link
+                          to={link}
+                          state={{ docId: row?.data?._id }}
+                          className="flex flex-row items-center gap-2"
+                        >
+                          <span className="text-primary">{icon}</span>
+                          <span className="font-body">{action}</span>
+                        </Link>
+                        {row?.status === "rejected" && (
+                          <span
+                            onClick={() => handleResubmit(row?.data?._id)}
+                            className="bg-primary text-white rounded-md px-6 py-1 cursor-pointer"
+                          >
+                            Resubmit
+                          </span>
+                        )}
+
+                        <span
+                          onClick={() => openPopUp(row?.data?._id)}
+                          className="bg-primary text-white rounded-md px-6 py-1 cursor-pointer"
+                        >
+                          Cancel
+                        </span>
+                      </div>
+                    </Typography>
+                  </td>
                 ) : row?.status === "approved" && roleType === "2" ? (
                   <td className="p-4">
                     <Typography
@@ -854,32 +889,27 @@ export function CustomTableFour({
                       {row?.data?.isCancelReq === "noReq" ? (
                         <span
                           onClick={() => agentOpenPopUp(row?.data?._id)}
-                          className="bg-primary text-white rounded-md px-6 py-1 cusror-pointer"
+                          className="bg-primary text-white rounded-md px-6 py-1  cursor-pointer"
                         >
                           Request Cancel
                         </span>
                       ) : row?.data?.isCancelReq === "reqCancel" ? (
-                        <span className="px-3 rounded-xl py-1 text-white bg-[#09985C]">
+                        <span className="px-3 rounded-xl py-1 text-white bg-yellow-500">
                           Pending
                         </span>
-                      ) : row?.data?.isCancelReq === "approvedReq" ? (
-                        <span className="px-3 rounded-xl py-1 text-white bg-[#D33131]">Cancelled</span>
-                      ) : "NA"}
-                    </Typography>
-                  </td>
-                ) : row?.status === "approved" ? (
-                  <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-medium"
-                    >
-                      <span
-                        onClick={() => openPopUp(row?.data?._id)}
-                        className="bg-primary text-white rounded-md px-6 py-1 cursor-pointer"
-                      >
-                        Cancel
-                      </span>
+                      ) : row?.data?.isCancelReq === "approvedReq" &&
+                        row?.data?.isDisabled === false ? (
+                        <span className="px-3 rounded-xl py-1 text-white bg-[#09985C]">
+                          Cancel Req. Approved
+                        </span>
+                      ) : row?.data?.isCancelReq === "approvedReq" &&
+                        row?.data?.isDisabled === true ? (
+                        <span className="px-3 rounded-xl py-1 text-white bg-[#D33131]">
+                          Cancelled
+                        </span>
+                      ) : (
+                        "NA"
+                      )}
                     </Typography>
                   </td>
                 ) : (

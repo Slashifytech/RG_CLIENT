@@ -117,13 +117,13 @@ const GroupedInput = ({
   const renderField = (field) => {
     if (field.type === "select") {
       return (
-        <div key={field.name} className="flex flex-col gap-2">
+        <div key={field.name} className="flex flex-col gap-2 mt-4">
           <label className="font-medium">{field.label}</label>
           <select
             name={field.name}
             value={stateName[field.name]}
             onChange={onChange}
-            className="w-full h-10 bg-white rounded-md px-3 outline-none mt-2"
+            className="w-full h-10 bg-white rounded-md px-3 outline-none "
           >
             <option value="" >
               {field.placeholder || "Select an option"}
@@ -147,7 +147,7 @@ const GroupedInput = ({
         key={field.name}
         title={field.label}
         imp={field.required}
-        className="w-full h-10 bg-white rounded-md px-3 outline-none mt-2"
+        className="w-full h-10 bg-white rounded-md px-3 outline-none "
         type={field.type}
         name={field.name}
         placeHolder={field.placeholder}
