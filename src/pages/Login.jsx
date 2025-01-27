@@ -59,62 +59,74 @@ const Login = () => {
       }
     }, 1000);
   };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin(e);
+    }
+  };
 
   return (
     <>
       <Mobile />
       <div className="bg-Image h-screen hidden sm:block md:block ">
-      <div className="glass h-screen">
-        <div className="text-white md:pt-12 sm:pt-16 pt-20 md:w-[40%] sm:w-[60%] flex flex-col justify-center   p-14  rounded-md ">
-        <span className="flex flex-row items-center ">
-        <img src={mgLogo} alt="logo" className="w-28" />
-        <p className="text-white text-[30px] leading-9">
-          {" "}
-          <span className="font-bold text-[32px] flex flex-col">RAAM</span>{" "}
-          GROUP
-        </p></span>
-        <div className="mt-9">
-        <p className="font-semibold  text-center italic text-[22px]">Welcome back to RG Portal</p>
-          <div className="font-semibold  mt-6">
-            Email <span className="text-red-500">*</span>
+        <div className="glass h-screen">
+          <div className="text-white md:pt-12 sm:pt-16 pt-20 md:w-[40%] sm:w-[60%] flex flex-col justify-center   p-14  rounded-md ">
+            <span className="flex flex-row items-center ">
+              {/* <img src={mgLogo} alt="logo" className="w-28" /> */}
+              <p className="text-white text-[30px] leading-9">
+                {" "}
+                <span className="font-bold text-[32px] flex flex-col">
+                  RAAM
+                </span>{" "}
+                GROUP
+              </p>
+            </span>
+            <div onKeyDown={handleKeyDown} className="mt-9">
+              <p className="font-semibold  text-center italic text-[22px]">
+                Welcome back to RG Portal
+              </p>
+              <div className="font-semibold  mt-6">
+                Email <span className="text-red-500">*</span>
+              </div>
+              <input
+                type="email"
+                name="email"
+                className="bg-white/20 backdrop-blur-md w-full mt-3 px-3 py-3 rounded-md outline-none border border-white/30 placeholder-white text-white"
+                placeholder="Email"
+                onChange={handleInput}
+              />
+              <div className="mt-6">
+                <span className="font-semibold ">
+                  Password <span className="text-red-500">*</span>
+                </span>
+                <div className="pt-3 pb-2 relative ">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    className="bg-white/20 backdrop-blur-md w-full px-3 py-3 rounded-md outline-none border border-white/30 placeholder-white text-white"
+                    placeholder="Password"
+                    onChange={handleInput}
+                  />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute inset-y-0 right-3 top-0 text-[20px] flex items-center "
+                  >
+                    {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                  </button>
+                </div>
+              </div>
+              <button
+                onClick={handleLogin}
+                className="bg-primary text-white  rounded-md py-3 mt-9 w-full"
+                disabled={loading}
+              >
+                {loading ? "Logging in..." : "Submit"}
+              </button>
+            </div>
           </div>
-          <input
-            type="email"
-            name="email"
-            className="bg-white/20 backdrop-blur-md w-full mt-3 px-3 py-3 rounded-md outline-none border border-white/30 placeholder-white text-white"
-            placeholder="Email"
-            onChange={handleInput}
-          />
-          <div className="mt-6">
-          <span className="font-semibold ">
-            Password <span className="text-red-500">*</span>
-          </span>
-          <div className="pt-3 pb-2 relative ">
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              className="bg-white/20 backdrop-blur-md w-full px-3 py-3 rounded-md outline-none border border-white/30 placeholder-white text-white"
-              placeholder="Password"
-              onChange={handleInput}
-            />
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute inset-y-0 right-3 top-0 text-[20px] flex items-center "
-            >
-              {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
-            </button></div>
-          </div>
-          <button
-            onClick={handleLogin}
-            className="bg-primary text-white  rounded-md py-3 mt-9 w-full"
-            disabled={loading}
-          >
-            {loading ? "Logging in..." : "Submit"}
-          </button>
         </div>
-        </div>
-      </div></div>
+      </div>
     </>
   );
 };

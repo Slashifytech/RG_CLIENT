@@ -200,6 +200,21 @@ useEffect(()=>{
                   </p>
                 )}
               </div>
+              <div className="pt-3 pb-2">
+                <label className="font-semibold">Email Id <span className="text-red-500">*</span></label>
+                <InputField
+                  className="w-full h-10 bg-secondary rounded-md px-3 mt-2"
+                  placeholder="Email Id"
+                  name="email"
+                  onchange={handleInput}
+                  type="email"
+                  value={agentData.email}
+                />
+                {errors.email && (
+                  <p className="text-red-500 mt-1 text-sm">{errors.email}</p>
+                )}
+                <p className="text-primary text-[13px] font-DMsan">{isEmailValid}</p>
+              </div>
               <div className="pt-3 pb-2 relative">
                 <label className="font-semibold">Password <span className="text-red-500">*</span></label>
                 <InputField
@@ -221,29 +236,7 @@ useEffect(()=>{
                   <p className="text-red-500 mt-1 text-sm">{errors.password}</p>
                 )}
               </div>
-              <div className="pt-3 pb-2 relative">
-                <label className="font-semibold">Confirm Password <span className="text-red-500">*</span></label>
-                <InputField
-                  className="w-full h-10 bg-secondary rounded-md px-3 mt-2"
-                  placeholder="Confirm Password"
-                  name="confirmPassword"
-                  onchange={handleInput}
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={agentData.confirmPassword}
-                />
-                <button
-                  type="button"
-                  onClick={toggleConfirmPasswordVisibility}
-                  className="absolute inset-y-0 right-3 top-9 text-[18px] flex items-center"
-                >
-              {showConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}
-                </button>
-                {errors.confirmPassword && (
-                  <p className="text-red-500 mt-1 text-sm">
-                    {errors.confirmPassword}
-                  </p>
-                )}
-              </div>
+             
             </span>
             <span className="md:w-[40%] sm:w-[40%]">
               <div className="pt-3 pb-2">
@@ -274,20 +267,28 @@ useEffect(()=>{
                   <p className="text-red-500 mt-1 text-sm">{errors.contact}</p>
                 )}
               </div>
-              <div className="pt-3 pb-2">
-                <label className="font-semibold">Email Id <span className="text-red-500">*</span></label>
+              <div className="pt-3 pb-2 relative">
+                <label className="font-semibold">Confirm Password <span className="text-red-500">*</span></label>
                 <InputField
                   className="w-full h-10 bg-secondary rounded-md px-3 mt-2"
-                  placeholder="Email Id"
-                  name="email"
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
                   onchange={handleInput}
-                  type="email"
-                  value={agentData.email}
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={agentData.confirmPassword}
                 />
-                {errors.email && (
-                  <p className="text-red-500 mt-1 text-sm">{errors.email}</p>
+                <button
+                  type="button"
+                  onClick={toggleConfirmPasswordVisibility}
+                  className="absolute inset-y-0 right-3 top-9 text-[18px] flex items-center"
+                >
+              {showConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                </button>
+                {errors.confirmPassword && (
+                  <p className="text-red-500 mt-1 text-sm">
+                    {errors.confirmPassword}
+                  </p>
                 )}
-                <p className="text-primary text-[13px] font-DMsan">{isEmailValid}</p>
               </div>
             </span>
           </div>

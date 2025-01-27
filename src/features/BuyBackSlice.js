@@ -32,6 +32,11 @@ const buyBackSlice = createSlice({
     buyBackByIdorStatus: null,
     BuyBackLists: null,
   },
+  reducers:{
+    seEmptytBuyback(state){
+      state.buyBackByIdorStatus = null
+    }
+},
 
   extraReducers: (builder) => {
     builder
@@ -63,5 +68,5 @@ const buyBackSlice = createSlice({
       });
   },
 });
-
+export const {seEmptytBuyback} = buyBackSlice.actions
 export default buyBackSlice.reducer;

@@ -69,45 +69,63 @@ const InvoiceForm = () => {
   const [errors, setErrors] = useState({});
   const formattedDate = createdDate();
   const rightFields = [
-    { name: "customerName", type: "text", placeholder: "Name", label: "Name" },
+    { name: "customerName", type: "text", placeholder: "Name", label: "Name" ,
+      required: true,
+      
+    },
     {
       name: "zipCode",
       type: "text",
       placeholder: "Zip Code",
       label: "Zip Code",
+      required: true,
+
     },
     {
       name: "contact",
       type: "number",
       placeholder: "Contact Number",
       label: "Conatct Number",
+      required: true,
+
     },
     {
       name: "customerGst",
       type: "text",
       placeholder: "GSTIN",
       label: "GSTIN Number",
+      required: true,
+
     },
   ];
   const leftFields = [
-    { name: "address", type: "text", placeholder: "Address", label: "Address" },
+    { name: "address", type: "text", placeholder: "Address", label: "Address",
+      required: true,
+
+     },
     {
       name: "stateCode",
       type: "text",
       placeholder: "State Code",
       label: "State Code",
+      required: true,
+
     },
     {
       name: "email",
       type: "email",
       placeholder: "Email Id",
       label: "Email Id",
+      required: true,
+
     },
     {
       name: "pan",
       type: "text",
       placeholder: "PAN Number",
       label: "PAN Number",
+      required: true,
+
     },
   ];
 
@@ -117,29 +135,40 @@ const InvoiceForm = () => {
       type: "text",
       placeholder: "Branch Name",
       label: "Branch Name",
+      required: true,
+
+ 
+
     },
     {
       name: "model",
       type: "text",
       placeholder: "Model",
       label: "Model",
+      required: true,
+
     },
     {
       name: "cgst",
       type: "number",
       placeholder: "CGST 9%",
       label: "CGST 9%",
+      required: true,
+      
+
     },
     {
       name: "sgst",
       type: "number",
       placeholder: "SGST 9%",
       label: "SGST 9%",
+      required: true,
+
     },
     {
       name: "gmEmail",
       type: "email",
-      placeholder: "General Manager Email",
+      placeholder: "General Manager Email Id",
       label: "General Manager Email",
     },
   ];
@@ -149,18 +178,24 @@ const InvoiceForm = () => {
       type: "text",
       placeholder: "Hypothecated To",
       label: "Hypothecated To",
+      required: true,
+
     },
     {
       name: "vinNumber",
-      type: "number",
+      type: "text",
       placeholder: "Vin Number",
       label: "Vin Number",
+      required: true,
+
     },
     {
       name: "gstAmount",
       type: "number",
       placeholder: "Pre Gst Amount",
       label: "Pre Gst Amount",
+      required: true,
+
     },
 
     {
@@ -168,12 +203,14 @@ const InvoiceForm = () => {
       type: "number",
       placeholder: "Total Amount",
       label: "Total Amount",
+      required: true,
+
     },
     {
       name: "rmEmail",
       type: "email",
-      placeholder: "Regional Manager Email",
-      label: "Regional Manager Email",
+      placeholder: "Relationship Manager/ Service Advisor Email Id",
+      label: "Relationship Manager/ Service Advisor Email Id",
     },
   ];
 
@@ -355,7 +392,8 @@ const InvoiceForm = () => {
     if (isValid) {
     } else {
       console.log("Validation errors:", errors);
-      toast.error(errors || "Please fill all required fields");
+       toast.error("Please fill in all required fields");
+       return
     }
 
     // const getChangedFields = (current, original) => {
@@ -373,6 +411,8 @@ const InvoiceForm = () => {
           changes.vehicleDetails = {
             ...changes.vehicleDetails,
             vinNumber: current[key].vinNumber,
+            rmEmail: current[key].rmEmail,
+            gmEmail: current[key].gmEmail
           };
         }
         if (JSON.stringify(current[key]) !== JSON.stringify(original[key])) {

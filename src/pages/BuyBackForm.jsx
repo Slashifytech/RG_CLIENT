@@ -47,40 +47,57 @@ const BuyBackForm = () => {
       type: "text",
       placeholder: "Customer Name",
       label: "Customer Name",
+      required: true,
     },
     {
       name: "contact",
       type: "number",
       placeholder: "Contact",
       label: "Contact",
+      required: true,
+
     },
     {
       name: "pan",
       type: "text",
       placeholder: "Pan Number",
       label: "Pan Number",
+      required: true,
+
     },
     {
       name: "zipCode",
       type: "number",
       placeholder: "Zip Code",
       label: "Zip Code",
+      required: true,
+
     },
   ];
   const leftFields = [
-    { name: "address", type: "text", placeholder: "Address", label: "Address" },
-    { name: "email", type: "email", placeholder: "Email", label: "Email" },
+    { name: "address", type: "text", placeholder: "Address", label: "Address" ,
+      required: true,
+
+    },
+    { name: "email", type: "email", placeholder: "Email", label: "Email",
+      required: true,
+
+     },
     {
       name: "customerGst",
       type: "text",
       placeholder: "Customer Gst",
       label: "Customer Gst",
+      required: true,
+
     },
     {
       name: "stateCode",
       type: "text",
       placeholder: "State Code",
       label: "State Code",
+      required: true,
+
     },
   ];
   const rightVehicleFields = [
@@ -90,12 +107,16 @@ const BuyBackForm = () => {
       placeholder: "Fuel Type",
       label: "Fuel Type",
       options: fuelType,
+      required: true,
+
     },
     {
       name: "agreementStartDate",
       type: "date",
       placeholder: "Agreement Start Date",
       label: "Agreement Start Date",
+      required: true,
+
     },
   
     {
@@ -103,18 +124,24 @@ const BuyBackForm = () => {
       type: "date",
       placeholder: "Delivery Date",
       label: "Delivery Date",
+      required: true,
+
     },
     {
       name: "validityMilage",
       type: "text",
       placeholder: "Validity Milage",
       label: "Validity Milage",
+      required: true,
+
     },
     {
       name: "gmEmail",
       type: "email",
-      placeholder: "General Manager Email",
+      placeholder: "General Manager Email Id",
       label: "General Manager Email",
+    
+
     },
   ];
 
@@ -125,30 +152,38 @@ const BuyBackForm = () => {
       placeholder: "Model",
       label: "Model",
       options: modelOption,
+      required: true,
+
     },
     {
       name: "vinNumber",
-      type: "number",
+      type: "text",
       placeholder: "Vin Number",
       label: "Vin Number",
+      required: true,
+
     },
     {
       name: "agreementValidDate",
       type: "date",
       placeholder: "Agreement Valid Date",
       label: "Agreement Valid Date ",
+      required: true,
+
     },
     {
       name: "totalPayment",
       type: "number",
       placeholder: "Total Payment",
       label: "Total Payment",
+      required: true,
+
     },
     {
       name: "rmEmail",
       type: "email",
-      placeholder: "Regional Manager Email",
-      label: "Regional Manager Email",
+      placeholder: "Relationship Manager/ Service Advisor Email Id",
+      label: "Relationship Manager/ Service Advisor Email Id",
     },
   ];
   const [errors, setErrors] = useState({});
@@ -252,6 +287,7 @@ const BuyBackForm = () => {
     if (!customerName) newErrors.customerName = "Customer name is required.";
     if (!address) newErrors.address = "Address is required.";
     if (!customerGst) newErrors.customerGst = "Customer GST is required.";
+    if (!pan) newErrors.pan = "Customer PAN is required.";
     if (!/^\d{10}$/.test(contact))
       newErrors.contact = "Contact must be a valid 10-digit number.";
     if (!stateCode) newErrors.stateCode = "State code is required.";
@@ -270,10 +306,18 @@ const BuyBackForm = () => {
       agreementValidDate,
       agreementStartMilage,
       validityMilage,
+      fuelType,
+      deliveryDate,
       totalPayment,
     } = buyBack.vehicleDetails;
 
+    if (!agreementPeriod) newErrors.agreementPeriod = "Agreement period is required.";
     if (!vehicleModel) newErrors.vehicleModel = "Model is required.";
+    if (!agreementStartMilage) newErrors.agreementStartMilage = "Agreement start milage is required.";
+    if (!fuelType) newErrors.fuelType = "Fuel type is required.";
+    if (!deliveryDate) newErrors.deliveryDate = "Delivery date is required.";
+
+
     if (!vinNumber) newErrors.vinNumber = "VIN number is required.";
     if (!agreementStartDate)
       newErrors.agreementStartDate = "Agreement start date is required.";
@@ -309,7 +353,7 @@ const BuyBackForm = () => {
       console.log("Form data is valid:", buyBack);
     } else {
       console.log("Validation errors:", errors);
-      toast.error("Form data is invalid");
+      toast.error("Please fill in all required fields");
       return;
     }
     try {

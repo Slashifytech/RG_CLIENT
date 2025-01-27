@@ -53,77 +53,88 @@ const AMCForm = () => {
       type: "text",
       placeholder: "Customer Name",
       label: "Customer Name",
+      required: true,
     },
     {
       name: "contact",
       type: "number",
       placeholder: "Contact",
       label: "Contact",
+      required: true,
     },
     {
       name: "pan",
       type: "text",
       placeholder: "Pan Number",
       label: "Pan Number",
+      required: true,
     },
     {
       name: "zipCode",
       type: "number",
       placeholder: "Zip Code",
       label: "Zip Code",
+      required: true,
     },
   ];
   const leftFields = [
-    { name: "address", type: "text", placeholder: "Address", label: "Address" },
-    { name: "email", type: "email", placeholder: "Email", label: "Email" },
+    { name: "address", type: "text", placeholder: "Address", label: "Address",  required: true, },
+    { name: "email", type: "email", placeholder: "Email", label: "Email",  required: true,},
     {
       name: "customerGst",
       type: "text",
       placeholder: "Customer Gst",
       label: "Customer Gst",
+      required: true,
     },
     {
       name: "stateCode",
       type: "text",
       placeholder: "State Code",
       label: "State Code",
+      required: true,
     },
   ];
   const rightVehicleFields = [
     {
       name: "vinNumber",
-      type: "number",
+      type: "text",
       placeholder: "Vin Number",
       label: "Vin Number",
+      required: true,
     },
     {
       name: "agreementStartDate",
       type: "date",
       placeholder: "Agreement Start Date",
       label: "Agreement Start Date",
+      required: true,
     },
     {
       name: "agreementStartMilage",
       type: "text",
       placeholder: "Agreement Start Milage",
       label: "Agreement Start Milage",
+      required: true,
     },
     {
       name: "MaximumValidPMS",
       type: "text",
       placeholder: "Maximum Valid Number of PMS",
       label: "Maximum Valid Number of PMS",
+      required: true,
     },
     {
       name: "total",
       type: "number",
       placeholder: "Total Amount",
       label: "Total Amount",
+      required: true,
     },
     {
       name: "gmEmail",
       type: "email",
-      placeholder: "General Manager Email",
+      placeholder: "General Manager Email Id",
       label: "General Manager Email",
     },
   ];
@@ -135,6 +146,7 @@ const AMCForm = () => {
       placeholder: "Model",
       label: "Model",
       options: modelOption,
+      required: true,
     },
     {
       name: "fuelType",
@@ -142,36 +154,40 @@ const AMCForm = () => {
       placeholder: "Fuel Type",
       label: "Fuel Type",
       options: fuelType,
+      required: true,
     },
     {
       name: "agreementPeriod",
       type: "number",
       placeholder: "Agreement Period",
       label: "Agreement Period",
+      required: true,
     },
     {
       name: "agreementValidDate",
       type: "date",
       placeholder: "Agreement Valid Date",
       label: "Agreement Valid Date",
-    },
+      required: true,},
     {
       name: "agreementValidMilage",
       type: "number",
       placeholder: "Agreement Valid Milage",
       label: "Agreement Valid Milage",
+      required: true,
     },
     {
       name: "dealerLocation",
       type: "text",
       placeholder: "Location of the Dealer",
       label: "Location of the Dealer",
+      required: true,
     },
     {
       name: "rmEmail",
       type: "email",
-      placeholder: "Regional Manager Email",
-      label: "Regional Manager Email",
+      placeholder: "Relationship Manager/ Service Advisor Email Id",
+      label: "Relationship Manager/ Service Advisor Email Id",
     },
   ];
   const [errors, setErrors] = useState({});
@@ -234,15 +250,24 @@ const AMCForm = () => {
           const mileageMultiplier =
             fuelType === "petrol"
               ? 10000
-              : fuelType === "Electric Vehicle" && (model === "Comet" ||
-                model === "ZS EV")
+              : fuelType === "Electric Vehicle" &&
+                (model === "Comet" || model === "ZS EV")
               ? 10000
               : fuelType === "Electric Vehicle" && model === "Windsor"
               ? 15000
+              : fuelType === "Electric Vehicle"
+              ? null
               : 15000;
-
-          updatedSection.agreementValidMilage =
-            agreementStartMilage + agreementPeriod * mileageMultiplier;
+          if (
+            fuelType === "Electric Vehicle" &&
+            model !== "Comet" &&
+            model !== "Windsor"
+          ) {
+            updatedSection.agreementValidMilage = 0;
+          } else {
+            updatedSection.agreementValidMilage =
+              agreementStartMilage + agreementPeriod * mileageMultiplier;
+          }
         }
       }
 
@@ -271,6 +296,8 @@ const AMCForm = () => {
     if (!customerName) newErrors.customerName = "Customer name is required.";
     if (!address) newErrors.address = "Address is required.";
     if (!customerGst) newErrors.customerGst = "Customer GST is required.";
+    if (!pan) newErrors.pan = "Customer PAN is required.";
+
     if (!/^\d{10}$/.test(contact))
       newErrors.contact = "Contact must be a valid 10-digit number.";
     if (!stateCode) newErrors.stateCode = "State code is required.";
@@ -283,6 +310,7 @@ const AMCForm = () => {
     // Vehicle Details Validation
     const {
       model,
+      fuelType,
       vinNumber,
       agreementPeriod,
       agreementStartDate,
@@ -295,6 +323,8 @@ const AMCForm = () => {
     } = AMCData.vehicleDetails;
 
     if (!model) newErrors.model = "Model is required.";
+    if (!fuelType) newErrors.fuelType = "Fuel type is required.";
+
     if (!vinNumber) newErrors.vinNumber = "VIN number is required.";
     if (!agreementPeriod)
       newErrors.agreementPeriod = "Agreement period is required.";
@@ -337,7 +367,7 @@ const AMCForm = () => {
       console.log("Form data is valid:", AMCData);
     } else {
       console.log("Validation errors:", errors);
-      toast.error("Form data is invalid");
+    toast.error("Please fill in all required fields");
       return;
     }
     try {

@@ -7,7 +7,7 @@ import DataNotFound from "../admin/DataNotFound";
 import { CustomTableFour } from "../Components/Table";
 import { FaPencil } from "react-icons/fa6";
 import Nav from "../admin/Nav";
-import { fetchBuyBackLists } from "../features/BuyBackSlice";
+import { fetchBuyBackLists, seEmptytBuyback } from "../features/BuyBackSlice";
 import SideNav from "../agent/SideNav";
 import Header from "../Components/Header";
 import { buyBackCancelByAdmin, buyBackResubmit } from "../features/BuybackApi";
@@ -15,9 +15,9 @@ import { toast } from "react-toastify";
 
 const BuyBackLists = () => {
   const { _id, roleType } = useSelector((state) => state.users?.users);
-  const userId = _id;
   const { BuyBackLists } = useSelector((state) => state.buyBack);
   const dispatch = useDispatch();
+  const userId = _id;
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
@@ -150,6 +150,7 @@ const BuyBackLists = () => {
         <Link
           to={roleType === "2" ? "/agent/buyback-form" : "/admin/add-buyback"}
           state={{ addNew: "isNew" }}
+          onClick={()=>dispatch(seEmptytBuyback())}
           className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[15.5%] sm:ml-[28%] mt-4 sm:mt-4 md:mt-4"
         >
           + Add New Buy Back

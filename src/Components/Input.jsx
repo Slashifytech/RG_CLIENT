@@ -118,7 +118,7 @@ const GroupedInput = ({
     if (field.type === "select") {
       return (
         <div key={field.name} className="flex flex-col gap-2 mt-4">
-          <label className="font-medium">{field.label}</label>
+          <label className="font-medium">{field.label}  <span className="text-red-500">{field.required ? "*" : ""}</span></label>
           <select
             name={field.name}
             value={stateName[field.name]}
