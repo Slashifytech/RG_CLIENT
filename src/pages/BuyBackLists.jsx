@@ -145,21 +145,18 @@ const BuyBackLists = () => {
       <div>
         <Header />
       </div>
-      <div className="flex items-center gap-3 justify-center md:ml-28 text-[18px] md:mt-10 sm:mt-10 mt-20">
-        <span className="font-head font-semibold">Morris Garage</span>
-      </div>
-
-      <div className="md:pt-6 sm:pt-14 pt-6 flex md:flex-row sm:flex-row flex-col-reverse justify-between md:items-center sm:items-center md:px-20 mx-6">
+    
+      <div className="md:pt-20 sm:pt-20 pt-6 flex md:flex-row sm:flex-row flex-col-reverse justify-between md:items-center sm:items-center md:px-20 mx-6">
         <Link
           to={roleType === "2" ? "/agent/buyback-form" : "/admin/add-buyback"}
           state={{ addNew: "isNew" }}
-          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[14.5%] sm:ml-[28%] mt-4 sm:mt-4 md:mt-4"
+          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[15.5%] sm:ml-[28%] mt-4 sm:mt-4 md:mt-4"
         >
           + Add New Buy Back
         </Link>
       </div>
 
-      <div className="px-6 flex justify-start md:ml-60 sm:ml-48 mt-6">
+      <div className="px-6 flex justify-start md:ml-64 sm:ml-48 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
@@ -169,7 +166,7 @@ const BuyBackLists = () => {
         />
       </div>
 
-      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[28%] ml-6">
+      <p className="pt-5 text-[20px] font-semibold md:ml-[21%] sm:ml-[28%] ml-6">
         Buy Back Lists-
       </p>
 
@@ -188,7 +185,7 @@ const BuyBackLists = () => {
           </div>
         ) : (
           <>
-            <div className="md:ml-[19.5%] sm:ml-[28%] mt-6 mr-6  ">
+            <div className="md:ml-[20.5%] sm:ml-[28%] mt-6 mr-6  ">
               <CustomTableFour
                 tableHead={TABLE_HEAD}
                 tableRows={TABLE_ROWS}

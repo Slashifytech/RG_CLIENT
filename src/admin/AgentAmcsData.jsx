@@ -5,7 +5,7 @@ import Pagination from "../Components/Pagination";
 import DataNotFound from "./DataNotFound";
 import { CustomTableFour } from "../Components/Table";
 import { FaPencil } from "react-icons/fa6";
-import { fetchamcLists, setEmptyAMC } from "../features/amcSlice";
+import { fetchamcLists } from "../features/amcSlice";
 import Loader from "../Components/Loader";
 
 const AgentAmcsData = () => {
@@ -54,9 +54,7 @@ const AgentAmcsData = () => {
     type: "amc",
   }));
 
-  const handleDispatch = () => {
-    dispatch(setEmptyAMC());
-  };
+
 
   return (
     <>

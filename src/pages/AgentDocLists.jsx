@@ -9,8 +9,8 @@ const AgentDocLists = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
-    { id: 0, label: "AMC Approval", component: <AgentAmcsData /> },
-    { id: 1, label: "Buyback Approval", component: <AgentBuybacks /> },
+    { id: 0, label: "AMC List", component: <AgentAmcsData /> },
+    { id: 1, label: "Buyback List", component: <AgentBuybacks /> },
     // { id: 2, label: "Policy Approval", component: <AgentPoliciesData /> },
 
   ];

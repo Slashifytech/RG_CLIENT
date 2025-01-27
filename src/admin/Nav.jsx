@@ -64,11 +64,13 @@ const Nav = () => {
       pathPage: "/admin/amc-lists",
       icon: <BiSolidCarMechanic />,
       label: "AMC Lists",
+      otherPath: "/admin/add-amc"
     },
     {
       pathPage: "/admin/buyback-lists",
       icon: <FaCarOn />,
       label: "Buy Back Lists",
+      otherPath: "/admin/add-buyback"
     },
     {
       pathPage: "/admin/invoice-lists",

@@ -187,7 +187,6 @@ const AMCForm = () => {
         [name]: value,
       };
 
-      // Calculate `agreementValidDate` if necessary fields are available
       if (name === "agreementPeriod" || name === "agreementStartDate") {
         const agreementPeriod = parseFloat(
           name === "agreementPeriod" ? value : updatedSection.agreementPeriod
@@ -216,7 +215,8 @@ const AMCForm = () => {
       if (
         name === "agreementPeriod" ||
         name === "agreementStartMilage" ||
-        name === "fuelType"
+        name === "fuelType" ||
+        name === "model"
       ) {
         const agreementPeriod = parseFloat(
           name === "agreementPeriod" ? value : updatedSection.agreementPeriod
@@ -228,9 +228,18 @@ const AMCForm = () => {
           10
         );
         const fuelType = name === "fuelType" ? value : updatedSection.fuelType;
+        const model = name === "model" ? value : updatedSection.model;
 
         if (agreementPeriod && agreementStartMilage && fuelType) {
-          const mileageMultiplier = fuelType === "petrol" ? 10000 : 15000;
+          const mileageMultiplier =
+            fuelType === "petrol"
+              ? 10000
+              : fuelType === "Electric Vehicle" && (model === "Comet" ||
+                model === "ZS EV")
+              ? 10000
+              : fuelType === "Electric Vehicle" && model === "Windsor"
+              ? 15000
+              : 15000;
 
           updatedSection.agreementValidMilage =
             agreementStartMilage + agreementPeriod * mileageMultiplier;
@@ -363,7 +372,6 @@ const AMCForm = () => {
       </span>
 
       <div className="sm:ml-[26.5%] md:ml-[21%]  w-full">
-      
         <p className="text-[20px] font-head font-semibold mt-5">
           Customer Personal Details
         </p>

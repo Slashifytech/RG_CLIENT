@@ -10,7 +10,11 @@ import { fetchamcLists, setEmptyAMC } from "../features/amcSlice";
 import Loader from "../Components/Loader";
 import SideNav from "../agent/SideNav";
 import Header from "../Components/Header";
-import { amcCancelByAdmin, amcResubmit, updateAMCStatus } from "../features/AMCapi";
+import {
+  amcCancelByAdmin,
+  amcResubmit,
+  updateAMCStatus,
+} from "../features/AMCapi";
 import { toast } from "react-toastify";
 
 const AdminAmcList = () => {
@@ -37,7 +41,13 @@ const AdminAmcList = () => {
       );
     } else if (roleType === "0" || roleType === "1") {
       dispatch(
-        fetchamcLists({ page, perPage, searchTerm, userId: null, status:false })
+        fetchamcLists({
+          page,
+          perPage,
+          searchTerm,
+          userId: null,
+          status: false,
+        })
       );
     }
 
@@ -71,11 +81,17 @@ const AdminAmcList = () => {
       const res = await amcResubmit(id);
       if (roleType === "2" && userId) {
         dispatch(
-          fetchamcLists({ page, perPage, option:null, userId, option: null })
+          fetchamcLists({ page, perPage, option: null, userId, option: null })
         );
       } else if (roleType === "0" || roleType === "1") {
         dispatch(
-          fetchamcLists({ page, perPage, option:null, userId: null, status:false })
+          fetchamcLists({
+            page,
+            perPage,
+            option: null,
+            userId: null,
+            status: false,
+          })
         );
       }
       toast.success(res?.message || "Amc resubmitted successfully");
@@ -88,7 +104,13 @@ const AdminAmcList = () => {
     try {
       const res = await amcCancelByAdmin(id);
       dispatch(
-        fetchamcLists({ page, perPage, searchTerm, userId: null, status:false })
+        fetchamcLists({
+          page,
+          perPage,
+          searchTerm,
+          userId: null,
+          status: false,
+        })
       );
       toast.success(res?.message || "Amc cancelled successfully");
     } catch (error) {
@@ -96,28 +118,25 @@ const AdminAmcList = () => {
       toast.error(error?.message || "Something Went Wrong");
     }
   };
-    const handleStatus = async(userId, type, reason) => {
-console.log(userId, type, reason)
+  const handleStatus = async (userId, type, reason) => {
+    try {
+      const response = await updateAMCStatus(userId, type, reason);
 
-      try {
-        const response = await updateAMCStatus(userId, type, reason);
-  
-        toast.success(response?.message || "AMC Updated Successfully");
-        dispatch(
-          fetchamcLists({
-            option: null,
-            option: null,
-            option: null,
-            option: null,
-            status: "reqCancel",
-          })
-        );
-      } catch (error) {
-        console.error(error, "Something went wrong");
-        toast.error(error?.message || "Something Went Wrong");
-      }
-    };
-  
+      toast.success(response?.message || "AMC Updated Successfully");
+      dispatch(
+        fetchamcLists({
+          option: null,
+          option: null,
+          option: null,
+          option: null,
+          status: "reqCancel",
+        })
+      );
+    } catch (error) {
+      console.error(error, "Something went wrong");
+      toast.error(error?.message || "Something Went Wrong");
+    }
+  };
 
   return (
     <>
@@ -133,13 +152,13 @@ console.log(userId, type, reason)
         <Link
           onClick={handleDispatch}
           to={roleType === "2" ? "/agent/amc-form" : "/admin/add-amc"}
-          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[14.5%] sm:ml-[26%] mt-4 sm:mt-4 md:mt-4"
+          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[15.5%] sm:ml-[26%] mt-4 sm:mt-4 md:mt-4"
         >
           + Add New Amc
         </Link>
       </div>
 
-      <div className="px-6 flex justify-start md:ml-60 sm:ml-48 mt-6">
+      <div className="px-6 flex justify-start md:ml-64 sm:ml-48 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
@@ -149,7 +168,7 @@ console.log(userId, type, reason)
         />
       </div>
 
-      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[28%] ml-6">
+      <p className="pt-5 text-[20px] font-semibold md:ml-[21%] sm:ml-[28%] ml-6">
         AMC Lists-
       </p>
 
@@ -168,7 +187,7 @@ console.log(userId, type, reason)
           </div>
         ) : (
           <>
-            <div className="md:ml-[19.5%] sm:ml-[28%] mt-6 mr-6  ">
+            <div className="md:ml-[20.5%] sm:ml-[28%] mt-6 mr-6  ">
               <CustomTableFour
                 tableHead={TABLE_HEAD}
                 tableRows={TABLE_ROWS}

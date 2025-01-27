@@ -272,9 +272,9 @@ const router = createBrowserRouter([
   {
     path: "/admin/invoice-form",
     element: (
-      <ProtectedAdmin>
+      <ProtectedAdminTeam>
         <InvoiceForm/>
-      </ProtectedAdmin>
+      </ProtectedAdminTeam>
     ),
   },
  

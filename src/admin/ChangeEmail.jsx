@@ -104,7 +104,7 @@ const ChangeEmail = () => {
           <div className="mt-5">
             <CustomInput
               type="email"
-              title={"Email"}
+              title={"New Email"}
               name="newEmail"
               className="h-11 md:w-full sm:w-full rounded-md text-body bg-input pl-3 border border-[#E8E8E8] outline-none"
               placeHodler="Enter new Email Address"
@@ -117,7 +117,7 @@ const ChangeEmail = () => {
           <div className="mt-5">
             <CustomInput
               type="email"
-              title={"Confirm Email"}
+              title={"Confirm New Email"}
               name="confirmEmail"
               className="h-11 md:w-full sm:w-full rounded-md text-body bg-input pl-3 border border-[#E8E8E8] outline-none"
               placeHodler="Confirm new Email Address"
