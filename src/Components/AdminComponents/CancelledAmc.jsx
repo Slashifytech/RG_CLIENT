@@ -37,6 +37,7 @@ const CancelledAmc = () => {
 
   const TABLE_HEAD = [
     "S.No.",
+    "AMC Id",
     "Name",
     "Email",
     "VIN No.",
@@ -44,6 +45,7 @@ const CancelledAmc = () => {
     "View/Download",
     "Status",
     "Action",
+  
   ];
 
   const TABLE_ROWS = amcLists?.data?.map((data, index) => ({

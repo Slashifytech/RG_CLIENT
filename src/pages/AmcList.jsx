@@ -56,6 +56,7 @@ const AdminAmcList = () => {
 
   const TABLE_HEAD = [
     "S.No.",
+    "AMC Id",
     "Name",
     "Email",
     "VIN No.",

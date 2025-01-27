@@ -729,7 +729,15 @@ export function CustomTableFour({
                     {row?.sno || "NA"}
                   </Typography>
                 </td>
-
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row.data?.customId}
+                  </Typography>
+                </td>
                 <td className="p-4">
                   <Typography
                     variant="small"

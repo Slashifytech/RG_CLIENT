@@ -8,7 +8,6 @@ import { fetchInvoiceByStatus } from "../../features/adminDashboardSlice";
 
 const InvoiceAmcList = ({createdBy}) => {
   const dispatch = useDispatch();
-  console.log(createdBy);
   const { invoicesByStatus } = useSelector((state) => state.admin);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -40,6 +39,7 @@ const InvoiceAmcList = ({createdBy}) => {
 
   const TABLE_HEAD = [
     "S.No.",
+    
     "Invoice Id",
     "Customer Name",
     "Email",

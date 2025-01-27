@@ -52,6 +52,7 @@ const BuyBackLists = () => {
 
   const TABLE_HEAD = [
     "S.No.",
+    "Buyback Id",
     "Name",
     "Email",
     "VIN No.",

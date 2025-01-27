@@ -40,6 +40,7 @@ const InvoiceBuyBackList = ({createdBy}) => {
 
   const TABLE_HEAD = [
     "S.No.",
+    
     "Invoice Id",
     "Customer Name",
     "Email",
