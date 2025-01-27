@@ -154,7 +154,7 @@ const AdminAmcList = () => {
           to={roleType === "2" ? "/agent/amc-form" : "/admin/add-amc"}
           className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[15.5%] sm:ml-[26%] mt-4 sm:mt-4 md:mt-4"
         >
-          + Add New Amc
+          + Add New AMC
         </Link>
       </div>
 

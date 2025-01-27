@@ -267,8 +267,8 @@ const InvoiceForm = () => {
 
   const validateFields = () => {
     const requiredFields = {
-      invoiceType: "Invoice Type is required",
-      email: "Email is required",
+      // invoiceType: "Invoice Type is required",
+      // email: "Email is required",
       ...Object.keys(invoiceData.billingDetail).reduce(
         (acc, key) => ({
           ...acc,
