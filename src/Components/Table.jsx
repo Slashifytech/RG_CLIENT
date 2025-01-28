@@ -851,7 +851,7 @@ export function CustomTableFour({
                       </div>
                     </Typography>
                   </td>
-                ) : roleType === "0" ? (
+                ) : roleType === "0" && row?.data?.isDisabled === false ? (
                   <td className="p-4">
                     <Typography
                       as="a"
@@ -884,6 +884,19 @@ export function CustomTableFour({
                           Cancel
                         </span>
                       </div>
+                    </Typography>
+                  </td>
+                ) : roleType === "0" && row?.data?.isDisabled === true ? (
+                  <td className="p-4">
+                    <Typography
+                      as="a"
+                      variant="small"
+                      color="blue-gray"
+                      className="font-medium"
+                    >
+                      <span className="px-3 rounded-xl py-1 text-white bg-[#D33131]">
+                        Cancelled
+                      </span>
                     </Typography>
                   </td>
                 ) : row?.status === "approved" && roleType === "2" ? (
