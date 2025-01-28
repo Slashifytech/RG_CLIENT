@@ -160,7 +160,6 @@ const ApprovalCard = ({ item, index }) => {
         <li className="md:w-[9%] w-[13%] text-center flex flex-col gap-2">
           {item?.isCancelReq === "reqCancel" ? (
             <Link
-              to="/admin/active-policy"
               onClick={() => handleStatus(item._id, "approvedReq")}
               className="py-1 px-5 bg-primary text-white rounded-lg cursor-pointer "
             >
