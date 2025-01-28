@@ -69,6 +69,8 @@ const ViewBuyBack = forwardRef(({ id }, ref) => {
           <p className="pt-5">
             Customer Name: {data?.customerDetails?.customerName || "NA"}
           </p>
+          <p className="pt-5">Fuel Type: {data?.vehicleDetails?.fuelType}</p>
+
           <p className="pt-5">Model: {data?.vehicleDetails?.vehicleModel}</p>
           <p className="pt-5">VIN No. : {data?.vehicleDetails?.vinNumber}</p>
           <p className="pt-5">

@@ -131,7 +131,9 @@ const ViewAmc = forwardRef(({ id }, ref) => {
             The service package has been named as “RG Annual Maintenance
             Contract”;
           </p>
-
+          <p>
+            Fuel Type: {data?.vehicleDetails?.fuelType || "NA"}
+          </p>
           <p>
             Agreement Period: {data?.vehicleDetails?.agreementPeriod || "NA"}
           </p>

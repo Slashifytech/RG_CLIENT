@@ -301,19 +301,15 @@ const BuyBackForm = () => {
     const {
       vehicleModel,
       vinNumber,
-      agreementPeriod,
       agreementStartDate,
       agreementValidDate,
-      agreementStartMilage,
       validityMilage,
       fuelType,
       deliveryDate,
       totalPayment,
     } = buyBack.vehicleDetails;
 
-    if (!agreementPeriod) newErrors.agreementPeriod = "Agreement period is required.";
     if (!vehicleModel) newErrors.vehicleModel = "Model is required.";
-    if (!agreementStartMilage) newErrors.agreementStartMilage = "Agreement start milage is required.";
     if (!fuelType) newErrors.fuelType = "Fuel type is required.";
     if (!deliveryDate) newErrors.deliveryDate = "Delivery date is required.";
 

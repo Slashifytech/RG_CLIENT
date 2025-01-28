@@ -53,7 +53,6 @@ const InvoiceForm = () => {
       hypothecated: "",
       vinNumber: "",
       branchName: "",
-      vehiclemodel: "",
       model: "",
       gstAmount: "",
       cgst: "",
@@ -63,7 +62,6 @@ const InvoiceForm = () => {
       gmEmail: "",
     },
   });
-  console.log(typeData);
   const [sameAsBilling, setSameAsBilling] = useState(false);
 
   const [errors, setErrors] = useState({});
@@ -158,10 +156,10 @@ const InvoiceForm = () => {
 
     },
     {
-      name: "sgst",
+      name: "totalAmount",
       type: "number",
-      placeholder: "SGST 9%",
-      label: "SGST 9%",
+      placeholder: "Total Amount",
+      label: "Total Amount",
       required: true,
 
     },
@@ -198,11 +196,12 @@ const InvoiceForm = () => {
 
     },
 
+
     {
-      name: "totalAmount",
+      name: "sgst",
       type: "number",
-      placeholder: "Total Amount",
-      label: "Total Amount",
+      placeholder: "SGST 9%",
+      label: "SGST 9%",
       required: true,
 
     },
