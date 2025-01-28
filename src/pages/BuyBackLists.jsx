@@ -10,7 +10,7 @@ import Nav from "../admin/Nav";
 import { fetchBuyBackLists, seEmptytBuyback } from "../features/BuyBackSlice";
 import SideNav from "../agent/SideNav";
 import Header from "../Components/Header";
-import { buyBackCancelByAdmin, buyBackResubmit } from "../features/BuybackApi";
+import { buyBackCancelByAdmin, buyBackResubmit, updatBuyBackStatus } from "../features/BuybackApi";
 import { toast } from "react-toastify";
 
 const BuyBackLists = () => {

@@ -45,7 +45,6 @@ export const CancelReqPopUp = ({
 
 export const AgentCancelReqPopUp = ({ isPopUpAgentOpen, closeAgentPopUp, text, item, cancelPolicyAgentRequest }) => {
   const handleClick = () => {
-   console.log("clicked")
     cancelPolicyAgentRequest(item, "reqCancel", null);
   };
 

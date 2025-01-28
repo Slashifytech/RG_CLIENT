@@ -148,7 +148,7 @@ const ApprovalCard = ({ item, index }) => {
             className="mx-1 text-primary cursor-pointer underline"
           >
             {" "}
-            View AMC{" "}
+            View Buyback{" "}
           </Link>
         </li>
 
