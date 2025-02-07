@@ -64,7 +64,8 @@ const Nav = () => {
       pathPage: "/admin/amc-lists",
       icon: <BiSolidCarMechanic />,
       label: "AMC Lists",
-      otherPath: "/admin/add-amc"
+      otherPath: "/admin/add-amc",
+      otherPathTwo: "/admin/update-AMC"
     },
     {
       pathPage: "/admin/buyback-lists",

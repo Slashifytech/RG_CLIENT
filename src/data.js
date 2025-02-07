@@ -23,12 +23,10 @@ export const invoiceOption = [
 
   ];
   export const locationOption = [
-    { id: 0, value: "Hyderabad SR", label: "Hyderabad SR" },
-    { id: 1, value: "Hyderabad WS", label: "Hyderabad WS" },
-    { id: 2, value: "360 Team", label: "360 Team" },
-    { id: 3, value: "Pune SR", label: "Pune SR" },
-    { id: 4, value: "Nashik SR", label: "Nashik SR" },
-    { id: 5, value: "Nashik WS", label: "Nashik WS" },
-    { id: 6, value: "Vizag SR", label: "Vizag SR" },
-    { id: 7, value: "Vizag WS", label: "Vizag WS" },
+    { id: 0, value: "Kukatpally", label: "Kukatpally" },
+    { id: 1, value: "Bajara Hills", label: "Bajara Hills" },
+    { id: 2, value: "Attapur", label: "Attapur" },
+    { id: 3, value: "Kondapur", label: "Kondapur" },
+    { id: 4, value: "Gachibowli", label: "Gachibowli" },
+    { id: 5, value: "Upcountry", label: "Upcountry" },
   ];

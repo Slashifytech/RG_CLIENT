@@ -37,6 +37,10 @@ const BuyBackForm = () => {
       agreementValidDate: "",
       totalPayment: "",
       fuelType: "",
+      rmEmail: "",
+      rmName: "",
+      rmEmployeeId: "",
+      gmEmail:""
     },
     createdBy: _id,
   });
@@ -62,7 +66,6 @@ const BuyBackForm = () => {
       type: "text",
       placeholder: "Pan Number",
       label: "Pan Number",
-      required: true,
 
     },
     {
@@ -70,13 +73,11 @@ const BuyBackForm = () => {
       type: "number",
       placeholder: "Zip Code",
       label: "Zip Code",
-      required: true,
 
     },
   ];
   const leftFields = [
     { name: "address", type: "text", placeholder: "Address", label: "Address" ,
-      required: true,
 
     },
     { name: "email", type: "email", placeholder: "Email", label: "Email",
@@ -88,7 +89,6 @@ const BuyBackForm = () => {
       type: "text",
       placeholder: "Customer Gst",
       label: "Customer Gst",
-      required: true,
 
     },
     {
@@ -96,7 +96,6 @@ const BuyBackForm = () => {
       type: "text",
       placeholder: "State Code",
       label: "State Code",
-      required: true,
 
     },
   ];
@@ -134,6 +133,13 @@ const BuyBackForm = () => {
       label: "Validity Milage",
       required: true,
 
+    },
+    {
+      name: "rmEmployeeId",
+      type: "text",
+      placeholder: "Employee Id of Relationship Manager/ Service Advisor",
+      label: "Employee Id of Relationship Manager/ Service Advisor",
+      required: true,
     },
     {
       name: "gmEmail",
@@ -180,10 +186,18 @@ const BuyBackForm = () => {
 
     },
     {
+      name: "rmName",
+      type: "text",
+      placeholder: "Relationship Manager / Service Advisor Name",
+      label: "Relationship Manager / Service Advisor Name",
+      required: true,
+    },
+    {
       name: "rmEmail",
       type: "email",
       placeholder: "Relationship Manager/ Service Advisor Email Id",
       label: "Relationship Manager/ Service Advisor Email Id",
+      required: true,
     },
   ];
   const [errors, setErrors] = useState({});
@@ -275,27 +289,19 @@ const BuyBackForm = () => {
     // Customer Details Validation
     const {
       customerName,
-      address,
-      customerGst,
+    
       contact,
-      stateCode,
       email,
-      pan,
-      zipCode,
+ 
     } = buyBack.customerDetails;
 
     if (!customerName) newErrors.customerName = "Customer name is required.";
-    if (!address) newErrors.address = "Address is required.";
-    if (!customerGst) newErrors.customerGst = "Customer GST is required.";
-    if (!pan) newErrors.pan = "Customer PAN is required.";
     if (!/^\d{10}$/.test(contact))
       newErrors.contact = "Contact must be a valid 10-digit number.";
-    if (!stateCode) newErrors.stateCode = "State code is required.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       newErrors.email = "Email must be valid.";
     // if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan)) newErrors.pan = "PAN must be valid.";
-    if (!/^\d{6}$/.test(zipCode))
-      newErrors.zipCode = "Zip Code must be a 6-digit number.";
+
 
     // Vehicle Details Validation
     const {
@@ -307,6 +313,9 @@ const BuyBackForm = () => {
       fuelType,
       deliveryDate,
       totalPayment,
+      rmEmail,
+      rmName,
+      rmEmployeeId,
     } = buyBack.vehicleDetails;
 
     if (!vehicleModel) newErrors.vehicleModel = "Model is required.";
@@ -324,7 +333,9 @@ const BuyBackForm = () => {
       newErrors.validityMilage = "Valid mileage must be a number.";
     if (!/^\d+(\.\d{1,2})?$/.test(totalPayment))
       newErrors.totalPayment = "Total Payment must be a valid number.";
-
+    if (!rmEmail) newErrors.rmEmail = "Email is required.";
+    if (!rmName) newErrors.rmName = "Name is required.";
+    if (!rmEmployeeId) newErrors.rmEmployeeId = "Id is required.";
     setErrors(newErrors);
 
     // Return true if no errors

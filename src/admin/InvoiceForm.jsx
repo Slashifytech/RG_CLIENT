@@ -59,6 +59,8 @@ const InvoiceForm = () => {
       sgst: "",
       totalAmount: "",
       rmEmail: "",
+      rmName: "",
+      rmEmployeeId: "",
       gmEmail: "",
     },
   });
@@ -67,17 +69,18 @@ const InvoiceForm = () => {
   const [errors, setErrors] = useState({});
   const formattedDate = createdDate();
   const rightFields = [
-    { name: "customerName", type: "text", placeholder: "Name", label: "Name" ,
+    {
+      name: "customerName",
+      type: "text",
+      placeholder: "Name",
+      label: "Name",
       required: true,
-      
     },
     {
       name: "zipCode",
       type: "text",
       placeholder: "Zip Code",
       label: "Zip Code",
-      required: true,
-
     },
     {
       name: "contact",
@@ -85,29 +88,21 @@ const InvoiceForm = () => {
       placeholder: "Contact Number",
       label: "Conatct Number",
       required: true,
-
     },
     {
       name: "customerGst",
       type: "text",
       placeholder: "GSTIN",
       label: "GSTIN Number",
-      required: true,
-
     },
   ];
   const leftFields = [
-    { name: "address", type: "text", placeholder: "Address", label: "Address",
-      required: true,
-
-     },
+    { name: "address", type: "text", placeholder: "Address", label: "Address" },
     {
       name: "stateCode",
       type: "text",
       placeholder: "State Code",
       label: "State Code",
-      required: true,
-
     },
     {
       name: "email",
@@ -115,15 +110,12 @@ const InvoiceForm = () => {
       placeholder: "Email Id",
       label: "Email Id",
       required: true,
-
     },
     {
       name: "pan",
       type: "text",
       placeholder: "PAN Number",
       label: "PAN Number",
-      required: true,
-
     },
   ];
 
@@ -134,9 +126,6 @@ const InvoiceForm = () => {
       placeholder: "Branch Name",
       label: "Branch Name",
       required: true,
-
- 
-
     },
     {
       name: "model",
@@ -144,7 +133,6 @@ const InvoiceForm = () => {
       placeholder: "Model",
       label: "Model",
       required: true,
-
     },
     {
       name: "cgst",
@@ -152,8 +140,6 @@ const InvoiceForm = () => {
       placeholder: "CGST 9%",
       label: "CGST 9%",
       required: true,
-      
-
     },
     {
       name: "totalAmount",
@@ -161,7 +147,13 @@ const InvoiceForm = () => {
       placeholder: "Total Amount",
       label: "Total Amount",
       required: true,
-
+    },
+    {
+      name: "rmEmployeeId",
+      type: "text",
+      placeholder: "Employee Id of Relationship Manager/ Service Advisor",
+      label: "Employee Id of Relationship Manager/ Service Advisor",
+      required: true,
     },
     {
       name: "gmEmail",
@@ -177,7 +169,6 @@ const InvoiceForm = () => {
       placeholder: "Hypothecated To",
       label: "Hypothecated To",
       required: true,
-
     },
     {
       name: "vinNumber",
@@ -185,7 +176,6 @@ const InvoiceForm = () => {
       placeholder: "Vin Number",
       label: "Vin Number",
       required: true,
-
     },
     {
       name: "gstAmount",
@@ -193,23 +183,27 @@ const InvoiceForm = () => {
       placeholder: "Pre Gst Amount",
       label: "Pre Gst Amount",
       required: true,
-
     },
-
-
     {
       name: "sgst",
       type: "number",
       placeholder: "SGST 9%",
       label: "SGST 9%",
       required: true,
-
+    },
+    {
+      name: "rmName",
+      type: "text",
+      placeholder: "Relationship Manager / Service Advisor Name",
+      label: "Relationship Manager / Service Advisor Name",
+      required: true,
     },
     {
       name: "rmEmail",
       type: "email",
       placeholder: "Relationship Manager/ Service Advisor Email Id",
       label: "Relationship Manager/ Service Advisor Email Id",
+      required: true
     },
   ];
 
@@ -239,9 +233,6 @@ const InvoiceForm = () => {
       const cgst = gstAmount * 0.09; // 9% of GST
       const sgst = gstAmount * 0.09; // 9% of GST
       const totalAmount = gstAmount + cgst + sgst;
-
-      // console.log("CGST:", cgst, "SGST:", sgst, "Total Amount:", totalAmount);
-
       return {
         ...prevState,
         vehicleDetails: {
@@ -265,28 +256,44 @@ const InvoiceForm = () => {
   };
 
   const validateFields = () => {
+    const notRequiredVehicleFields = ["vehicleDetails.gmEmail"];
+    const notRequiredCustomerFields = [
+      "customerDetails.address",
+      "customerDetails.pan",
+      "customerDetails.stateCode",
+      "customerDetails.custometGst",
+      "customerDetails.zipCode",
+    ];
+
     const requiredFields = {
-      // invoiceType: "Invoice Type is required",
-      // email: "Email is required",
-      ...Object.keys(invoiceData.billingDetail).reduce(
-        (acc, key) => ({
-          ...acc,
-          [`billingDetail.${key}`]: `${key} in Billing Detail is required`,
-        }),
+      ...Object.keys(invoiceData.customerDetails).reduce(
+        (acc, key) =>
+          notRequiredCustomerFields.includes(`customerDetails.${key}`)
+            ? acc
+            : {
+                ...acc,
+                [`customerDetails.${key}`]: `${key} in Customer Details is required`,
+              },
         {}
       ),
       ...Object.keys(invoiceData.shippingDetails).reduce(
-        (acc, key) => ({
-          ...acc,
-          [`shippingDetails.${key}`]: `${key} in Shipping Detail is required`,
-        }),
+        (acc, key) =>
+          notRequiredCustomerFields.includes(`shippingDetails.${key}`)
+            ? acc
+            : {
+                ...acc,
+                [`shippingDetails.${key}`]: `${key} in shipping details is required`,
+              },
         {}
       ),
       ...Object.keys(invoiceData.vehicleDetails).reduce(
-        (acc, key) => ({
-          ...acc,
-          [`vehicleDetails.${key}`]: `${key} in Vehicle Details is required`,
-        }),
+        (acc, key) =>
+          notRequiredVehicleFields.includes(`vehicleDetails.${key}`)
+            ? acc
+            : {
+                ...acc,
+                [`vehicleDetails.${key}`]: `${key} in Vehicle Details is required`,
+              },
         {}
       ),
     };
@@ -377,6 +384,12 @@ const InvoiceForm = () => {
           rmEmail:
             incomingData.vehicleDetails?.rmEmail ||
             prevState.vehicleDetails.rmEmail,
+          rmName:
+            incomingData.vehicleDetails?.rmName ||
+            prevState.vehicleDetails.rmName,
+          rmEmployeeId:
+            incomingData.vehicleDetails?.rmEmployeeId ||
+            prevState.vehicleDetails.rmEmployeeId,
           gmEmail:
             incomingData.vehicleDetails?.gmEmail ||
             prevState.vehicleDetails.gmEmail,
@@ -391,8 +404,8 @@ const InvoiceForm = () => {
     if (isValid) {
     } else {
       console.log("Validation errors:", errors);
-       toast.error("Please fill in all required fields");
-       return
+      toast.error("Please fill in all required fields");
+      return;
     }
 
     // const getChangedFields = (current, original) => {
@@ -411,7 +424,7 @@ const InvoiceForm = () => {
             ...changes.vehicleDetails,
             vinNumber: current[key].vinNumber,
             rmEmail: current[key].rmEmail,
-            gmEmail: current[key].gmEmail
+            gmEmail: current[key].gmEmail,
           };
         }
         if (JSON.stringify(current[key]) !== JSON.stringify(original[key])) {

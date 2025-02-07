@@ -8,7 +8,7 @@ import { addNewAMC, updateAMC } from "../features/AMCapi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchamcDataById } from "../features/amcSlice";
 import { createdDate, formatDate } from "../helper/commonHelperFunc";
-import { fuelType, modelOption } from "../data";
+import { fuelType, locationOption, modelOption } from "../data";
 import Header from "../Components/Header";
 const AMCForm = () => {
   const location = useLocation();
@@ -42,6 +42,8 @@ const AMCForm = () => {
       dealerLocation: "",
       total: "",
       rmEmail: "",
+      rmName: "",
+      rmEmployeeId: "",
       gmEmail: "",
     },
     createdBy: _id,
@@ -67,32 +69,34 @@ const AMCForm = () => {
       type: "text",
       placeholder: "Pan Number",
       label: "Pan Number",
-      required: true,
     },
     {
       name: "zipCode",
       type: "number",
       placeholder: "Zip Code",
       label: "Zip Code",
-      required: true,
     },
   ];
   const leftFields = [
-    { name: "address", type: "text", placeholder: "Address", label: "Address",  required: true, },
-    { name: "email", type: "email", placeholder: "Email", label: "Email",  required: true,},
+    { name: "address", type: "text", placeholder: "Address", label: "Address" },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      label: "Email",
+      required: true,
+    },
     {
       name: "customerGst",
       type: "text",
       placeholder: "Customer Gst",
       label: "Customer Gst",
-      required: true,
     },
     {
       name: "stateCode",
       type: "text",
       placeholder: "State Code",
       label: "State Code",
-      required: true,
     },
   ];
   const rightVehicleFields = [
@@ -132,6 +136,13 @@ const AMCForm = () => {
       required: true,
     },
     {
+      name: "rmEmployeeId",
+      type: "text",
+      placeholder: "Employee Id of Relationship Manager/ Service Advisor",
+      label: "Employee Id of Relationship Manager/ Service Advisor",
+      required: true,
+    },
+    {
       name: "gmEmail",
       type: "email",
       placeholder: "General Manager Email Id",
@@ -168,7 +179,8 @@ const AMCForm = () => {
       type: "date",
       placeholder: "Agreement Valid Date",
       label: "Agreement Valid Date",
-      required: true,},
+      required: true,
+    },
     {
       name: "agreementValidMilage",
       type: "number",
@@ -178,9 +190,17 @@ const AMCForm = () => {
     },
     {
       name: "dealerLocation",
-      type: "text",
+      type: "select",
+      options: locationOption,
       placeholder: "Location of the Dealer",
       label: "Location of the Dealer",
+      required: true,
+    },
+    {
+      name: "rmName",
+      type: "text",
+      placeholder: "Relationship Manager / Service Advisor Name",
+      label: "Relationship Manager / Service Advisor Name",
       required: true,
     },
     {
@@ -188,6 +208,7 @@ const AMCForm = () => {
       type: "email",
       placeholder: "Relationship Manager/ Service Advisor Email Id",
       label: "Relationship Manager/ Service Advisor Email Id",
+      required: true,
     },
   ];
   const [errors, setErrors] = useState({});
@@ -284,28 +305,19 @@ const AMCForm = () => {
     // Customer Details Validation
     const {
       customerName,
-      address,
-      customerGst,
       contact,
-      stateCode,
       email,
-      pan,
-      zipCode,
+    
     } = AMCData.customerDetails;
 
     if (!customerName) newErrors.customerName = "Customer name is required.";
-    if (!address) newErrors.address = "Address is required.";
-    if (!customerGst) newErrors.customerGst = "Customer GST is required.";
-    if (!pan) newErrors.pan = "Customer PAN is required.";
 
     if (!/^\d{10}$/.test(contact))
       newErrors.contact = "Contact must be a valid 10-digit number.";
-    if (!stateCode) newErrors.stateCode = "State code is required.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       newErrors.email = "Email must be valid.";
     // if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan)) newErrors.pan = "PAN must be valid.";
-    if (!/^\d{6}$/.test(zipCode))
-      newErrors.zipCode = "Zip Code must be a 6-digit number.";
+
 
     // Vehicle Details Validation
     const {
@@ -320,6 +332,9 @@ const AMCForm = () => {
       MaximumValidPMS,
       dealerLocation,
       total,
+      rmEmail,
+      rmName,
+      rmEmployeeId,
     } = AMCData.vehicleDetails;
 
     if (!model) newErrors.model = "Model is required.";
@@ -340,6 +355,9 @@ const AMCForm = () => {
       newErrors.MaximumValidPMS = "PMS must be a number.";
     if (!dealerLocation)
       newErrors.dealerLocation = "Dealer location is required.";
+    if (!rmEmail) newErrors.rmEmail = "Email is required.";
+    if (!rmName) newErrors.rmName = "Name is required.";
+    if (!rmEmployeeId) newErrors.rmEmployeeId = "Id is required.";
     if (!/^\d+(\.\d{1,2})?$/.test(total))
       newErrors.total = "Total must be a valid number.";
 
@@ -367,7 +385,7 @@ const AMCForm = () => {
       console.log("Form data is valid:", AMCData);
     } else {
       console.log("Validation errors:", errors);
-    toast.error("Please fill in all required fields");
+      toast.error("Please fill in all required fields");
       return;
     }
     try {
