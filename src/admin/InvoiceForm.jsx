@@ -260,36 +260,39 @@ const InvoiceForm = () => {
   const validateFields = () => {
     const notRequiredVehicleFields = ["vehicleDetails.gmEmail"];
     const notRequiredCustomerFields = [
-      "customerDetails.address",
-      "customerDetails.pan",
-      "customerDetails.stateCode",
-      "customerDetails.custometGst",
-      "customerDetails.zipCode",
+      "billingDetail.address",
+      "billingDetail.pan",
+      "billingDetail.stateCode",
+      "billingDetail.customerGst", 
+      "billingDetail.zipCode",
+    ];
+    const notRequiredShippingDetails = [
+      "shippingDetails.address",
+      "shippingDetails.pan",
+      "shippingDetails.stateCode",
+      "shippingDetails.customerGst", 
+      "shippingDetails.zipCode",
     ];
   
-    // Ensure invoiceData and its properties exist
-    const customerDetails = invoiceData?.customerDetails || {};
+    const billingDetail = invoiceData?.billingDetail || {};
     const shippingDetails = invoiceData?.shippingDetails || {};
     const vehicleDetails = invoiceData?.vehicleDetails || {};
   
     const requiredFields = {
-      // Customer Details (excluding not required fields)
-      ...Object.keys(customerDetails).reduce(
+      ...Object.keys(billingDetail).reduce(
         (acc, key) =>
-          notRequiredCustomerFields.includes(`customerDetails.${key}`)
+          notRequiredCustomerFields.includes(`billingDetail.${key}`)
             ? acc
-            : { ...acc, [`customerDetails.${key}`]: `${key} in Customer Details is required` },
+            : { ...acc, [`billingDetail.${key}`]: `${key} in Billing Details is required` },
         {}
       ),
-      // Shipping Details (Always Required)
-  ...Object.keys(shippingDetails).reduce(
+      ...Object.keys(shippingDetails).reduce(
         (acc, key) =>
-          notRequiredCustomerFields.includes(`shippingDetails.${key}`)
+          notRequiredShippingDetails.includes(`shippingDetails.${key}`)
             ? acc
             : { ...acc, [`shippingDetails.${key}`]: `${key} in Shipping Details is required` },
         {}
       ),
-      // Vehicle Details (excluding not required fields)
       ...Object.keys(vehicleDetails).reduce(
         (acc, key) =>
           notRequiredVehicleFields.includes(`vehicleDetails.${key}`)
@@ -310,6 +313,7 @@ const InvoiceForm = () => {
         errors[fieldPath] = requiredFields[fieldPath];
       }
     });
+  
   
     setErrors(errors);
     return Object.keys(errors).length === 0;
