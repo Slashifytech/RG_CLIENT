@@ -429,12 +429,22 @@ const InvoiceForm = () => {
             gmEmail: current[key].gmEmail,
           };
         }
+        
         if (JSON.stringify(current[key]) !== JSON.stringify(original[key])) {
           changes[key] = current[key];
         }
+    
+        if (key === "billingDetail" && current[key]?.email) {
+          changes.billingDetail = {
+            ...changes.billingDetail,
+            email: current[key].email,
+          };
+        }
+    
         return changes;
       }, {});
     };
+    
     const payload = invoiceId
       ? getChangedFields(invoiceData, invoiceById?.invoice || {})
       : { ...invoiceData, createdBy: createdBy };
