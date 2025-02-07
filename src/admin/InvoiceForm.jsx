@@ -264,55 +264,55 @@ const InvoiceForm = () => {
       "customerDetails.custometGst",
       "customerDetails.zipCode",
     ];
-
+  
+    // Ensure invoiceData and its properties exist
+    const customerDetails = invoiceData?.customerDetails || {};
+    const shippingDetails = invoiceData?.shippingDetails || {};
+    const vehicleDetails = invoiceData?.vehicleDetails || {};
+  
     const requiredFields = {
-      ...Object.keys(invoiceData.customerDetails).reduce(
+      // Customer Details (excluding not required fields)
+      ...Object.keys(customerDetails).reduce(
         (acc, key) =>
           notRequiredCustomerFields.includes(`customerDetails.${key}`)
             ? acc
-            : {
-                ...acc,
-                [`customerDetails.${key}`]: `${key} in Customer Details is required`,
-              },
+            : { ...acc, [`customerDetails.${key}`]: `${key} in Customer Details is required` },
         {}
       ),
-      ...Object.keys(invoiceData.shippingDetails).reduce(
+      // Shipping Details (Always Required)
+  ...Object.keys(shippingDetails).reduce(
         (acc, key) =>
           notRequiredCustomerFields.includes(`shippingDetails.${key}`)
             ? acc
-            : {
-                ...acc,
-                [`shippingDetails.${key}`]: `${key} in shipping details is required`,
-              },
+            : { ...acc, [`shippingDetails.${key}`]: `${key} in Shipping Details is required` },
         {}
       ),
-      ...Object.keys(invoiceData.vehicleDetails).reduce(
+      // Vehicle Details (excluding not required fields)
+      ...Object.keys(vehicleDetails).reduce(
         (acc, key) =>
           notRequiredVehicleFields.includes(`vehicleDetails.${key}`)
             ? acc
-            : {
-                ...acc,
-                [`vehicleDetails.${key}`]: `${key} in Vehicle Details is required`,
-              },
+            : { ...acc, [`vehicleDetails.${key}`]: `${key} in Vehicle Details is required` },
         {}
       ),
     };
-
+  
     const errors = {};
-
+  
     Object.keys(requiredFields).forEach((fieldPath) => {
       const value = fieldPath
         .split(".")
-        .reduce((o, key) => o?.[key], invoiceData);
-      if (!value) {
+        .reduce((o, key) => (o && typeof o === "object" ? o[key] : undefined), invoiceData);
+  
+      if (value === undefined || value === null || value === "") {
         errors[fieldPath] = requiredFields[fieldPath];
       }
     });
-
+  
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
-
+  
   useEffect(() => {
     if (invoiceId) {
       dispatch(fetchInvoiceById({ invoiceId }));
