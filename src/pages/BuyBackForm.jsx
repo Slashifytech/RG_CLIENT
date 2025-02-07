@@ -134,7 +134,6 @@ const BuyBackForm = () => {
       label: "Name of Relationship Manager / Service Advisor",
       required: true,
     },
-
     {
       name: "gmEmail",
       type: "email",
@@ -182,6 +181,8 @@ const BuyBackForm = () => {
       required: true,
     },
 
+ 
+  
     {
       name: "rmEmployeeId",
       type: "text",

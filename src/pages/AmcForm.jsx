@@ -135,6 +135,7 @@ const AMCForm = () => {
       label: "Total Amount",
       required: true,
     },
+ 
     {
       name: "rmName",
       type: "text",
@@ -204,7 +205,8 @@ const AMCForm = () => {
       placeholder: "Employee Id of Relationship Manager/ Service Advisor",
       label: "Employee Id of Relationship Manager/ Service Advisor",
       required: true,
-    },
+    }, 
+  
     {
       name: "gmEmail",
       type: "email",

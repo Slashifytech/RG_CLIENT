@@ -149,11 +149,12 @@ const InvoiceForm = () => {
       required: true,
     },
     
+ 
     {
-      name: "rmName",
+      name: "rmEmployeeId",
       type: "text",
-      placeholder: "Relationship Manager / Service Advisor Name",
-      label: "Name of Relationship Manager / Service Advisor ",
+      placeholder: "Employee Id of Relationship Manager/ Service Advisor",
+      label: "Employee Id of Relationship Manager/ Service Advisor",
       required: true,
     },
     {
@@ -193,10 +194,10 @@ const InvoiceForm = () => {
       required: true,
     },
     {
-      name: "rmEmployeeId",
+      name: "rmName",
       type: "text",
-      placeholder: "Employee Id of Relationship Manager/ Service Advisor",
-      label: "Employee Id of Relationship Manager/ Service Advisor",
+      placeholder: "Relationship Manager / Service Advisor Name",
+      label: "Name of Relationship Manager / Service Advisor ",
       required: true,
     },
     {
