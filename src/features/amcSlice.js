@@ -29,13 +29,13 @@ export const fetchamcLists = createAsyncThunk(
 const amcSlice = createSlice({
   name: "amc",
   initialState: {
-    amcByIdorStatus: null,
+    amcByIdorStatus: [],
     amcLists: null,
   },
 
   reducers:{
         setEmptyAMC(state){
-          state.amcByIdorStatus = null
+          state.amcByIdorStatus = []
         }
   },
   extraReducers: (builder) => {
@@ -51,7 +51,7 @@ const amcSlice = createSlice({
       .addCase(fetchamcDataById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.amcByIdorStatus = null;
+        state.amcByIdorStatus = [];
       })
       .addCase(fetchamcLists.pending, (state) => {
         state.loading = true;

@@ -151,9 +151,9 @@ const GroupedInput = ({
         type={field.type}
         name={field.name}
         placeHolder={field.placeholder}
-        value={stateName[field.name]}
+        value={stateName[field?.name]}
         onChange={onChange}
-        errorMessage={errors[field.name]}
+        errorMessage={errors[field?.name]}
       />
     );
   };

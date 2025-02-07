@@ -1,8 +1,12 @@
 import React from "react";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { setEmptyAMC } from "../features/amcSlice";
+import { setEmptytBuyback } from "../features/BuyBackSlice";
 
 const InvoicePopUp = ({ isOpen, closePopUp, docType, id }) => {
+  const dispatch =useDispatch()
   return (
     <>
       {isOpen && (
@@ -18,6 +22,7 @@ const InvoicePopUp = ({ isOpen, closePopUp, docType, id }) => {
             </p>
             <div className="flex justify-center items-center font-DMsans gap-5 mt-5">
               <Link
+                // onClick={dispatch(docType === "AMC" ? setEmptytBuyback() :  setEmptyAMC())}
                 to="/admin/invoice-form"
                 state={{id: id, type: docType}}
                 className="px-8 py-2 cursor-pointer  rounded-lg text-primary border border-primary hover:bg-black hover:text-white"

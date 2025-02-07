@@ -7,7 +7,7 @@ import DataNotFound from "../admin/DataNotFound";
 import { CustomTableFour } from "../Components/Table";
 import { FaPencil } from "react-icons/fa6";
 import Nav from "../admin/Nav";
-import { fetchBuyBackLists, seEmptytBuyback } from "../features/BuyBackSlice";
+import { fetchBuyBackLists, setEmptytBuyback } from "../features/BuyBackSlice";
 import SideNav from "../agent/SideNav";
 import Header from "../Components/Header";
 import { buyBackCancelByAdmin, buyBackResubmit, updatBuyBackStatus } from "../features/BuybackApi";
@@ -151,7 +151,7 @@ const BuyBackLists = () => {
         <Link
           to={roleType === "2" ? "/agent/buyback-form" : "/admin/add-buyback"}
           state={{ addNew: "isNew" }}
-          onClick={()=>dispatch(seEmptytBuyback())}
+          onClick={()=>dispatch(setEmptytBuyback())}
           className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[15.5%] sm:ml-[28%] mt-4 sm:mt-4 md:mt-4"
         >
           + Add New Buy Back

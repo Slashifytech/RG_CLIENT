@@ -18,11 +18,13 @@ const invoiceSlice = createSlice({
     name: "invoice",
     initialState:{
         invoiceById:""
+        
     },
     reducers:{
       setEmptyInvoiceData(state){
            state.invoiceById = []
-      }
+      }, 
+   
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchInvoiceById.pending, (state)=>{
@@ -35,7 +37,7 @@ const invoiceSlice = createSlice({
         })
       .addCase(fetchInvoiceById.rejected, (state, action)=>{
         state.loading = false;
-        state.invoiceById = ""
+        state.invoiceById = null
       })
     }
 })

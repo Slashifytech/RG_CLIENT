@@ -11,7 +11,7 @@ export const fetchbuyBackDataById = createAsyncThunk(
       console.log(error);
       return rejectWithValue(err.response ? err.response.data : err.message);
     }
-  }
+}
 );
 
 export const fetchBuyBackLists = createAsyncThunk(
@@ -29,12 +29,12 @@ export const fetchBuyBackLists = createAsyncThunk(
 const buyBackSlice = createSlice({
   name: "buyBack",
   initialState: {
-    buyBackByIdorStatus: null,
+    buyBackByIdorStatus: [],
     BuyBackLists: null,
   },
   reducers:{
-    seEmptytBuyback(state){
-      state.buyBackByIdorStatus = null
+    setEmptytBuyback(state){
+      state.buyBackByIdorStatus = []
     }
 },
 
@@ -51,7 +51,7 @@ const buyBackSlice = createSlice({
       .addCase(fetchbuyBackDataById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.buyBackByIdorStatus = null;
+        state.buyBackByIdorStatus = [];
       })
       .addCase(fetchBuyBackLists.pending, (state) => {
         state.loading = true;
@@ -64,9 +64,9 @@ const buyBackSlice = createSlice({
       .addCase(fetchBuyBackLists.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.BuyBackLists = null;
+        state.BuyBackLists = [];
       });
   },
 });
-export const {seEmptytBuyback} = buyBackSlice.actions
+export const {setEmptytBuyback} = buyBackSlice.actions
 export default buyBackSlice.reducer;

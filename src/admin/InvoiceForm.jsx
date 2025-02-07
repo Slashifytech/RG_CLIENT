@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { GroupedInput } from "../Components/Input";
 import { createdDate } from "../helper/commonHelperFunc";
 import Nav from "./Nav";
@@ -320,11 +320,8 @@ const InvoiceForm = () => {
       dispatch(fetchInvoiceById({ invoiceId }));
     }
     if (id) {
-      if (typeData === "AMC") {
         dispatch(fetchamcDataById({ id, option: null }));
-      } else if (typeData === "Buyback") {
         dispatch(fetchbuyBackDataById({ id, option: null }));
-      }
     }
   }, [id, invoiceId]);
 
@@ -337,68 +334,47 @@ const InvoiceForm = () => {
     }
   }, [invoiceById?.invoice]);
 
+  const mergedData = useMemo(() => {
+    if (!typeData) return {}; 
+  
+    return {
+      ...buyBackByIdorStatus?.data,  
+      ...amcByIdorStatus?.data       
+    };
+  }, [typeData, amcByIdorStatus, buyBackByIdorStatus]);
+  
   useEffect(() => {
-    if (amcByIdorStatus?.data || buyBackByIdorStatus?.data) {
-      const incomingData = amcByIdorStatus?.data || buyBackByIdorStatus?.data;
-
+    if (typeData) {
       setInvoiceData((prevState) => ({
         ...prevState,
-        invoiceType: incomingData.invoiceType || prevState.invoiceType,
-        email: incomingData.email || prevState.email,
+        invoiceType: mergedData.invoiceType || prevState.invoiceType || "",
+        email: mergedData.email || prevState.email || "",
         billingDetail: {
-          ...prevState.billingDetail,
-          customerName: incomingData?.customerDetails?.customerName || "",
-          address:
-            incomingData?.customerDetails?.address ||
-            prevState.billingDetail.address,
-          contact:
-            incomingData?.customerDetails?.contact ||
-            prevState.billingDetail.contact,
-          email:
-            incomingData?.customerDetails?.email ||
-            prevState.billingDetail.email,
-          pan:
-            incomingData?.customerDetails?.pan || prevState.billingDetail.pan,
-          customerGst:
-            incomingData?.customerDetails?.customerGst ||
-            prevState.billingDetail.customerGst,
-          zipCode:
-            incomingData?.customerDetails?.zipCode ||
-            prevState.billingDetail.zipCode,
-          stateCode:
-            incomingData?.customerDetails?.stateCode ||
-            prevState.billingDetail.stateCode,
+          customerName: mergedData?.customerDetails?.customerName || "",
+          address: mergedData?.customerDetails?.address || "",
+          contact: mergedData?.customerDetails?.contact || "",
+          email: mergedData?.customerDetails?.email || "",
+          pan: mergedData?.customerDetails?.pan || "",
+          customerGst: mergedData?.customerDetails?.customerGst || "",
+          zipCode: mergedData?.customerDetails?.zipCode || "",
+          stateCode: mergedData?.customerDetails?.stateCode || "",
         },
-
         vehicleDetails: {
-          ...prevState.vehicleDetails,
-          vinNumber:
-            incomingData.vehicleDetails?.vinNumber ||
-            prevState.vehicleDetails.vinNumber,
-          model:
-            incomingData.vehicleDetails?.model ||
-            incomingData.vehicleDetails?.vehicleModel ||
-            prevState.vehicleDetails.model,
-          gstAmount:
-            incomingData.vehicleDetails?.total ||
-            incomingData.vehicleDetails?.totalPayment ||
-            prevState.vehicleDetails.gstAmount,
-          rmEmail:
-            incomingData.vehicleDetails?.rmEmail ||
-            prevState.vehicleDetails.rmEmail,
-          rmName:
-            incomingData.vehicleDetails?.rmName ||
-            prevState.vehicleDetails.rmName,
-          rmEmployeeId:
-            incomingData.vehicleDetails?.rmEmployeeId ||
-            prevState.vehicleDetails.rmEmployeeId,
-          gmEmail:
-            incomingData.vehicleDetails?.gmEmail ||
-            prevState.vehicleDetails.gmEmail,
+          vinNumber: mergedData.vehicleDetails?.vinNumber || "",
+          model: mergedData.vehicleDetails?.model || mergedData.vehicleDetails?.vehicleModel || "",
+          gstAmount: mergedData.vehicleDetails?.total || mergedData.vehicleDetails?.totalPayment || "",
+          rmEmail: mergedData.vehicleDetails?.rmEmail || "",
+          rmName: mergedData.vehicleDetails?.rmName || "",
+          rmEmployeeId: mergedData.vehicleDetails?.rmEmployeeId || "",
+          gmEmail: mergedData.vehicleDetails?.gmEmail || "",
         },
       }));
+    
+      
     }
-  }, [amcByIdorStatus, buyBackByIdorStatus]);
+  }, [typeData, mergedData]);
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateFields();

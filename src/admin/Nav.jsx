@@ -71,7 +71,8 @@ const Nav = () => {
       pathPage: "/admin/buyback-lists",
       icon: <FaCarOn />,
       label: "Buy Back Lists",
-      otherPath: "/admin/add-buyback"
+      otherPath: "/admin/add-buyback",
+      otherPathTwo: "/admin/update-buyback"
     },
     {
       pathPage: "/admin/invoice-lists",

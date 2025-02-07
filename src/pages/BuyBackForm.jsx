@@ -134,11 +134,13 @@ const BuyBackForm = () => {
       label: "Name of Relationship Manager / Service Advisor",
       required: true,
     },
+
     {
-      name: "gmEmail",
+      name: "rmEmail",
       type: "email",
-      placeholder: "General Manager Email Id",
-      label: "General Manager Email",
+      placeholder: " Relationship Manager/ Service Advisor Email Id",
+      label: "Email Id of Relationship Manager/ Service Advisor ",
+      required: true,
     },
   ];
 
@@ -191,11 +193,10 @@ const BuyBackForm = () => {
       required: true,
     },
     {
-      name: "rmEmail",
+      name: "gmEmail",
       type: "email",
-      placeholder: " Relationship Manager/ Service Advisor Email Id",
-      label: "Email Id of Relationship Manager/ Service Advisor ",
-      required: true,
+      placeholder: "General Manager Email Id",
+      label: "General Manager Email",
     },
   ];
   const [errors, setErrors] = useState({});
