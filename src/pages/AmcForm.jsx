@@ -136,17 +136,18 @@ const AMCForm = () => {
       required: true,
     },
     {
-      name: "rmEmployeeId",
+      name: "rmName",
       type: "text",
-      placeholder: "Employee Id of Relationship Manager/ Service Advisor",
-      label: "Employee Id of Relationship Manager/ Service Advisor",
+      placeholder: "Relationship Manager / Service Advisor Name",
+      label: "Name of Relationship Manager / Service Advisor",
       required: true,
     },
     {
-      name: "gmEmail",
+      name: "rmEmail",
       type: "email",
-      placeholder: "General Manager Email Id",
-      label: "General Manager Email",
+      placeholder: " Relationship Manager/ Service Advisor Email Id",
+      label: "Email Id of Relationship Manager/ Service Advisor ",
+      required: true,
     },
   ];
 
@@ -196,19 +197,19 @@ const AMCForm = () => {
       label: "Location of the Dealer",
       required: true,
     },
+ 
     {
-      name: "rmName",
+      name: "rmEmployeeId",
       type: "text",
-      placeholder: "Relationship Manager / Service Advisor Name",
-      label: "Relationship Manager / Service Advisor Name",
+      placeholder: "Employee Id of Relationship Manager/ Service Advisor",
+      label: "Employee Id of Relationship Manager/ Service Advisor",
       required: true,
     },
     {
-      name: "rmEmail",
+      name: "gmEmail",
       type: "email",
-      placeholder: "Relationship Manager/ Service Advisor Email Id",
-      label: "Relationship Manager/ Service Advisor Email Id",
-      required: true,
+      placeholder: "General Manager Email Id",
+      label: "General Manager Email",
     },
   ];
   const [errors, setErrors] = useState({});
@@ -302,7 +303,6 @@ const AMCForm = () => {
   const validateFields = () => {
     const newErrors = {};
 
-    // Customer Details Validation
     const {
       customerName,
       contact,
@@ -410,7 +410,7 @@ const AMCForm = () => {
         <Header />
       </div>
       <span className="flex md:flex-row flex-col md:items-center justify-between md:mx-36 mx-6 font-head pt-10 ">
-        <p className="md:text-[23px] text-[18px] font-semibold pt-12 md:ml-[13%] sm:ml-[25%]">
+        <p className="md:text-[23px] text-[18px] font-semibold pt-12 md:ml-[13.5%] sm:ml-[25%]">
           {id ? "Update AMC" : "Add New AMC"}
         </p>
         <p className="md:text-[18px] text-[16px] font-medium md:pt-12 pt-4 sm:ml-[25%]">

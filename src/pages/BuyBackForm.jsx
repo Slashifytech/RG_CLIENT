@@ -7,7 +7,7 @@ import SideNav from "../agent/SideNav";
 import { useDispatch, useSelector } from "react-redux";
 import { createdDate, formatDate } from "../helper/commonHelperFunc";
 import { addNewBuyBack, updateBuyBack } from "../features/BuybackApi";
-import { fuelType, modelOption } from "../data";
+import { fuelType, locationOption, modelOption } from "../data";
 import { fetchbuyBackDataById } from "../features/BuyBackSlice";
 import Header from "../Components/Header";
 const BuyBackForm = () => {
@@ -32,6 +32,7 @@ const BuyBackForm = () => {
     vehicleDetails: {
       vehicleModel: "",
       vinNumber: "",
+      dealerLocation: "",
       validityMilage: "",
       agreementStartDate: "",
       agreementValidDate: "",
@@ -40,7 +41,7 @@ const BuyBackForm = () => {
       rmEmail: "",
       rmName: "",
       rmEmployeeId: "",
-      gmEmail:""
+      gmEmail: "",
     },
     createdBy: _id,
   });
@@ -59,44 +60,40 @@ const BuyBackForm = () => {
       placeholder: "Contact",
       label: "Contact",
       required: true,
-
     },
     {
       name: "pan",
       type: "text",
       placeholder: "Pan Number",
       label: "Pan Number",
-
     },
     {
       name: "zipCode",
       type: "number",
       placeholder: "Zip Code",
       label: "Zip Code",
-
     },
   ];
   const leftFields = [
-    { name: "address", type: "text", placeholder: "Address", label: "Address" ,
-
-    },
-    { name: "email", type: "email", placeholder: "Email", label: "Email",
+    { name: "address", type: "text", placeholder: "Address", label: "Address" },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      label: "Email",
       required: true,
-
-     },
+    },
     {
       name: "customerGst",
       type: "text",
       placeholder: "Customer Gst",
       label: "Customer Gst",
-
     },
     {
       name: "stateCode",
       type: "text",
       placeholder: "State Code",
       label: "State Code",
-
     },
   ];
   const rightVehicleFields = [
@@ -107,7 +104,6 @@ const BuyBackForm = () => {
       label: "Fuel Type",
       options: fuelType,
       required: true,
-
     },
     {
       name: "agreementStartDate",
@@ -115,16 +111,14 @@ const BuyBackForm = () => {
       placeholder: "Agreement Start Date",
       label: "Agreement Start Date",
       required: true,
-
     },
-  
+
     {
       name: "deliveryDate",
       type: "date",
       placeholder: "Delivery Date",
       label: "Delivery Date",
       required: true,
-
     },
     {
       name: "validityMilage",
@@ -132,22 +126,20 @@ const BuyBackForm = () => {
       placeholder: "Validity Milage",
       label: "Validity Milage",
       required: true,
-
     },
     {
-      name: "rmEmployeeId",
+      name: "rmName",
       type: "text",
-      placeholder: "Employee Id of Relationship Manager/ Service Advisor",
-      label: "Employee Id of Relationship Manager/ Service Advisor",
+      placeholder: "Relationship Manager / Service Advisor Name",
+      label: "Name of Relationship Manager / Service Advisor",
       required: true,
     },
+
     {
       name: "gmEmail",
       type: "email",
       placeholder: "General Manager Email Id",
       label: "General Manager Email",
-    
-
     },
   ];
 
@@ -159,7 +151,6 @@ const BuyBackForm = () => {
       label: "Model",
       options: modelOption,
       required: true,
-
     },
     {
       name: "vinNumber",
@@ -167,7 +158,6 @@ const BuyBackForm = () => {
       placeholder: "Vin Number",
       label: "Vin Number",
       required: true,
-
     },
     {
       name: "agreementValidDate",
@@ -175,7 +165,6 @@ const BuyBackForm = () => {
       placeholder: "Agreement Valid Date",
       label: "Agreement Valid Date ",
       required: true,
-
     },
     {
       name: "totalPayment",
@@ -183,20 +172,28 @@ const BuyBackForm = () => {
       placeholder: "Total Payment",
       label: "Total Payment",
       required: true,
-
     },
     {
-      name: "rmName",
+      name: "dealerLocation",
+      type: "select",
+      options: locationOption,
+      placeholder: "Location of the Dealer",
+      label: "Location of the Dealer",
+      required: true,
+    },
+
+    {
+      name: "rmEmployeeId",
       type: "text",
-      placeholder: "Relationship Manager / Service Advisor Name",
-      label: "Relationship Manager / Service Advisor Name",
+      placeholder: "Employee Id of Relationship Manager/ Service Advisor",
+      label: "Employee Id of Relationship Manager/ Service Advisor",
       required: true,
     },
     {
       name: "rmEmail",
       type: "email",
-      placeholder: "Relationship Manager/ Service Advisor Email Id",
-      label: "Relationship Manager/ Service Advisor Email Id",
+      placeholder: " Relationship Manager/ Service Advisor Email Id",
+      label: "Email Id of Relationship Manager/ Service Advisor ",
       required: true,
     },
   ];
@@ -207,13 +204,13 @@ const BuyBackForm = () => {
   const handleInput = (e) => {
     const { name, value, dataset } = e.target;
     const section = dataset?.section;
-  
+
     setBuyBack((prev) => {
       const updatedSection = {
         ...prev[section],
         [name]: value,
       };
-  
+
       // Calculate `agreementValidDate` if necessary fields are available
       if (name === "vehicleModel" || name === "agreementStartDate") {
         const vehicleModel =
@@ -222,13 +219,14 @@ const BuyBackForm = () => {
           name === "agreementStartDate"
             ? value
             : updatedSection?.agreementStartDate;
-  
+
         // Handle date parsing safely
         if (vehicleModel === "Astor") {
           updatedSection.agreementValidDate = "NA";
         } else if (vehicleModel === "Comet" && agreementStartDate) {
           const startDate = new Date(agreementStartDate);
-          if (!isNaN(startDate)) { // Ensure the date is valid
+          if (!isNaN(startDate)) {
+            // Ensure the date is valid
             startDate.setFullYear(startDate.getFullYear() + 5);
             updatedSection.agreementValidDate = startDate
               .toISOString()
@@ -238,7 +236,8 @@ const BuyBackForm = () => {
           }
         } else if (agreementStartDate) {
           const startDate = new Date(agreementStartDate);
-          if (!isNaN(startDate)) { // Ensure the date is valid
+          if (!isNaN(startDate)) {
+            // Ensure the date is valid
             startDate.setFullYear(startDate.getFullYear() + 8);
             updatedSection.agreementValidDate = startDate
               .toISOString()
@@ -248,7 +247,7 @@ const BuyBackForm = () => {
           }
         }
       }
-  
+
       if (name === "vehicleModel") {
         switch (value) {
           case "Hector":
@@ -274,14 +273,13 @@ const BuyBackForm = () => {
             break;
         }
       }
-  
+
       return {
         ...prev,
         [section]: updatedSection,
       };
     });
   };
-  
 
   const validateFields = () => {
     const newErrors = {};
@@ -289,10 +287,9 @@ const BuyBackForm = () => {
     // Customer Details Validation
     const {
       customerName,
-    
+
       contact,
       email,
- 
     } = buyBack.customerDetails;
 
     if (!customerName) newErrors.customerName = "Customer name is required.";
@@ -301,7 +298,6 @@ const BuyBackForm = () => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       newErrors.email = "Email must be valid.";
     // if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan)) newErrors.pan = "PAN must be valid.";
-
 
     // Vehicle Details Validation
     const {
@@ -321,7 +317,6 @@ const BuyBackForm = () => {
     if (!vehicleModel) newErrors.vehicleModel = "Model is required.";
     if (!fuelType) newErrors.fuelType = "Fuel type is required.";
     if (!deliveryDate) newErrors.deliveryDate = "Delivery date is required.";
-
 
     if (!vinNumber) newErrors.vinNumber = "VIN number is required.";
     if (!agreementStartDate)
@@ -389,7 +384,7 @@ const BuyBackForm = () => {
       </div>
 
       <span className="flex md:flex-row flex-col md:items-center justify-between md:mx-36 mx-6 font-head md:pt-10 ">
-        <p className="md:text-[23px] text-[18px] font-semibold pt-20 md:ml-[14%] sm:ml-[25%]">
+        <p className="md:text-[23px] text-[18px] font-semibold pt-20 md:ml-[13.5%] sm:ml-[25%]">
           Add New Buy Back
         </p>
         <p className="md:text-[18px] text-[16px] font-medium md:pt-12 pt-4 sm:ml-[25%]">
@@ -399,7 +394,6 @@ const BuyBackForm = () => {
       </span>
 
       <div className="sm:ml-[26.5%] md:ml-[21%]  w-full">
-      
         <p className="text-[20px] font-head font-semibold mt-5">
           Customer Personal Details
         </p>
