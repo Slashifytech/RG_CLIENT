@@ -279,7 +279,8 @@ const AMCForm = () => {
               ? 10000
               : fuelType === "Electric Vehicle" && model === "Windsor"
               ? 15000
-              : fuelType === "Electric Vehicle"
+              : fuelType === "Electric Vehicle" &&
+              (model !== "Comet" || model !== "ZS EV")
               ? null
               : 15000;
           if (
