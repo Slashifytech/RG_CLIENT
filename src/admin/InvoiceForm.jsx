@@ -125,7 +125,6 @@ const InvoiceForm = () => {
       type: "text",
       placeholder: "Branch Name",
       label: "Branch Name",
-      required: true,
     },
     {
       name: "model",
@@ -170,7 +169,6 @@ const InvoiceForm = () => {
       type: "text",
       placeholder: "Hypothecated To",
       label: "Hypothecated To",
-      required: true,
     },
     {
       name: "vinNumber",
@@ -258,7 +256,7 @@ const InvoiceForm = () => {
   };
 
   const validateFields = () => {
-    const notRequiredVehicleFields = ["vehicleDetails.gmEmail"];
+    const notRequiredVehicleFields = ["vehicleDetails.gmEmail", "vehicleDetails.hypothecated", "vehicleDetails.branchName"];
     const notRequiredCustomerFields = [
       "billingDetail.address",
       "billingDetail.pan",
