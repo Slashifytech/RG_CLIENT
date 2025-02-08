@@ -226,7 +226,12 @@ const AMCForm = () => {
         ...prev[section],
         [name]: value,
       };
-
+      if (name === "agreementPeriod") {
+        const agreementPeriod = parseFloat(value);
+        if (!isNaN(agreementPeriod) && agreementPeriod > MaximumValidPMS) {
+          updatedSection.agreementPeriod = MaximumValidPMS;
+        }
+      }
       if (name === "agreementPeriod" || name === "agreementStartDate") {
         const agreementPeriod = parseFloat(
           name === "agreementPeriod" ? value : updatedSection.agreementPeriod
