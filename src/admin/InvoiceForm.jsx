@@ -328,14 +328,14 @@ const InvoiceForm = () => {
   }, [id, invoiceId]);
 
   useEffect(() => {
-    if (invoiceById?.invoice) {
+    if (invoiceById?.invoice && typeData === "edit") {
       setInvoiceData((prev) => ({
         ...prev,
         ...invoiceById?.invoice,
       }));
     }
   }, [invoiceById?.invoice]);
-
+console.log(invoiceById?.invoice)
   const mergedData = useMemo(() => {
     if (!typeData) return {}; 
   
@@ -346,7 +346,7 @@ const InvoiceForm = () => {
   }, [typeData, amcByIdorStatus, buyBackByIdorStatus]);
   
   useEffect(() => {
-    if (typeData) {
+    if (!typeData ==="edit") {
       setInvoiceData((prevState) => ({
         ...prevState,
         invoiceType: mergedData.invoiceType || prevState.invoiceType || "",

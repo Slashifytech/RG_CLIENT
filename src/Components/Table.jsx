@@ -156,7 +156,7 @@ export function CustomTableOne({
                 >
                   <Link
                     to={link}
-                    state={{ invoiceId: row?.data?._id }}
+                    state={{ invoiceId: row?.data?._id, type: "edit" }}
                     className="flex flex-row items-center gap-2"
                   >
                     <span className="text-primary">{icon}</span>
