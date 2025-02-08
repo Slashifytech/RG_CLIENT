@@ -226,12 +226,20 @@ const AMCForm = () => {
         ...prev[section],
         [name]: value,
       };
+      if (name === "MaximumValidPMS") {
+        updatedSection.MaximumValidPMS = parseFloat(value) || 0;
+      }
+  
+      // Ensure agreementPeriod does not exceed MaximumValidPMS
       if (name === "agreementPeriod") {
         const agreementPeriod = parseFloat(value);
+        const MaximumValidPMS = parseFloat(updatedSection.MaximumValidPMS || prev[section]?.MaximumValidPMS || 0);
+  
         if (!isNaN(agreementPeriod) && agreementPeriod > MaximumValidPMS) {
           updatedSection.agreementPeriod = MaximumValidPMS;
         }
       }
+  
       if (name === "agreementPeriod" || name === "agreementStartDate") {
         const agreementPeriod = parseFloat(
           name === "agreementPeriod" ? value : updatedSection.agreementPeriod
