@@ -17,7 +17,7 @@ export const fetchInvoiceById = createAsyncThunk(
 const invoiceSlice = createSlice({
     name: "invoice",
     initialState:{
-        invoiceById:""
+        invoiceById:[]
         
     },
     reducers:{
@@ -37,7 +37,8 @@ const invoiceSlice = createSlice({
         })
       .addCase(fetchInvoiceById.rejected, (state, action)=>{
         state.loading = false;
-        state.invoiceById = null
+        state.error = action.payload;
+        state.invoiceById = []
       })
     }
 })

@@ -5,13 +5,52 @@ import Nav from "./Nav";
 import { toast } from "react-toastify";
 import { addNewInovoice, editInovoice } from "../features/adminApi";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchInvoiceById } from "../features/InvoiceSlice";
+import { fetchInvoiceById, setEmptyInvoiceData } from "../features/InvoiceSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchbuyBackDataById } from "../features/BuyBackSlice";
 import { updateAMCStatus } from "../features/AMCapi";
 import { updatBuyBackStatus } from "../features/BuybackApi";
 import Header from "../Components/Header";
 import { fetchamcDataById } from "../features/amcSlice";
+const initialInvoiceData = {
+  invoiceType: "",
+  serviceId: "",
+  billingDetail: {
+    customerName: "",
+    address: "",
+    contact: "",
+    email: "",
+    pan: "",
+    customerGst: "",
+    zipCode: "",
+    stateCode: "",
+  },
+  shippingDetails: {
+    customerName: "",
+    address: "",
+    contact: "",
+    email: "",
+    pan: "",
+    customerGst: "",
+    zipCode: "",
+    stateCode: "",
+  },
+  vehicleDetails: {
+    hypothecated: "",
+    vinNumber: "",
+    branchName: "",
+    model: "",
+    gstAmount: "",
+    cgst: "",
+    sgst: "",
+    totalAmount: "",
+    rmEmail: "",
+    rmName: "",
+    rmEmployeeId: "",
+    gmEmail: "",
+  },
+};
+
 const InvoiceForm = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -26,43 +65,9 @@ const InvoiceForm = () => {
   const id = location?.state?.id;
   const typeData = location?.state?.type;
   const [invoiceData, setInvoiceData] = useState({
+    ...initialInvoiceData,
     invoiceType: typeData,
     serviceId: id,
-    billingDetail: {
-      customerName: "",
-      address: "",
-      contact: "",
-      email: "",
-      pan: "",
-      customerGst: "",
-      zipCode: "",
-      stateCode: "",
-    },
-    shippingDetails: {
-      customerName: "",
-      address: "",
-      contact: "",
-      email: "",
-      pan: "",
-      customerGst: "",
-      zipCode: "",
-      stateCode: "",
-    },
-
-    vehicleDetails: {
-      hypothecated: "",
-      vinNumber: "",
-      branchName: "",
-      model: "",
-      gstAmount: "",
-      cgst: "",
-      sgst: "",
-      totalAmount: "",
-      rmEmail: "",
-      rmName: "",
-      rmEmployeeId: "",
-      gmEmail: "",
-    },
   });
   const [sameAsBilling, setSameAsBilling] = useState(false);
 
@@ -218,7 +223,12 @@ const InvoiceForm = () => {
       },
     }));
   };
-
+  useEffect(() => {
+    return () => {
+      setInvoiceData({ ...initialInvoiceData });
+      dispatch(setEmptyInvoiceData())
+    };
+  }, []);
   useEffect(() => {
     if (invoiceData.vehicleDetails.gstAmount !== undefined) {
       calculateVehicleDetails();
@@ -228,7 +238,6 @@ const InvoiceForm = () => {
   const calculateVehicleDetails = () => {
     setInvoiceData((prevState) => {
       const gstAmount = parseFloat(prevState.vehicleDetails.gstAmount || 0);
-      console.log("GST Amount:", gstAmount);
 
       const cgst = gstAmount * 0.09; // 9% of GST
       const sgst = gstAmount * 0.09; // 9% of GST
@@ -318,6 +327,7 @@ const InvoiceForm = () => {
   };
   
   useEffect(() => {
+    
     if (invoiceId) {
       dispatch(fetchInvoiceById({ invoiceId }));
     }
@@ -328,14 +338,14 @@ const InvoiceForm = () => {
   }, [id, invoiceId]);
 
   useEffect(() => {
-    if (invoiceById?.invoice && typeData === "edit") {
+    if (invoiceById?.invoice) {
       setInvoiceData((prev) => ({
         ...prev,
         ...invoiceById?.invoice,
       }));
     }
-  }, [invoiceById?.invoice]);
-console.log(invoiceById?.invoice)
+  }, [invoiceById?.invoice, location.pathname]);
+
   const mergedData = useMemo(() => {
     if (!typeData) return {}; 
   
@@ -377,6 +387,10 @@ console.log(invoiceById?.invoice)
   }, [typeData, mergedData]);
   
   
+
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateFields();
@@ -456,6 +470,7 @@ console.log(invoiceById?.invoice)
       setisLoading(false);
     }
   };
+
   return (
     <>
       <div className="fixed">
