@@ -286,7 +286,7 @@ const AMCForm = () => {
           if (
             fuelType === "Electric Vehicle" &&
             model !== "Comet" &&
-            model !== "Windsor"
+            model !== "Windsor" && model !== "ZS EV"
           ) {
             updatedSection.agreementValidMilage = 0;
           } else {
