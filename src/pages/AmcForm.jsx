@@ -272,7 +272,7 @@ const AMCForm = () => {
 
         if (agreementPeriod && agreementStartMilage && fuelType) {
           const mileageMultiplier =
-            fuelType === "petrol"
+            fuelType === "Petrol"
               ? 10000
               : fuelType === "Electric Vehicle" &&
                 (model === "Comet" || model === "ZS EV")
