@@ -29,4 +29,5 @@ export const invoiceOption = [
     { id: 3, value: "Kondapur", label: "Kondapur" },
     { id: 4, value: "Gachibowli", label: "Gachibowli" },
     { id: 5, value: "Upcountry", label: "Upcountry" },
+    { id: 6, value: "Balanagar", label: "Balanagar" },
   ];
