@@ -356,7 +356,7 @@ const InvoiceForm = () => {
   }, [typeData, amcByIdorStatus, buyBackByIdorStatus]);
   
   useEffect(() => {
-    if (!typeData ==="edit") {
+    if (typeData !=="edit") {
       setInvoiceData((prevState) => ({
         ...prevState,
         invoiceType: mergedData.invoiceType || prevState.invoiceType || "",
