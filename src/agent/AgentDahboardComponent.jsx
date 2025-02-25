@@ -45,7 +45,10 @@ const AgentDashboardComponent = () => {
     try {
       const response = await dispatch(cancelReqPolicy(id)).unwrap();
       toast.info(response.message);
-      dispatch(fetchPolicyAllData({ option:null, option:null, option:null, option:null, userId }));
+      dispatch(fetchPolicyAllData({   optionf: null,
+          optiond: null,
+          options: null,
+          optionh: null,userId }));
 
       //  console.log(response.message);
     } catch (error) {
@@ -58,7 +61,10 @@ const AgentDashboardComponent = () => {
       const res = await resubmitPolicy(policyId);
       toast.success(res?.message || "Policy resubmitted successfully");
 
-      dispatch(fetchPolicyAllData({ option:null, option:null, option:null, option:null, userId }));
+      dispatch(fetchPolicyAllData({   optionf: null,
+          optiond: null,
+          options: null,
+          optionh: null,userId }));
     } catch (error) {
       console.log(error);
       toast.error(error?.message || "Sommething went wrong");
