@@ -69,7 +69,6 @@ const EwForm = () => {
       startKm: "",
       endKm: "",
       ewStatus: "",
-      planType: "",
     },
     createdBy: _id,
   });
