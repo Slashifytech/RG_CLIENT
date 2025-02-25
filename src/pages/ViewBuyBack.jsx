@@ -483,7 +483,11 @@ const ViewBuyBack = forwardRef(({ id }, ref) => {
                     any changes will not affect customers who have already
                     enrolled in the Buyback Program.
                   </p>
+<<<<<<< HEAD
                   <img src={stamp} alt="stamp" className="mt-9 w-[30%]" />
+=======
+             <img src={stamp} alt="stamp" className="mt-9 w-[30%]" />
+>>>>>>> 6eb398bbbadcb13746fefffa7051ad1e41917a36
                 </div>
               </div>
             </div>

@@ -1066,7 +1066,11 @@ const ViewAmc = forwardRef(({ id }, ref) => {
                 due unless payment is directly hindered by Force Majeure.
               </p>
 
+<<<<<<< HEAD
               <img src={stamp} alt="stamp" className="mt-9 w-[30%]" />
+=======
+             <img src={stamp} alt="stamp" className="mt-9 w-[30%]" />
+>>>>>>> 6eb398bbbadcb13746fefffa7051ad1e41917a36
             </div>
           </>
         )}
