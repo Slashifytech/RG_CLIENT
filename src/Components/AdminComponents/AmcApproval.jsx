@@ -129,10 +129,10 @@ const ApprovalCard = ({ item, index }) => {
       toast.success(response?.message || "AMC Updated Successfully");
       dispatch(
         fetchamcLists({
-          option: null,
-          option: null,
-          option: null,
-          option: null,
+          optionf: null,
+          optiond: null,
+          options: null,
+          optionh: null,
           status: "pending",
         })
       );

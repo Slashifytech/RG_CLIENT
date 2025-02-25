@@ -95,7 +95,7 @@ const AdminAmcList = () => {
           fetchamcLists({
             page,
             perPage,
-            option: null,
+            optiond: null,
             userId: null,
             status: false,
           })
@@ -132,10 +132,10 @@ const AdminAmcList = () => {
       toast.success(response?.message || "AMC Updated Successfully");
       dispatch(
         fetchamcLists({
-          option: null,
-          option: null,
-          option: null,
-          option: null,
+          optionf: null,
+          optiond: null,
+          options: null,
+          optionh: null,
           status: "reqCancel",
         })
       );
