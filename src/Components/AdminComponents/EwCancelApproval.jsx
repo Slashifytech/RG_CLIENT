@@ -1,60 +1,54 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Nav from "./Nav";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllPendingPolicy, updatePolicy } from "../features/policySlice";
 import { toast } from "react-toastify";
-import Pagination from "../Components/Pagination";
 import { Link } from "react-router-dom";
-import DataNotFound from "./DataNotFound";
-import { fetchUserById } from "../../Util/UtilityFunction";
-import Loader from "../Components/Loader";
-import RejectPopUp from "../Components/RejectPopUp";
+import Loader from "../Loader";
+import DataNotFound from "../../admin/DataNotFound";
+import Pagination from "../Pagination";
+import { fetchUserById } from "../../../Util/UtilityFunction";
+import { setEmptyInvoiceData } from "../../features/InvoiceSlice";
+import RejectPopUp from "../RejectPopUp";
+import InvoicePopUp from "../InvoicePopUp";
+import { fetchEwLists } from "../../features/EwSlice";
+import { updateEwStatus } from "../../features/EwApi";
 
-const PolicyApproval = () => {
+const EwCancelApproval = () => {
   const dispatch = useDispatch();
-  const { pendingPolicy, status, totalPagesCount, totalPoliciesCount } =
-    useSelector((state) => state.policy);
-
+  const { EwLists } = useSelector((state) => state.amc);
+  const [page, setPage] = useState(1);
   const perPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPage = EwLists?.pagination?.currentPage;
+  const totalPagesCount = EwLists?.pagination?.totalPages;
+  const totalCount = EwLists?.pagination?.totalItems;
   const [loading, setLoading] = useState(true);
 
-
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
   useEffect(() => {
+    setLoading(true);
     dispatch(
-      fetchAllPendingPolicy({
-        page: currentPage,
-        limit: perPage,
+      fetchEwLists({
+        page,
+        perPage,
+        option: null,
+        option: null,
+        status: "reqCancel",
       })
     );
-  }, [dispatch, currentPage]);
 
-  useEffect(() => {
-    if (status === "loading") {
-      setLoading(true);
-    } else if (status === "succeeded" || status === "failed") {
-      setLoading(false);
-    }
-  }, [status]);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-
+    setLoading(false);
+  }, [page, perPage]);
 
   return (
     <>
-   
-      <div>
-      
-      </div>
+      <div></div>
 
-      <p className="font-semibold text-[24px] md:ml-72 sm:ml-72 ml-6 ">
-        Pending Approval List
+      <p className="font-semibold text-[24px] md:ml-72 sm:ml-44 ml-6 ">
+        Pending Cancel AMC Request
       </p>
       <div className="overflow-x-scroll w-full md:w-full md:overflow-hidden ">
-        <ul className="bg-secondary text-[15px] py-7 flex flex-row justify-around items-center sm:w-[93%] w-[180%]  mr-10 md:ml-72 sm:ml-72 md:w-[75%]  gap-2 rounded-lg mt-8 h-[6vh]  text-black font-medium">
+        <ul className="bg-secondary text-[15px] py-7 flex flex-row justify-around items-center sm:w-[93%] w-[180%]  mr-10 md:ml-72 sm:ml-44 md:w-[75%]  gap-2 rounded-lg mt-8 h-[6vh]  text-black font-medium">
           <li className="md:w-[2%]">S.No</li>
           <li className="w-[32%] md:w-[36%] text-center">Description</li>
           <li className="w-[1%] text-center">Action</li>
@@ -66,33 +60,27 @@ const PolicyApproval = () => {
               {/* <Loading customText={"Loading"} /> */}
               <Loader />
             </div>
-          ) : pendingPolicy?.data?.length === 0 ? (
+          ) : !totalCount ? (
             <DataNotFound
               className="flex justify-center flex-col w-full items-center mt-20 ml-28"
-              message="No pending policy found"
+              message="No pending Ew Policy found"
             />
           ) : (
-            pendingPolicy?.data
-              ?.filter(
-                (policy) =>
-                  policy.policyStatus === "yetToApproved" ||
-                  policy?.isCancelReq === "reqCancel"
-              )
-              .map((item, index) => (
-                <ApprovalCard
-                  key={item._id}
-                  item={item}
-                  index={index + 1 + (currentPage - 1) * perPage}
-                />
-              ))
+            amcLists?.data?.map((item, index) => (
+              <ApprovalCard
+                key={item._id}
+                item={item}
+                index={index + 1 + (currentPage - 1) * perPage}
+              />
+            ))
           )}
         </div>
 
-        {totalPoliciesCount > 0 && (
+        {totalCount > 0 && (
           <div className="flex justify-center items-center  mt-9 mb-5 ml-28 ">
             <Pagination
               currentPage={currentPage}
-              hasNextPage={currentPage < totalPagesCount}
+              hasNextPage={currentPage * perPage < totalCount}
               hasPreviousPage={currentPage > 1}
               onPageChange={handlePageChange}
               totalPagesCount={totalPagesCount}
@@ -108,10 +96,13 @@ const ApprovalCard = ({ item, index }) => {
   const dispatch = useDispatch();
   const [agentData, setAgentData] = useState();
   const [isReasonPopUp, setIsReasonPopUp] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const openReasonPopUp = useCallback(() => setIsReasonPopUp(true));
   const closeReasonPopUp = useCallback(() => setIsReasonPopUp(false));
+  const openPopUp = useCallback(() => setIsOpen(true));
+  const closePopUp = useCallback(() => setIsOpen(false));
   const getAgentData = async () => {
-    const data = await fetchUserById(item.userId);
+    const data = await fetchUserById(item?.createdBy);
     setAgentData(data);
   };
 
@@ -119,50 +110,52 @@ const ApprovalCard = ({ item, index }) => {
     getAgentData();
   }, []);
 
-  const handlePolicyStatus = async (userId, type, policyData, reason) => {
+  const handleStatus = async (userId, type, reason) => {
     try {
-      const response = await dispatch(
-        updatePolicy({ userId, type, policyData, reason })
-      );
+      const response = await updateEwStatus(userId, type, reason);
 
-      if (response?.meta?.requestStatus === "fulfilled") {
-        toast.success("Policy Updated Successfully");
-        dispatch(fetchAllPendingPolicy({ page: 1, limit: 10 }));
-      } else {
-        toast.error("Failed to update the policy status");
-      }
+      toast.success(response?.message || "AMC Updated Successfully");
+      dispatch(
+        fetchEwLists({
+          option: null,
+          option: null,
+          option: null,
+          option: null,
+          status: "reqCancel",
+        })
+      );
     } catch (error) {
       console.error(error, "Something went wrong");
+      toast.error(error?.message || "Something Went Wrong");
     }
   };
 
   return (
     <>
-      <ul className="text-[15px] flex flex-row justify-around items-start mx-6 sm:mx-6 md:mx-10 md:ml-72 sm:ml-72 gap-2 rounded-lg mt-8 text-black font-normal w-[180%] md:w-[80%] sm:w-[100%]">
+      <ul className="text-[15px] flex flex-row justify-around items-start mx-6 sm:mx-6 md:mx-10 md:ml-72 sm:ml-44 gap-2 rounded-lg mt-8 text-black font-normal w-[180%] md:w-[80%] sm:w-[100%]">
         <li className="w-[2%]">{index}</li>
         <li className="w-[36%] px-3 text-start mb-3 py-3 rounded-lg bg-secondary  shadow">
           {agentData?.roleType === "0" ? "Admin" : "Agent"}:{" "}
           {agentData?.agentName}{" "}
           {item?.isCancelReq === "reqCancel"
-            ? "Sent a request to cancel the Policy of"
-            : " Sent a request to approve the policy of"}{" "}
-          {item?.customerName} 
-          {item?.isCancelReq === "reqCancel" ? item?.policyId : ""}
+            ? "Sent a request to cancel the Ew Policy of"
+            : " Sent a request to approve the Ew Policy of"}{" "}
+          {item?.customerDetails?.customerName}
           <Link
-            to="/policy"
+            to="/ew-view"
             state={{ id: item?._id }}
             className="mx-1 text-primary cursor-pointer underline"
           >
             {" "}
-            View Policy{" "}
+            View Ew Policy{" "}
           </Link>
         </li>
 
         <li className="md:w-[9%] w-[13%] text-center flex flex-col gap-2">
           {item?.isCancelReq === "reqCancel" ? (
             <Link
-              to="/admin/active-policy"
-              onClick={() => handlePolicyStatus(item._id, "approvedReq", item)}
+              // to="/admin/active-policy"
+              onClick={() => handleStatus(item._id, "approvedReq")}
               className="py-1 px-5 bg-primary text-white rounded-lg cursor-pointer "
             >
               Approve
@@ -170,7 +163,10 @@ const ApprovalCard = ({ item, index }) => {
           ) : (
             <>
               <span
-                onClick={() => handlePolicyStatus(item._id, "approved", item)}
+                onClick={() => {
+                  dispatch(setEmptyInvoiceData());
+                  openPopUp();
+                }}
                 className="py-1 px-5 bg-primary text-white rounded-lg cursor-pointer"
               >
                 Accept
@@ -188,12 +184,18 @@ const ApprovalCard = ({ item, index }) => {
       <RejectPopUp
         isReasonPopUp={isReasonPopUp}
         closeReasonPopUp={closeReasonPopUp}
-        handlePolicyStatus={handlePolicyStatus}
+        handlePolicyStatus={handleStatus}
         item={item}
-        subTitle={"  Please provide reason to reject the Policy !"}
+        subTitle={"  Please provide reason to reject the AMC !"}
+      />
+      <InvoicePopUp
+        isOpen={isOpen}
+        closePopUp={closePopUp}
+        docType="AMC"
+        id={item._id}
       />
     </>
   );
 };
 
-export default PolicyApproval;
+export default EwCancelApproval;

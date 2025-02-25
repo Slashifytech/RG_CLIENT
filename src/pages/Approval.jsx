@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import PolicyApproval from "./../admin/ApprovalComponent";
 import Nav from "../admin/Nav";
-import AmcApproval from "../admin/AmcApproval";
-import BuyBackApproval from "../admin/BuyBackApproval";
+import AmcApproval from "../Components/AdminComponents/AmcApproval";
+import BuyBackApproval from "../Components/AdminComponents/BuyBackApproval";
 import Header from "../Components/Header";
+import EwApproval from "../Components/AdminComponents/EwApproval";
 
 const Approval = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -11,7 +11,7 @@ const Approval = () => {
   const tabs = [
     { id: 0, label: "AMC Approval", component: <AmcApproval /> },
     { id: 1, label: "Buyback Approval", component: <BuyBackApproval /> },
-    // { id: 2, label: "Policy Approval", component: <PolicyApproval /> },
+    { id: 2, label: "Ew Poicy Approval", component: <EwApproval /> },
 
   ];
 

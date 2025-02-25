@@ -8,9 +8,7 @@ import { useDispatch } from "react-redux";
 import ViewPolicy from "./Components/ViewPolicy";
 import ErrorPage from "./Components/ErrorPage";
 import ProtectedAdmin from "./Components/ProtectedAdmin";
-import Policy from "./pages/Policy";
-import ActivePolicy from "./pages/ActivePolicy";
-import AdminPolicy from "./pages/AdminPolicy";
+
 import Approval from "./pages/Approval";
 import AgentForm from "./pages/AgentForm";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -18,7 +16,6 @@ import AgentDashboard from "./pages/AgentDashboard";
 import ProtectedAgent from "./Components/ProtectedAgent"  
 import InvoiceForm from "./admin/InvoiceForm";
 import InvoiceList from "./admin/InvoiceList";
-import CustomerApproval from "./pages/CustomerApproval";
 import InvoiceView from "./pages/InvoiceView";
 import AgentList from "./admin/AgentList";
 import AddTeam from "./admin/AddTeam";
@@ -36,6 +33,11 @@ import ViewAmc from "./pages/ViewAmc";
 import ViewBuyBack from "./pages/ViewBuyBack";
 import ChangePassword from "./admin/ChangePassword";
 import ChangeEmail from "./admin/ChangeEmail";
+import BuyBackProfileView from "./pages/BuyBackProfileView";
+import AmcProfileView from "./pages/AmcProfileView";
+import EwForm from "./pages/EwForm";
+import AdminEwLists from "./pages/EwList";
+import EwPdf from "./pages/EwPdf";
 
 const router = createBrowserRouter([
   {
@@ -66,30 +68,8 @@ const router = createBrowserRouter([
       </ProtectedAdmin>
     ),
   },
-  {
-    path: "/update-policies",
-    element: (
-      <ProtectedAgent>
-        <Policy></Policy>
-      </ProtectedAgent>
-    ),
-  },
-  {
-    path: "/admin/add-policies",
-    element: (
-      <ProtectedAdmin>
-        <Policy></Policy>
-      </ProtectedAdmin>
-    ),
-  },
-  {
-    path: "/admin/update-policies",
-    element: (
-      <ProtectedAdmin>
-        <Policy></Policy>
-      </ProtectedAdmin>
-    ),
-  },
+
+
   {
     path: "/admin/add-AMC",
     element: (
@@ -99,10 +79,26 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/admin/add-ewpolicy",
+    element: (
+      <ProtectedAdmin>
+        <EwForm></EwForm>
+      </ProtectedAdmin>
+    ),
+  },
+  {
     path: "/agent/amc-form",
     element: (
       <ProtectedAgent>
         <AMCForm></AMCForm>
+      </ProtectedAgent>
+    ),
+  },
+  {
+    path: "/agent/ewpolicy-form",
+    element: (
+      <ProtectedAgent>
+        <EwForm></EwForm>
       </ProtectedAgent>
     ),
   },
@@ -123,6 +119,22 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/admin/update-ewpolicy",
+    element: (
+      <ProtectedAdmin>
+        <EwForm></EwForm>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/agent/edit-ewpolicy",
+    element: (
+      <ProtectedAgent>
+        <EwForm></EwForm>
+      </ProtectedAgent>
+    ),
+  },
+  {
     path: "/admin/amc-lists",
     element: (
       <ProtectedAdmin>
@@ -139,6 +151,30 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/agent/ewpolicy-list",
+    element: (
+      <ProtectedAgent>
+        <AdminEwLists></AdminEwLists>
+      </ProtectedAgent>
+    ),
+  },
+  {
+    path: "/admin/ew-list",
+    element: (
+      <ProtectedAdmin>
+        <AdminEwLists></AdminEwLists>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/agent/ew-list",
+    element: (
+      <ProtectedAgent>
+        <AdminEwLists></AdminEwLists>
+      </ProtectedAgent>
+    ),
+  },
+  {
     path: "/amc-view",
     element: (
         <ViewAmc></ViewAmc>
@@ -151,12 +187,24 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/buyback/profile-view",
+    element: (
+        <BuyBackProfileView></BuyBackProfileView>
+    ),
+  },
+  {
+    path: "/amc/profile-view",
+    element: (
+        <AmcProfileView></AmcProfileView>
+    ),
+  },
+  {
     path: "/admin/add-buyback",
     element: (
       <ProtectedAdmin>
         <BuyBackForm></BuyBackForm>
       </ProtectedAdmin>
-    ),
+    ),                                                                                            
   },
   {
     path: "/agent/buyback-form",
@@ -198,14 +246,7 @@ const router = createBrowserRouter([
       </ProtectedAgent>
     ),
   },
-  {
-    path: "/new-policy",
-    element: (
-      <ProtectedAgent>
-        <Policy></Policy>
-      </ProtectedAgent>
-    ),
-  },
+
   {
     path: "/new-AMC",
     element: (
@@ -239,14 +280,7 @@ const router = createBrowserRouter([
       </ProtectedAdmin>
     ),
   },
-  {
-    path: "/admin/policies",
-    element: (
-      <ProtectedAdmin>
-        <AdminPolicy></AdminPolicy>
-      </ProtectedAdmin>
-    ),
-  },
+ 
   {
     path: "/admin/cancelled-policy",
     element: (
@@ -279,6 +313,12 @@ const router = createBrowserRouter([
   },
  
   {
+    path: "/ew-view",
+    element: (
+        <EwPdf/>
+    ),
+  },
+  {
     path: "/admin/invoice-lists",
     element: (
       <ProtectedAdminTeam>
@@ -305,6 +345,14 @@ const router = createBrowserRouter([
   },
     {
     path: "/admin/new-team",
+    element: (
+      <ProtectedAdmin>
+        <AddTeam/>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/admin/update-team",
     element: (
       <ProtectedAdmin>
         <AddTeam/>
@@ -351,6 +399,7 @@ const router = createBrowserRouter([
       </ProtectedAdmin>
     ),
   },
+
   {
     path: "/*",
     element: <ErrorPage></ErrorPage>,

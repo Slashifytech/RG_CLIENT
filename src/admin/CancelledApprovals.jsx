@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Nav from "../admin/Nav";
 import Header from "../Components/Header";
-import AmcCancelApproval from "../Components/AmcCancelApproval";
-import BuybackCancelApproval from "../Components/BuybackCancelApproval";
+import AmcCancelApproval from "../Components/AdminComponents/AmcCancelApproval";
+import BuybackCancelApproval from "../Components/AdminComponents/BuybackCancelApproval";
+import EwCancelApproval from "../Components/AdminComponents/EwCancelApproval";
 
 const CancelledApprovals = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -10,7 +11,7 @@ const CancelledApprovals = () => {
   const tabs = [
     { id: 0, label: "AMC Cancel Approval", component: <AmcCancelApproval /> },
     { id: 1, label: "Buyback Cancel Approval", component: <BuybackCancelApproval /> },
-    // { id: 2, label: "Policy Approval", component: <PolicyApproval /> },
+    { id: 2, label: "Ew Policy Approval", component: <EwCancelApproval /> },
 
   ];
 

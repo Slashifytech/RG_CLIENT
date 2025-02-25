@@ -1,19 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Pagination from "../Pagination";
 import { Link } from "react-router-dom";
-import { fetchamcLists } from "../features/amcSlice";
-import Loader from "./Loader";
-import DataNotFound from "../admin/DataNotFound";
-import Pagination from "./Pagination";
-import { fetchUserById } from "../../Util/UtilityFunction";
-import { setEmptyInvoiceData } from "../features/InvoiceSlice";
-import RejectPopUp from "./RejectPopUp";
-import InvoicePopUp from "./InvoicePopUp";
-import { updateAMCStatus } from "../features/AMCapi";
+import DataNotFound from "../../admin/DataNotFound";
+import { fetchUserById } from "../../../Util/UtilityFunction";
+import Loader from "../Loader";
+import RejectPopUp from "../RejectPopUp";
+import { fetchamcLists } from "../../features/amcSlice";
+import { updateAMCStatus } from "../../features/AMCapi";
+import InvoicePopUp from "../InvoicePopUp";
+import { setEmptyInvoiceData } from "../../features/InvoiceSlice";
 
-
-const AmcCancelApproval = () => {
+const AmcApproval = () => {
   const dispatch = useDispatch();
   const { amcLists } = useSelector((state) => state.amc);
   const [page, setPage] = useState(1);
@@ -34,7 +33,7 @@ const AmcCancelApproval = () => {
         perPage,
         option: null,
         option: null,
-        status: "reqCancel",
+        status: "pending",
       })
     );
 
@@ -46,7 +45,7 @@ const AmcCancelApproval = () => {
       <div></div>
 
       <p className="font-semibold text-[24px] md:ml-72 sm:ml-44 ml-6 ">
-        Pending Cancel AMC Request 
+        Pending Approval List
       </p>
       <div className="overflow-x-scroll w-full md:w-full md:overflow-hidden ">
         <ul className="bg-secondary text-[15px] py-7 flex flex-row justify-around items-center sm:w-[93%] w-[180%]  mr-10 md:ml-72 sm:ml-44 md:w-[75%]  gap-2 rounded-lg mt-8 h-[6vh]  text-black font-medium">
@@ -67,13 +66,19 @@ const AmcCancelApproval = () => {
               message="No pending AMC found"
             />
           ) : (
-            amcLists?.data?.map((item, index) => (
-              <ApprovalCard
-                key={item._id}
-                item={item}
-                index={index + 1 + (currentPage - 1) * perPage}
-              />
-            ))
+            amcLists?.data
+              ?.filter(
+                (policy) =>
+                  policy.amcStatus === "pending" ||
+                  policy?.isCancelReq === "reqCancel"
+              )
+              .map((item, index) => (
+                <ApprovalCard
+                  key={item._id}
+                  item={item}
+                  index={index + 1 + (currentPage - 1) * perPage}
+                />
+              ))
           )}
         </div>
 
@@ -122,7 +127,7 @@ const ApprovalCard = ({ item, index }) => {
           option: null,
           option: null,
           option: null,
-          status: "reqCancel",
+          status: "pending",
         })
       );
     } catch (error) {
@@ -155,7 +160,6 @@ const ApprovalCard = ({ item, index }) => {
         <li className="md:w-[9%] w-[13%] text-center flex flex-col gap-2">
           {item?.isCancelReq === "reqCancel" ? (
             <Link
-              // to="/admin/active-policy"
               onClick={() => handleStatus(item._id, "approvedReq")}
               className="py-1 px-5 bg-primary text-white rounded-lg cursor-pointer "
             >
@@ -199,4 +203,4 @@ const ApprovalCard = ({ item, index }) => {
   );
 };
 
-export default AmcCancelApproval;
+export default AmcApproval;

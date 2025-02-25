@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import Pagination from "../Components/Pagination";
+import Pagination from "../Pagination";
 import { Link } from "react-router-dom";
-import DataNotFound from "./DataNotFound";
-import { fetchUserById } from "../../Util/UtilityFunction";
-import Loader from "../Components/Loader";
-import RejectPopUp from "../Components/RejectPopUp";
-import { fetchBuyBackLists } from "../features/BuyBackSlice";
-import { updatBuyBackStatus, updateBuyBack } from "../features/BuybackApi";
-import InvoicePopUp from "../Components/InvoicePopUp";
-import { setEmptyInvoiceData } from "../features/InvoiceSlice";
+import DataNotFound from "../../admin/DataNotFound";
+import { fetchUserById } from "../../../Util/UtilityFunction";
+import Loader from "../Loader";
+import RejectPopUp from "../RejectPopUp";
+import { fetchBuyBackLists } from "../../features/BuyBackSlice";
+import { updatBuyBackStatus, updateBuyBack } from "../../features/BuybackApi";
+import InvoicePopUp from "../InvoicePopUp";
+import { setEmptyInvoiceData } from "../../features/InvoiceSlice";
 
 const BuyBackApproval = () => {
   const dispatch = useDispatch();

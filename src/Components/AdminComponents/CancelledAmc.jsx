@@ -61,7 +61,7 @@ const CancelledAmc = () => {
     
      
 
-      <div className="px-6 flex justify-start md:ml-60 sm:ml-44 mt-6">
+      <div className="px-6 flex justify-start md:ml-[18%] sm:ml-44 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"

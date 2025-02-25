@@ -9,7 +9,7 @@ import { RiLogoutBoxRLine, RiTeamFill } from "react-icons/ri";
 import { FaCarOn, FaFileInvoiceDollar } from "react-icons/fa6";
 import LogoutPop from "../Components/LogoutPop";
 import { logo } from "../assets";
-import { HiDocumentText, HiUsers } from "react-icons/hi2";
+import { HiClipboardDocumentList, HiDocumentText, HiUsers } from "react-icons/hi2";
 import { useSelector } from "react-redux";
 
 const Nav = () => {
@@ -31,19 +31,20 @@ const Nav = () => {
     setisLogoutOpen(false);
   };
   const sidebarList = [
-    // {
-    //   pathPage: "/admin/dashboard",
-    //   icon: <BsPieChartFill />,
-    //   label: "Dashboard",
-    //   otherPathTwo: "/admin/add-policies",
-    //   otherPathThree: "/admin/add-amc",
-    // },
+    {
+      pathPage: "/admin/dashboard",
+      icon: <BsPieChartFill />,
+      label: "Dashboard",
+      otherPathTwo: "/admin/add-policies",
+      otherPathThree: "/admin/add-amc",
+    },
     {
       pathPage: "/admin/team-lists",
       icon: <HiUsers />,
       label: "Accounts Team",
       otherPath: "/admin/team-invoices",
       otherPathTwo: "/admin/new-team",
+      otherPathThree: "/admin/update-team"
     },
     {
       pathPage: "/admin/cancelled-policy",
@@ -65,14 +66,24 @@ const Nav = () => {
       icon: <BiSolidCarMechanic />,
       label: "AMC Lists",
       otherPath: "/admin/add-amc",
-      otherPathTwo: "/admin/update-AMC"
+      otherPathTwo: "/admin/update-AMC",
+      otherPathThree: "/amc/profile-view"
+    },
+    {
+      pathPage: "/admin/ew-list",
+      icon: <HiClipboardDocumentList />,
+      label: "EW Lists",
+      otherPath: "/admin/add-ewpolicy",
+      otherPathTwo: "/admin/update-ewpolicy",
+      otherPathThree: "/amc/profile-view"
     },
     {
       pathPage: "/admin/buyback-lists",
       icon: <FaCarOn />,
       label: "Buy Back Lists",
       otherPath: "/admin/add-buyback",
-      otherPathTwo: "/admin/update-buyback"
+      otherPathTwo: "/admin/update-buyback",
+      otherPathThree: "/buyback/profile-view"
     },
     {
       pathPage: "/admin/invoice-lists",

@@ -5,42 +5,38 @@ import DataNotFound from "../../admin/DataNotFound";
 import { CustomTableFour } from "../Table";
 import { FaPencil } from "react-icons/fa6";
 import Pagination from "../Pagination";
-import { fetchBuyBackLists } from "../../features/BuyBackSlice";
-import Header from "../Header";
+import { fetchEwLists } from "../../features/EwSlice";
 
-const CancelledBuyBack = () => {
-  const { _id, roleType } = useSelector((state) => state.users?.users);
-  const userId = _id;
-  const { BuyBackLists } = useSelector((state) => state.buyBack);
+
+const CancelledEw = () => {
+  const { _id,  roleType } = useSelector(
+      (state) => state.users?.users
+    );
+  const { EwLists } = useSelector((state) => state.amc);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const perPage = 10;
-  const currentPage = BuyBackLists?.pagination?.currentPage;
-  const totalPagesCount = BuyBackLists?.pagination?.totalPages;
-  const totalCount = BuyBackLists?.pagination?.totalItems;
+  const currentPage = EwLists?.pagination?.currentPage;
+  const totalPagesCount = EwLists?.pagination?.totalPages;
+  const totalCount = EwLists?.pagination?.totalItems;
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
   };
 
   useEffect(() => {
     setLoading(true);
-    dispatch(
-      fetchBuyBackLists({
-        page,
-        perPage,
-        searchTerm,
-        userId: null,
-        status: true,
-      })
-    );
+      dispatch(
+        fetchEwLists({ page, perPage, searchTerm, userId: null, status: true })
+      );
+
     setLoading(false);
   }, [page, perPage, searchTerm]);
 
   const TABLE_HEAD = [
     "S.No.",
-    "Buyback Id",
+    "AMC Id",
     "Name",
     "Email",
     "VIN No.",
@@ -48,20 +44,23 @@ const CancelledBuyBack = () => {
     "View/Download",
     "Status",
     "Action",
+  
   ];
 
-  const TABLE_ROWS = BuyBackLists?.data?.map((data, index) => ({
+  const TABLE_ROWS = EwLists?.data?.map((data, index) => ({
     sno: (currentPage - 1) * perPage + index + 1,
     data: data || "NA",
     status: data?.isDisabled || "NA",
-    type: "buyBack",
+    type: "amc",
   }));
+
 
   return (
     <>
+    
+     
 
       <div className="px-6 flex justify-start md:ml-[18%] sm:ml-44 mt-6">
-
         <input
           type="text"
           placeholder="Search by VIN number"
@@ -72,7 +71,7 @@ const CancelledBuyBack = () => {
       </div>
 
       <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[28%] ml-6">
-        Buy Back Lists-
+        Ew Policy Lists-
       </p>
 
       <div className="font-head pt-4">
@@ -85,7 +84,7 @@ const CancelledBuyBack = () => {
           <div className="flex justify-center items-center h-[300px]">
             <DataNotFound
               className="flex justify-center flex-col w-full items-center md:mt-20 mt-12 md:ml-28 sm:ml-28"
-              message="No Buy Back found"
+              message="No Ew Policy found"
             />
           </div>
         ) : (
@@ -94,14 +93,10 @@ const CancelledBuyBack = () => {
               <CustomTableFour
                 tableHead={TABLE_HEAD}
                 tableRows={TABLE_ROWS}
-                link={
-                  roleType === "2"
-                    ? "/agent/edit-buyback"
-                    : "/admin/update-buyback"
-                }
+                link={roleType === "2" ? "/agent/edit-AMC": "/admin/update-AMC"}
+                redirectLink={"/amc-view"}
                 action="Edit"
                 icon={<FaPencil />}
-                redirectLink={"/buyback-view"}
               />
             </div>
             {totalPagesCount > 1 && (
@@ -122,4 +117,4 @@ const CancelledBuyBack = () => {
   );
 };
 
-export default CancelledBuyBack;
+export default CancelledEw;

@@ -10,8 +10,14 @@ import Nav from "../admin/Nav";
 import { fetchBuyBackLists, setEmptytBuyback } from "../features/BuyBackSlice";
 import SideNav from "../agent/SideNav";
 import Header from "../Components/Header";
-import { buyBackCancelByAdmin, buyBackResubmit, updatBuyBackStatus } from "../features/BuybackApi";
+import {
+  buyBackCancelByAdmin,
+  buyBackResubmit,
+  updatBuyBackStatus,
+} from "../features/BuybackApi";
 import { toast } from "react-toastify";
+import { downloadCsvData } from "../../Util/UtilityFunction";
+import { IoMdDownload } from "react-icons/io";
 
 const BuyBackLists = () => {
   const { _id, roleType } = useSelector((state) => state.users?.users);
@@ -57,6 +63,7 @@ const BuyBackLists = () => {
     "Email",
     "VIN No.",
     "AMC Issue date",
+    "Profile View",
     "View/Download",
     "Status",
     "Action",
@@ -136,6 +143,10 @@ const BuyBackLists = () => {
       toast.error(error?.message || "Something Went Wrong");
     }
   };
+  const handleDownload = async () => {
+    const path = "/buyBack-download";
+    await downloadCsvData(path);
+  };
   return (
     <>
       <div className="fixed">
@@ -146,16 +157,23 @@ const BuyBackLists = () => {
       <div>
         <Header />
       </div>
-    
+
       <div className="md:pt-20 sm:pt-20 pt-6 flex md:flex-row sm:flex-row flex-col-reverse justify-between md:items-center sm:items-center md:px-20 mx-6">
         <Link
           to={roleType === "2" ? "/agent/buyback-form" : "/admin/add-buyback"}
           state={{ addNew: "isNew" }}
-          onClick={()=>dispatch(setEmptytBuyback())}
+          onClick={() => dispatch(setEmptytBuyback())}
           className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[15.5%] sm:ml-[28%] mt-4 sm:mt-4 md:mt-4"
         >
           + Add New Buy Back
         </Link>
+        <span
+          onClick={handleDownload}
+          className="px-6 bg-primary flex flex-row items-center cursor-pointer gap-3 text-white rounded-md py-2 text-[16px]  mt-4 sm:mt-4 md:mt-4"
+        >
+          Download CSV
+          <IoMdDownload />
+        </span>
       </div>
 
       <div className="px-6 flex justify-start md:ml-64 sm:ml-48 mt-6">
@@ -197,6 +215,7 @@ const BuyBackLists = () => {
                     : "/admin/update-buyback"
                 }
                 action="Edit"
+                profileRedirectLink={"/buyback/profile-view"}
                 icon={<FaPencil />}
                 redirectLink={"/buyback-view"}
                 handleResubmit={handleResubmit}

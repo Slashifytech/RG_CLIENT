@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
   background-color: #f7f7f8;
 }
+
 input[type="radio"] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -26,16 +28,16 @@ input[type="radio"]:checked {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .glass {
-  background: rgba(0, 0, 0, 0.2); 
+  background: rgba(0, 0, 0, 0.2);
   /* backdrop-filter: blur(0px); 
   -webkit-backdrop-filter: blur(2px); Safari compatibility */
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
-  color: rgb(255, 255, 255); 
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  color: rgb(255, 255, 255);
 }
 
 /* Chat.css */
@@ -560,7 +562,8 @@ input[type="file"] {
 
 .swal-actions {
   display: flex;
-  justify-content: space-between; /* Align cancel and confirm buttons */
+  justify-content: space-between;
+  /* Align cancel and confirm buttons */
   gap: 10px;
 }
 
@@ -590,6 +593,7 @@ input[type="file"] {
     transform: scale(0.5);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -605,12 +609,10 @@ input[type="file"] {
   width: 50px;
   aspect-ratio: 1.154;
   position: relative;
-  background: conic-gradient(
-    from 120deg at 50% 64%,
-    #0000,
-    #000000 1deg 120deg,
-    #0000 121deg
-  );
+  background: conic-gradient(from 120deg at 50% 64%,
+      #0000,
+      #000000 1deg 120deg,
+      #0000 121deg);
   animation: l27-0 1.5s infinite cubic-bezier(0.3, 1, 0, 1);
 }
 
@@ -629,6 +631,7 @@ input[type="file"] {
 }
 
 @keyframes l27-0 {
+
   0%,
   30% {
     transform: rotate(0);
@@ -651,8 +654,7 @@ input[type="file"] {
 
   30%,
   70% {
-    transform: rotate(calc(var(--s, 1) * 120deg))
-      translate(calc(var(--s, 1) * -5px), 10px);
+    transform: rotate(calc(var(--s, 1) * 120deg)) translate(calc(var(--s, 1) * -5px), 10px);
   }
 
   100% {

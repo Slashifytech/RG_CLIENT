@@ -80,7 +80,7 @@ const TeamList = () => {
                 agentId={agent.agentId}
                 handleDelete={handleDelete}
                 link="/admin/team-invoices"
-                editLink="/admin/update-agent"
+                editLink="/admin/update-team"
                 text={"View more"}
               />
             ))

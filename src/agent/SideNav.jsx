@@ -6,6 +6,7 @@ import LogoutPop from "../Components/LogoutPop";
 import { logo } from "../assets";
 import { BiSolidCarMechanic } from "react-icons/bi";
 import { FaCarOn } from "react-icons/fa6";
+import { HiClipboardDocumentList } from "react-icons/hi2";
 
 const SideNav = () => {
   const location = useLocation();
@@ -30,7 +31,13 @@ const SideNav = () => {
       otherPath: "/agent/edit-AMC",
       otherPathTwo: "/agent/amc-form",
     },
-
+    {
+      pathPage: "/agent/ewpolicy-list",
+      icon: <HiClipboardDocumentList />,
+      label: "Ew Policy Lists",
+      otherPath: "/agent/edit-ewpolicy",
+      otherPathTwo: "/agent/ewpolicy-form",
+    },
     {
       pathPage: "/agent/buybacks-list",
       icon: <FaCarOn />,

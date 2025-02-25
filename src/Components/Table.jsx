@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, Typography } from "@material-tailwind/react";
-import { formatDate } from "../helper/commonHelperFunc";
+import { formatDate, getRelativeTime } from "../helper/commonHelperFunc";
 import { ToggleButton } from "./Input";
 import PdfPage from "./pdfPage";
 import MgPdf from "./Mgpdf";
@@ -11,6 +11,9 @@ import ViewAmc from "../pages/ViewAmc";
 import ViewBuyBack from "../pages/ViewBuyBack";
 import { useSelector } from "react-redux";
 import { AgentCancelReqPopUp, CancelReqPopUp } from "./CancelReqPopUp";
+import { EwIdPopup } from "./AdminComponents/EwIdPopUp";
+import { FaPencil } from "react-icons/fa6";
+import EwPdf from "../pages/EwPdf";
 
 export function CustomTableOne({
   tableHead = [],
@@ -667,13 +670,16 @@ export function CustomTableFour({
   handleResubmit,
   handleStatus,
   handleCancel,
+  profileRedirectLink,
 }) {
   const pdfRef = useRef();
   const { roleType } = useSelector((state) => state.users?.users);
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [isAgentPopUpOpen, setIsAgentPopUpOpen] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const [isId, setIsId] = useState();
+  const [iseWiD, setIseWId] = useState();
+
   const [isCancelId, setIsCancelId] = useState();
 
   const openPopUp = useCallback((id) => {
@@ -684,9 +690,13 @@ export function CustomTableFour({
     setIsCancelId(id);
     setIsAgentPopUpOpen(true);
   }, []);
-
+  const openIdPopUp = useCallback((id) => {
+    setIseWId(id);
+    setIsOpen(true);
+  }, []);
   const closePopUp = useCallback(() => setIsPopUpOpen(false), []);
   const closeAgentPopUp = useCallback(() => setIsAgentPopUpOpen(false), []);
+  const closeIdPopUp = useCallback(() => setIsOpen(false), []);
 
   const handleDownloadClick = (id) => {
     if (pdfRef.current[id]) {
@@ -729,6 +739,7 @@ export function CustomTableFour({
                     {row?.sno || "NA"}
                   </Typography>
                 </td>
+
                 <td className="p-4">
                   <Typography
                     variant="small"
@@ -738,6 +749,45 @@ export function CustomTableFour({
                     {row.data?.customId}
                   </Typography>
                 </td>
+                {row?.type === "ewPolicy" && (
+                  <td className="p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal text-center"
+                    >
+                      <span
+                        onClick={()=>openIdPopUp(row?.data?._id)}
+                        className="flex flex-row items-center gap-3 cursor-pointer"
+                      >
+                        <span>
+                          <FaPencil />
+                        </span>
+                        <span>
+                          {row?.data?.backendPolicyId
+                            ? row?.data?.backendPolicyId
+                            : "Backend Id"}
+                        </span>
+                      </span>
+                      {!row?.data?.backendPolicyId &&
+                      <span
+                        className={`${
+                          getRelativeTime(row?.data?.createdAt)?.includes(
+                            "day left"
+                          )
+                            ? "text-yellow-500"
+                            : getRelativeTime(row?.data?.createdAt)?.includes(
+                                "More than a week ago"
+                              )
+                            ? "text-red-500"
+                            : "text-green-500"
+                        } font-medium`}
+                      >
+                        {getRelativeTime(row?.data?.createdAt)}
+                      </span>}
+                    </Typography>
+                  </td>
+                )}
                 <td className="p-4">
                   <Typography
                     variant="small"
@@ -775,6 +825,24 @@ export function CustomTableFour({
                     {formatDate(row.data.createdAt)}
                   </Typography>
                 </td>
+                {row.type !== "ewPolicy" && (
+                  <td className="p-4">
+                    <Typography
+                      as="a"
+                      variant="small"
+                      color="blue-gray"
+                      className="font-medium"
+                    >
+                      <Link
+                        to={profileRedirectLink}
+                        state={{ id: row?.data?._id }}
+                        className="px-3 rounded-xl py-1 text-white bg-black cursor-pointer"
+                      >
+                        View
+                      </Link>
+                    </Typography>
+                  </td>
+                )}
                 <td className="p-4">
                   <Typography
                     variant="small"
@@ -962,6 +1030,19 @@ export function CustomTableFour({
                       id={row?.data?._id}
                     />
                   </span>
+                ) : row.type === "ewPolicy" ? (
+                  <span className="hidden">
+                    <EwPdf
+                      ref={(el) => {
+                        // Initialize pdfRefs.current if it's undefined
+                        if (!pdfRef.current) {
+                          pdfRef.current = {};
+                        }
+                        pdfRef.current[row?.data?._id] = el; // Store the reference
+                      }}
+                      id={row?.data?._id}
+                    />
+                  </span>
                 ) : null}
               </tr>
             ))}
@@ -982,6 +1063,113 @@ export function CustomTableFour({
         text="Are you sure to cancel the policy ?"
         cancelPolicyRequest={handleCancel}
       />
+      <EwIdPopup
+        closePopUp={closeIdPopUp}
+        isOpen={isOpen}
+        id={iseWiD}
+        text={"Enter The Backend Id"}
+      />
+    </>
+  );
+}
+
+export function CustomTableFive({ tableHead = [], tableRows = [] }) {
+  return (
+    <>
+      <Card className="h-full w-full overflow-scroll scrollbar-hide font-poppins">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              {tableHead.map((head) => (
+                <th
+                  key={head}
+                  className="border-b border-blue-gray-100 bg-input p-4"
+                >
+                  <Typography
+                    variant="small"
+                    color="sidebar"
+                    className="font-medium leading-none opacity-70 "
+                  >
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {tableRows.map((row, index) => (
+              <tr key={index} className="even:bg-blue-gray-50/50">
+                {/* Render only the values you want to display */}
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row?.sno || "NA"}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row.data?.serviceVinNumber}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row.data?.serviceDate}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row.data?.partsPrice}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row.data?.labourPrice}
+                  </Typography>
+                </td>
+
+                <td className="p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {row.data?.vasPrice}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography
+                    as="a"
+                    variant="small"
+                    color="blue-gray"
+                    className="font-medium"
+                  >
+                    {row.data?.serviceTotalAmount}
+                  </Typography>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
     </>
   );
 }

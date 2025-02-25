@@ -3,6 +3,7 @@ import Nav from "../admin/Nav";
 import Header from "../Components/Header";
 import CancelledAmc from "../Components/AdminComponents/CancelledAmc";
 import CancelledBuyBack from "../Components/AdminComponents/CancelledBuyBack";
+import CancelledEw from "../Components/AdminComponents/CancelledEw";
 
 const CancelledPolicy = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -10,7 +11,7 @@ const CancelledPolicy = () => {
   const tabs = [
     { id: 0, label: "AMC Cancelled Policy", component: <CancelledAmc /> },
     { id: 1, label: "Buyback Cancelled Policy", component: <CancelledBuyBack /> },
-    // { id: 2, label: "Policy Approval", component: <PolicyApproval /> },
+    { id: 2, label: "Ew Cancelled Policy", component: <CancelledEw/> },
 
   ];
 

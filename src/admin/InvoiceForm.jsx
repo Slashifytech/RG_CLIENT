@@ -5,16 +5,22 @@ import Nav from "./Nav";
 import { toast } from "react-toastify";
 import { addNewInovoice, editInovoice } from "../features/adminApi";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchInvoiceById, setEmptyInvoiceData } from "../features/InvoiceSlice";
+import {
+  fetchInvoiceById,
+  setEmptyInvoiceData,
+} from "../features/InvoiceSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchbuyBackDataById } from "../features/BuyBackSlice";
 import { updateAMCStatus } from "../features/AMCapi";
 import { updatBuyBackStatus } from "../features/BuybackApi";
 import Header from "../Components/Header";
 import { fetchamcDataById } from "../features/amcSlice";
+import { fetchEwById } from "./../features/EwSlice";
+import { updateEwStatus } from "../features/EwApi";
 const initialInvoiceData = {
   invoiceType: "",
   serviceId: "",
+  location: "",
   billingDetail: {
     customerName: "",
     address: "",
@@ -58,6 +64,8 @@ const InvoiceForm = () => {
   const { invoiceById } = useSelector((state) => state.invoice);
   const { buyBackByIdorStatus } = useSelector((state) => state.buyBack);
   const { amcByIdorStatus } = useSelector((state) => state.amc);
+  const { ewByIdorStatus } = useSelector((state) => state.ewPolicy);
+
   const { users } = useSelector((state) => state.users);
   const [isLoading, setisLoading] = useState(false);
   const createdBy = users?._id;
@@ -70,7 +78,6 @@ const InvoiceForm = () => {
     serviceId: id,
   });
   const [sameAsBilling, setSameAsBilling] = useState(false);
-
   const [errors, setErrors] = useState({});
   const formattedDate = createdDate();
   const rightFields = [
@@ -152,8 +159,7 @@ const InvoiceForm = () => {
       label: "Total Amount",
       required: true,
     },
-    
- 
+
     {
       name: "rmEmployeeId",
       type: "text",
@@ -208,7 +214,7 @@ const InvoiceForm = () => {
       type: "email",
       placeholder: "Relationship Manager/ Service Advisor Email Id",
       label: "Email Id of Relationship Manager/ Service Advisor ",
-      required: true
+      required: true,
     },
   ];
 
@@ -226,7 +232,7 @@ const InvoiceForm = () => {
   useEffect(() => {
     return () => {
       setInvoiceData({ ...initialInvoiceData });
-      dispatch(setEmptyInvoiceData())
+      dispatch(setEmptyInvoiceData());
     };
   }, []);
   useEffect(() => {
@@ -253,7 +259,7 @@ const InvoiceForm = () => {
       };
     });
   };
-
+console.log(location)
   const handleCheckboxChange = (e) => {
     setSameAsBilling(e.target.checked);
     if (e.target.checked) {
@@ -265,75 +271,90 @@ const InvoiceForm = () => {
   };
 
   const validateFields = () => {
-    const notRequiredVehicleFields = ["vehicleDetails.gmEmail", "vehicleDetails.hypothecated", "vehicleDetails.branchName"];
+    const notRequiredVehicleFields = [
+      "vehicleDetails.gmEmail",
+      "vehicleDetails.hypothecated",
+      "vehicleDetails.branchName",
+    ];
     const notRequiredCustomerFields = [
       "billingDetail.address",
       "billingDetail.pan",
       "billingDetail.stateCode",
-      "billingDetail.customerGst", 
+      "billingDetail.customerGst",
       "billingDetail.zipCode",
     ];
     const notRequiredShippingDetails = [
       "shippingDetails.address",
       "shippingDetails.pan",
       "shippingDetails.stateCode",
-      "shippingDetails.customerGst", 
+      "shippingDetails.customerGst",
       "shippingDetails.zipCode",
     ];
-  
+
     const billingDetail = invoiceData?.billingDetail || {};
     const shippingDetails = invoiceData?.shippingDetails || {};
     const vehicleDetails = invoiceData?.vehicleDetails || {};
-  
+
     const requiredFields = {
       ...Object.keys(billingDetail).reduce(
         (acc, key) =>
           notRequiredCustomerFields.includes(`billingDetail.${key}`)
             ? acc
-            : { ...acc, [`billingDetail.${key}`]: `${key} in Billing Details is required` },
+            : {
+                ...acc,
+                [`billingDetail.${key}`]: `${key} in Billing Details is required`,
+              },
         {}
       ),
       ...Object.keys(shippingDetails).reduce(
         (acc, key) =>
           notRequiredShippingDetails.includes(`shippingDetails.${key}`)
             ? acc
-            : { ...acc, [`shippingDetails.${key}`]: `${key} in Shipping Details is required` },
+            : {
+                ...acc,
+                [`shippingDetails.${key}`]: `${key} in Shipping Details is required`,
+              },
         {}
       ),
       ...Object.keys(vehicleDetails).reduce(
         (acc, key) =>
           notRequiredVehicleFields.includes(`vehicleDetails.${key}`)
             ? acc
-            : { ...acc, [`vehicleDetails.${key}`]: `${key} in Vehicle Details is required` },
+            : {
+                ...acc,
+                [`vehicleDetails.${key}`]: `${key} in Vehicle Details is required`,
+              },
         {}
       ),
     };
-  
+
     const errors = {};
-  
+
     Object.keys(requiredFields).forEach((fieldPath) => {
       const value = fieldPath
         .split(".")
-        .reduce((o, key) => (o && typeof o === "object" ? o[key] : undefined), invoiceData);
-  
+        .reduce(
+          (o, key) => (o && typeof o === "object" ? o[key] : undefined),
+          invoiceData
+        );
+
       if (value === undefined || value === null || value === "") {
         errors[fieldPath] = requiredFields[fieldPath];
       }
     });
-  
-  
+
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
-  
+
   useEffect(() => {
-    
     if (invoiceId) {
       dispatch(fetchInvoiceById({ invoiceId }));
     }
     if (id) {
-        dispatch(fetchamcDataById({ id, option: null }));
-        dispatch(fetchbuyBackDataById({ id, option: null }));
+      dispatch(fetchamcDataById({ id, option: null }));
+      dispatch(fetchbuyBackDataById({ id, option: null }));
+      dispatch(fetchEwById({ id, option: null }));
     }
   }, [id, invoiceId]);
 
@@ -347,16 +368,16 @@ const InvoiceForm = () => {
   }, [invoiceById?.invoice, location.pathname]);
 
   const mergedData = useMemo(() => {
-    if (!typeData) return {}; 
-  
+    if (!typeData) return {};
+
     return {
-      ...buyBackByIdorStatus?.data,  
-      ...amcByIdorStatus?.data       
+      ...buyBackByIdorStatus?.data,
+      ...amcByIdorStatus?.data,
+      ...ewByIdorStatus?.data,
     };
-  }, [typeData, amcByIdorStatus, buyBackByIdorStatus]);
-  
+  }, [typeData, amcByIdorStatus, buyBackByIdorStatus, ewByIdorStatus]);
   useEffect(() => {
-    if (!typeData ==="edit") {
+    if (typeData !== "edit") {
       setInvoiceData((prevState) => ({
         ...prevState,
         invoiceType: mergedData.invoiceType || prevState.invoiceType || "",
@@ -373,23 +394,23 @@ const InvoiceForm = () => {
         },
         vehicleDetails: {
           vinNumber: mergedData.vehicleDetails?.vinNumber || "",
-          model: mergedData.vehicleDetails?.model || mergedData.vehicleDetails?.vehicleModel || "",
-          gstAmount: mergedData.vehicleDetails?.total || mergedData.vehicleDetails?.totalPayment || "",
+          model:
+            mergedData.vehicleDetails?.model ||
+            mergedData.vehicleDetails?.vehicleModel ||
+            "",
+          gstAmount:
+            mergedData.vehicleDetails?.total ||
+            mergedData.vehicleDetails?.totalPayment ||
+            mergedData.ewDetails?.warrantyAmount ||
+            "",
           rmEmail: mergedData.vehicleDetails?.rmEmail || "",
           rmName: mergedData.vehicleDetails?.rmName || "",
           rmEmployeeId: mergedData.vehicleDetails?.rmEmployeeId || "",
           gmEmail: mergedData.vehicleDetails?.gmEmail || "",
         },
       }));
-    
-      
     }
   }, [typeData, mergedData]);
-  
-  
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -421,25 +442,29 @@ const InvoiceForm = () => {
             gmEmail: current[key].gmEmail,
           };
         }
-        
+
         if (JSON.stringify(current[key]) !== JSON.stringify(original[key])) {
           changes[key] = current[key];
         }
-    
+
         if (key === "billingDetail" && current[key]?.email) {
           changes.billingDetail = {
             ...changes.billingDetail,
             email: current[key].email,
           };
         }
-    
+
         return changes;
       }, {});
     };
-    
+
     const payload = invoiceId
       ? getChangedFields(invoiceData, invoiceById?.invoice || {})
-      : { ...invoiceData, createdBy: createdBy };
+      : {
+          ...invoiceData,
+          createdBy: createdBy,
+          location: mergedData?.vehicleDetails?.dealerLocation,
+        };
     const role = localStorage.getItem("roleType");
     try {
       setisLoading(true);
@@ -452,6 +477,8 @@ const InvoiceForm = () => {
         const updateResponse =
           typeData === "Buyback"
             ? await updatBuyBackStatus(id, "approved", null)
+            : typeData === "ewPolicy"
+            ? await updateEwStatus(id, "approved", null)
             : await updateAMCStatus(id, "approved", null);
 
         if (updateResponse.status === 200) {
@@ -460,7 +487,7 @@ const InvoiceForm = () => {
         }
       }
       setisLoading(false);
-      navigate("/admin/invoice-lists");
+      // navigate("/admin/invoice-lists");
     } catch (error) {
       console.log(error);
       setisLoading(false);

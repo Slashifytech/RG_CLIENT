@@ -30,6 +30,47 @@ const InputField = ({
     </>
   );
 };
+const CustomSelect = ({
+  label,
+  options = [],
+  value,
+  onChange,
+  name,
+  placeholder,
+  isDisabled = false,
+  customClass = "",
+  imp,
+}) => {
+  return (
+    <>
+      {label && (
+        <div className="font-semibold">
+          {label}
+          {imp ? <span className="text-red-500">*</span> : ""}
+        </div>
+      )}
+      <select
+        id={name}
+        name={name}
+        value={value}
+        onChange={onChange}
+        className={`select-input ${customClass}`}
+        disabled={isDisabled}
+      >
+        <option value="" >
+          {placeholder}
+        </option>
+        {options.map((option, index) => (
+          <option key={index} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </>
+  );
+};
+
+
 
 const SelectInput = ({
   label,
@@ -360,6 +401,6 @@ const PasswordField = ({ name, value, handleInput, showPassword, toggleVisibilit
     </>
 
   )}
-export { SelectInput, InputField, CustomInput, GroupedInput, FileUpload, ToggleButton,  ImageComponent, PasswordField};
+export { SelectInput,CustomSelect, InputField, CustomInput, GroupedInput, FileUpload, ToggleButton,  ImageComponent, PasswordField};
 
 export default InputField;

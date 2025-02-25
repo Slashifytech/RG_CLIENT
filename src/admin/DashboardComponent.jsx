@@ -1,32 +1,187 @@
 import React, { useEffect, useState } from "react";
 import HeaderTab from "./HeaderTabs";
 import Nav from "./Nav";
-import { Link } from "react-router-dom";
-
-import {
-  getCancelledCountPolicy,
-  getCountPolicy,
-} from "../../Util/UtilityFunction";
 import Header from "../Components/Header";
+import Cards from "../Components/AdminComponents/Cards";
+import { toast } from "react-toastify";
+import { getDashboardData } from "../features/adminApi";
+import { graphLine, icon, TwoUser } from "../assets";
+import { useSelector } from "react-redux";
+import { CustomInput, CustomSelect, SelectInput } from "../Components/Input";
+import { locationOption, modelOption } from "../data";
 
 const DashboardComponent = () => {
-  const [cancelPolicyCount, setCancelPolicyCount] = useState();
-  const [policyCount, setPolicyCount] = useState();
+  const { roleType, agentName, email } = useSelector(
+    (state) => state.users.users
+  );
+  const [amcData, setAmcData] = useState({
+    location: "",
+    vehicleModel: "",
+    startDate: "",
+    endDate: "",
+    totalAmc: "",
+    totalRevenue: "",
+    totalExpense: "",
+  });
+  const [buyBackData, setBuyBackData] = useState({
+    location: "",
+    vehicleModel: "",
+    startDate: "",
+    endDate: "",
+    statsData: "",
+    totalBuyBack: "",
+    totalRevenue: "",
+    totalExpense: "",
+  });
+  const [ewPolicyData, setEwPolicyData] = useState({
+    location: "",
+    vehicleModel: "",
+    startDate: "",
+    endDate: "",
+    statsData: "",
+    totalEwPolicy: "",
+    totalRevenue: "",
+  });
+  const amcPath = "/amc-stats-data";
+  const buyBackPath = "/buy-back-stats-data";
+  const ewPolicyPath = "/ew-stats"
+
+  const handleInputChange = (e, dataType) => {
+    const { name, value } = e.target;
+
+    if (dataType === "amc") {
+      setAmcData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    } else if (dataType === "buyBack") {
+      setBuyBackData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  const getAmcData = async () => {
+    try {
+      const res = await getDashboardData(
+        amcPath,
+        amcData.location,
+        amcData.vehicleModel,
+        amcData.startDate,
+        amcData.endDate
+      );
+      setAmcData((prev) => ({
+        ...prev,
+        totalAmc: res?.totalamcCount,
+        totalRevenue: res?.totalRevenue,
+        totalExpense: res?.totalExpense,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getBuyBackData = async () => {
+    try {
+      const res = await getDashboardData(
+        buyBackPath,
+        buyBackData.location,
+        buyBackData.vehicleModel,
+        buyBackData.startDate,
+        buyBackData.endDate
+      );
+      setBuyBackData((prev) => ({
+        ...prev,
+        totalBuyBack: res?.totalBuyBackCount,
+        totalRevenue: res?.totalRevenue,
+        totalExpense: res?.totalExpense,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getEwData = async () => {
+    try {
+      const res = await getDashboardData(
+        ewPolicyPath,
+        ewPolicyData.location,
+        ewPolicyData.vehicleModel,
+        ewPolicyData.startDate,
+        ewPolicyData.endDate
+      );
+      setEwPolicyData((prev) => ({
+        ...prev,
+        totalEwPolicy: res?.totalEwCount,
+        totalRevenue: res?.totalRevenue,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+console.log(ewPolicyData)
+  useEffect(() => {
+    getAmcData();
+  }, [amcData.endDate, amcData.startDate, amcData.location, amcData.vehicleModel]);
 
   useEffect(() => {
-    const getCancelledPolicy = async () => {
-      const response = await getCancelledCountPolicy();
-      setCancelPolicyCount(response);
-    };
-    getCancelledPolicy();
-  }, []);
+    getBuyBackData();
+  }, [buyBackData.endDate, buyBackData.startDate, buyBackData.location, buyBackData.vehicleModel]);
+
   useEffect(() => {
-    const getAllPolicy = async () => {
-      const response = await getCountPolicy();
-      setPolicyCount(response);
-    };
-    getAllPolicy();
-  }, []);
+  getEwData();
+  }, [ewPolicyData.endDate, ewPolicyData.startDate, ewPolicyData.location, ewPolicyData.vehicleModel]);
+  const amcCardData = [
+    {
+      countData: amcData?.totalAmc,
+      title: "Total AMC Policies",
+      bgImg: graphLine,
+      icon: TwoUser,
+    },
+    {
+      countData: amcData?.totalRevenue,
+      title: "Total AMC Revenue",
+      icon: icon,
+    },
+    {
+      countData: amcData?.totalExpense,
+      title: "Total AMC Expense",
+      icon: icon,
+    },
+  ];
+
+  const buyBackCardData = [
+    {
+      countData: buyBackData?.totalBuyBack,
+      title: "Total Buy Back  Policies",
+      bgImg: graphLine,
+      icon: TwoUser,
+    },
+    {
+      countData: buyBackData?.totalRevenue,
+      title: "Total Buy Back Revenue",
+      icon: icon,
+    },
+    {
+      countData: buyBackData?.totalExpense,
+      title: "Total Buy Back Expense",
+      icon: icon,
+    },
+  ];
+  const ewPolicyCardData = [
+    {
+      countData: ewPolicyData?.totalEwPolicy,
+      title: "Total Ew Policies",
+      bgImg: graphLine,
+      icon: TwoUser,
+    },
+    {
+      countData: ewPolicyData?.totalRevenue,
+      title: "Total Ew Policy Revenue",
+      icon: icon,
+    },
+ 
+  ];
+
   return (
     <>
       <div className="fixed">
@@ -35,28 +190,147 @@ const DashboardComponent = () => {
         </span>
       </div>
       <div>
-      <Header/>
-    </div>
-    <div className="ml-0 sm:ml-[28%] md:ml-[23%] mt-16">
-        <HeaderTab />
+        <Header />
+      </div>
+      <div className="ml-0 sm:ml-[28%] md:ml-[20%] mt-20 ">
+        <p className="text-[30px] font-bold">Dashboard</p>
+        <p className="text-[16px] font-normal">
+          Hi, {agentName} welcome back to RaamGroup Portal!
+        </p>
+      </div>
+      <div className="flex flex-row items-center gap-6 sm:ml-[28%] md:ml-[20%] mr-6 mt-6">
+        <CustomSelect
+          options={locationOption}
+          name={"location"}
+          customClass="bg-white w-60 rounded-md h-10 border border-black"
+          value={amcData.location}
+          onChange={(e) => handleInputChange(e, "amc")}
+          placeholder={"Choose Location"}
+        />
+        <CustomSelect
+          options={modelOption}
+          name={"location"}
+          customClass="bg-white w-60 rounded-md h-10 border border-black"
+          value={amcData.vehicleModel}
+          onChange={(e) => handleInputChange(e, "amc")}
+          placeholder={"Choose Model"}
+        />
+        <CustomInput
+          type={"date"}
+          name={"startDate"}
+          className="bg-white w-full rounded-md h-10 border border-black -mt-6 px-3"
+          value={amcData.startDate}
+          onChange={(e) => handleInputChange(e, "amc")}
+        />
+        <CustomInput
+          type={"date"}
+          name={"endDate"}
+          className="bg-white w-full rounded-md h-10 border border-black -mt-6 px-3"
+          value={amcData.endDate}
+          onChange={(e) => handleInputChange(e, "amc")}
+        />
       </div>
 
-      <div className="flex md:flex-row sm:flex-row flex-col  ml-8 sm:ml-[33%] md:ml-[25%]  w-full gap-9 pt-3 pb-20">
-        <Link
-          to="/admin/active-policy"
-          className="bg-secondary shadow font-semibold font md:w-[16%]  sm:w-[28%] w-[72%] md:mx-0 sm:mx-0 mx-6 rounded-md h-[10rem] text-center pt-6 font-head text-[20px]"
-        >
-          <p className="text-[40px]">{policyCount || 0}</p>
-          Active Polices
-        </Link>
+      <div className="ml-8 sm:ml-[33%] md:ml-[20%] md:w-[70%] gap-9 pt-3 pb-6 grid grid-cols-3">
+        {amcCardData.map((item, index) => (
+          <Cards
+            key={index}
+            countData={item.countData}
+            titleData={item.title}
+            bgImg={item.bgImg}
+            icon={item.icon}
+          />
+        ))}
+      </div>
 
-        <Link
-          to="/admin/cancelled-policy"
-          className="bg-secondary shadow font-semibold font md:w-[16%]  sm:w-[28%] w-[72%] md:mx-0 sm:mx-0 mx-6 rounded-md h-[10rem] text-center pt-6 font-head text-[20px]"
-        >
-          <p className="text-[40px]">{cancelPolicyCount || 0}</p>
-          Cancelled Polices
-        </Link>
+
+      <div className="flex flex-row items-center gap-6 sm:ml-[28%] md:ml-[20%] mr-6  ">
+        <CustomSelect
+          options={locationOption}
+          name={"location"}
+          customClass="bg-white w-60 rounded-md h-10 border border-black"
+          value={buyBackData.location}
+          onChange={(e) => handleInputChange(e, "buyBack")}
+          placeholder={"Choose Location"}
+        />
+        <CustomSelect
+          options={modelOption}
+          name={"location"}
+          customClass="bg-white w-60 rounded-md h-10 border border-black"
+          value={buyBackData.vehicleModel}
+          onChange={(e) => handleInputChange(e, "buyBack")}
+          placeholder={"Choose Model"}
+        />
+        <CustomInput
+          type={"date"}
+          name={"startDate"}
+          className="bg-white w-full rounded-md h-10 border border-black -mt-6 px-3"
+          value={buyBackData.startDate}
+          onChange={(e) => handleInputChange(e, "buyBack")}
+        />
+        <CustomInput
+          type={"date"}
+          name={"endDate"}
+          className="bg-white w-full rounded-md h-10 border border-black -mt-6 px-3"
+          value={buyBackData.endDate}
+          onChange={(e) => handleInputChange(e, "buyBack")}
+        />
+      </div>
+      <div className="ml-8 sm:ml-[33%] md:ml-[20%] md:w-[70%] gap-9  pb-20 grid grid-cols-3 mt-6">
+        {buyBackCardData.map((item, index) => (
+          <Cards
+            key={index}
+            countData={item.countData}
+            titleData={item.title}
+            bgImg={item.bgImg}
+            icon={item.icon}
+          />
+        ))}
+      </div>
+
+
+      <div className="flex flex-row items-center gap-6 sm:ml-[28%] md:ml-[20%] mr-6 -mt-14">
+        <CustomSelect
+          options={locationOption}
+          name={"location"}
+          customClass="bg-white w-60 rounded-md h-10 border border-black"
+          value={ewPolicyData.location}
+          onChange={(e) => handleInputChange(e, "buyBack")}
+          placeholder={"Choose Location"}
+        />
+        <CustomSelect
+          options={modelOption}
+          name={"location"}
+          customClass="bg-white w-60 rounded-md h-10 border border-black"
+          value={ewPolicyData.vehicleModel}
+          onChange={(e) => handleInputChange(e, "buyBack")}
+          placeholder={"Choose Model"}
+        />
+        <CustomInput
+          type={"date"}
+          name={"startDate"}
+          className="bg-white w-full rounded-md h-10 border border-black -mt-6 px-3"
+          value={ewPolicyData.startDate}
+          onChange={(e) => handleInputChange(e, "buyBack")}
+        />
+        <CustomInput
+          type={"date"}
+          name={"endDate"}
+          className="bg-white w-full rounded-md h-10 border border-black -mt-6 px-3"
+          value={ewPolicyData.endDate}
+          onChange={(e) => handleInputChange(e, "buyBack")}
+        />
+      </div>
+      <div className="ml-8 sm:ml-[33%] md:ml-[20%] md:w-[70%] gap-9  pb-20 grid grid-cols-3 mt-6">
+        {ewPolicyCardData.map((item, index) => (
+          <Cards
+            key={index}
+            countData={item.countData}
+            titleData={item.title}
+            bgImg={item.bgImg}
+            icon={item.icon}
+          />
+        ))}
       </div>
     </>
   );

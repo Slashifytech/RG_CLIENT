@@ -109,7 +109,20 @@ export const formatFieldName = (field) => {
   }
 };
 
+export const getRelativeTime = (createdAt) => {
+  const createdDate = new Date(createdAt);
+  const currentDate = new Date();
+  
+  const diffTime = Math.floor((currentDate - createdDate) / (1000 * 60 * 60 * 24));
 
+  if (diffTime < 1) {
+    return "Today";
+  } else if (diffTime < 7) {
+    return `${diffTime} day${diffTime > 1 ? "s" : ""} left`;
+  } else {
+    return "More than a week ago";
+  }
+};
 export function extractFileNames(filePath) {
   // Get the last part of the path (filename)
   const fullName = filePath.split('/').pop();

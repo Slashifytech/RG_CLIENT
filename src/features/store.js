@@ -10,6 +10,8 @@ import documentsReducer from './DocumentSlice'
 import agentReducer from './agentSlice'
 import amcReducer  from './amcSlice'
 import buyBackReducer from './BuyBackSlice'
+import ewPolicyReducer from './EwSlice'
+
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -22,7 +24,8 @@ export const store = configureStore({
     invoice: invoiceReducer,
     documents: documentsReducer,
     amc: amcReducer,
-    buyBack: buyBackReducer
+    buyBack: buyBackReducer,
+    ewPolicy: ewPolicyReducer,
   },
 });
   

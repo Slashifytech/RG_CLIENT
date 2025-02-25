@@ -35,37 +35,31 @@ export const updateEmail = async (payload) => {
 };
 
 export const addNewAgent = async (agentData, update, addNew, aId) => {
-  
   try {
     const response = await apiurl.post("/add-new-agent", agentData, {
-      params:{
-        update:update,
+      params: {
+        update: update,
         isNew: addNew,
         id: aId,
-      }
+      },
     });
     console.log("Agent added successfully:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error adding agent:", error);
-    throw error;  
+    throw error;
   }
 };
 
-export const  deleteAgent  = async (userId) =>{
-  try{
-    const response  = await apiurl.delete(`/deleteAgent/${userId}`)
-    
-    return response.data
-  }catch(error){
-    console.log("Error whle deleting agents",error)
+export const deleteAgent = async (userId) => {
+  try {
+    const response = await apiurl.delete(`/deleteAgent/${userId}`);
+
+    return response.data;
+  } catch (error) {
+    console.log("Error whle deleting agents", error);
   }
-
-}
-
-
-
-
+};
 
 export const cancelPolicy = async (policyId) => {
   try {
@@ -73,100 +67,105 @@ export const cancelPolicy = async (policyId) => {
     return response.data;
   } catch (error) {
     console.error("Error in cancelling policy:", error);
-    throw error;  
+    throw error;
   }
 };
 
-export const getCancelPolicy = async(page, limit) =>{
-  try{
-   const response = await apiurl.get('/get-cancelled-policy',{
-    params:{page, limit}
-   })
-   console.log(response.data, "cab")
-   return response.data;
-  }catch(error){
-    console.log("Error in fetching cancelled policy:", error);
-     throw error
-  }
-}
-
-
-export const getAllPolicy = async(page, limit, manufacturer, searchTerm) =>{
-  try{
-   const response = await apiurl.get('/get-all-policy',{
-    params: { page, limit, manufacturer, search:searchTerm},
-  
-  })
-   return response.data;
-  }catch(error){
-    console.log("Error in fetching all policies:", error);
-     throw error
-  }
-}
-
-
-export const addNewInovoice = async(payload, role) =>{
-  try{
-   const response = await apiurl.post('/add-invoice', payload, role)
-   return response.data;
-  }catch(error){
-    console.log("Error in fetching all policies:", error);
-     throw error
-  }
-}
-
-export const editInovoice = async(payload, id) =>{
-  try{
-   const response = await apiurl.patch('/update-invoice', payload, {
-    params:{
-      id: id,
-    }
-   })
-   return response.data;
-  }catch(error){
-    console.log("Error in fetching all policies:", error);
-     throw error
-  }
-}
-
-export const getAllInvoice = async(page, perPage) =>{
-  try{
-   const response = await apiurl.get('/all-invoice-approval',null, {
-    params:{
-      
-      page: page,
-      limit: perPage
-    }
-   })
-
-   return response.data;
-  }catch(error){
-    console.log("Error in fetching all policies:", error);
-     throw error
-  }
-}
-
-export const approvalStatusChange = async(invoiceId, approvalStatus, message) =>{
-  try{
-   const response = await apiurl.patch('/update-approval',null, {
-    params:{
-     invoiceId: invoiceId,
-     approvalStatus: approvalStatus,
-     message: message
-    }
-   })
-
-   return response.data;
-  }catch(error){
-    console.log("Error in fetching all policies:", error);
-     throw error
-  }
-}
-
-
-export const getAllInvoiceByStatus = async (page, perPage, invoiceType, search, createdBy) => {
+export const getCancelPolicy = async (page, limit) => {
   try {
-    const response = await apiurl.get('/invoice-all', {
+    const response = await apiurl.get("/get-cancelled-policy", {
+      params: { page, limit },
+    });
+    console.log(response.data, "cab");
+    return response.data;
+  } catch (error) {
+    console.log("Error in fetching cancelled policy:", error);
+    throw error;
+  }
+};
+
+export const getAllPolicy = async (page, limit, manufacturer, searchTerm) => {
+  try {
+    const response = await apiurl.get("/get-all-policy", {
+      params: { page, limit, manufacturer, search: searchTerm },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Error in fetching all policies:", error);
+    throw error;
+  }
+};
+
+export const addNewInovoice = async (payload, role) => {
+  try {
+    const response = await apiurl.post("/add-invoice", payload, role);
+    return response.data;
+  } catch (error) {
+    console.log("Error in fetching all policies:", error);
+    throw error;
+  }
+};
+
+export const editInovoice = async (payload, id) => {
+  try {
+    const response = await apiurl.patch("/update-invoice", payload, {
+      params: {
+        id: id,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Error in fetching all policies:", error);
+    throw error;
+  }
+};
+
+export const getAllInvoice = async (page, perPage) => {
+  try {
+    const response = await apiurl.get("/all-invoice-approval", null, {
+      params: {
+        page: page,
+        limit: perPage,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log("Error in fetching all policies:", error);
+    throw error;
+  }
+};
+
+export const approvalStatusChange = async (
+  invoiceId,
+  approvalStatus,
+  message
+) => {
+  try {
+    const response = await apiurl.patch("/update-approval", null, {
+      params: {
+        invoiceId: invoiceId,
+        approvalStatus: approvalStatus,
+        message: message,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log("Error in fetching all policies:", error);
+    throw error;
+  }
+};
+
+export const getAllInvoiceByStatus = async (
+  page,
+  perPage,
+  invoiceType,
+  search,
+  createdBy
+) => {
+  try {
+    const response = await apiurl.get("/invoice-all", {
       params: {
         invoiceType: invoiceType,
         page: page,
@@ -196,7 +195,7 @@ export const customerApprovalSend = async (
       policyId: policyId,
       customerName: customerName,
       clientApproval: clientApproval,
-      email: email
+      email: email,
     });
 
     return res.data;
@@ -213,20 +212,13 @@ export const customerApprovalSend = async (
   }
 };
 
-
-export const getTeamMember = async (
-  brandName,
-
-) => {
+export const getTeamMember = async (brandName) => {
   try {
-    const res = await apiurl.get("/team-members",{
-      params:{
-      brandName: brandName ,
-
-      }
-    }
-    
-    );
+    const res = await apiurl.get("/team-members", {
+      params: {
+        brandName: brandName,
+      },
+    });
 
     return res.data;
   } catch (error) {
@@ -242,3 +234,33 @@ export const getTeamMember = async (
   }
 };
 
+export const getDashboardData = async (
+  path,
+  location,
+  vehicleModel,
+  startDate,
+  endDate
+) => {
+  try {
+    const res = await apiurl.get(path, {
+      params: {
+        location: location,
+        vehicleModel: vehicleModel,
+        startDate: startDate,
+        endDate: endDate,
+      },
+    });
+
+    return res.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        error.response.data.message || "Error while fetching data"
+      );
+    } else if (error.request) {
+      throw new Error("No response from server. Please try again later.");
+    } else {
+      throw new Error("An unexpected error occurred");
+    }
+  }
+};

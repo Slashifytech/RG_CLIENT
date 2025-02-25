@@ -6,34 +6,31 @@ import DataNotFound from "../admin/DataNotFound";
 import { CustomTableFour } from "../Components/Table";
 import { FaPencil } from "react-icons/fa6";
 import Nav from "../admin/Nav";
-import { fetchamcLists, setEmptyAMC } from "../features/amcSlice";
 import Loader from "../Components/Loader";
 import SideNav from "../agent/SideNav";
 import Header from "../Components/Header";
 import {
   amcCancelByAdmin,
-  amcExpenseNewExpense,
-  amcResubmit,
-  updateAMCStatus,
+
 } from "../features/AMCapi";
 import { toast } from "react-toastify";
-import { RiUpload2Fill } from "react-icons/ri";
-import Papa from "papaparse";
 import { IoMdDownload } from "react-icons/io";
 import { downloadCsvData } from "../../Util/UtilityFunction";
-const AdminAmcList = () => {
+import { fetchEwLists, setEmptytEw } from "../features/EwSlice";
+import { ewResubmit, updateEwStatus } from "../features/EwApi";
+const AdminEwLists = () => {
   const { _id, roleType } = useSelector((state) => state.users?.users);
   const userId = roleType === "2" ? _id : null;
-  const { amcLists } = useSelector((state) => state.amc);
+  const { EwLists } = useSelector((state) => state.ewPolicy);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
 
   const perPage = 10;
-  const currentPage = amcLists?.pagination?.currentPage;
-  const totalPagesCount = amcLists?.pagination?.totalPages;
-  const totalCount = amcLists?.pagination?.totalItems;
+  const currentPage = EwLists?.pagination?.currentPage;
+  const totalPagesCount = EwLists?.pagination?.totalPages;
+  const totalCount = EwLists?.pagination?.totalItems;
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
   };
@@ -42,11 +39,11 @@ const AdminAmcList = () => {
     setLoading(true);
     if (roleType === "2" && userId) {
       dispatch(
-        fetchamcLists({ page, perPage, searchTerm, userId, option: null })
+        fetchEwLists({ page, perPage, searchTerm, userId, option: null })
       );
     } else if (roleType === "0" || roleType === "1") {
       dispatch(
-        fetchamcLists({
+        fetchEwLists({
           page,
           perPage,
           searchTerm,
@@ -61,38 +58,38 @@ const AdminAmcList = () => {
 
   const TABLE_HEAD = [
     "S.No.",
-    "AMC Id",
+    "Ew Id",
+    "Bakend Policy Id ",
     "Name",
     "Email",
     "VIN No.",
-    "AMC Issue date",
-    "View Profile",
+    "Ew Issue date",
     "View/Download",
     "Status",
     "Action",
   ];
 
-  const TABLE_ROWS = amcLists?.data?.map((data, index) => ({
+  const TABLE_ROWS = EwLists?.data?.map((data, index) => ({
     sno: (currentPage - 1) * perPage + index + 1,
     data: data || "NA",
-    status: data?.amcStatus || "NA",
-    type: "amc",
+    status: data?.ewStatus || "NA",
+    type: "ewPolicy",
   }));
 
   const handleDispatch = () => {
-    dispatch(setEmptyAMC());
+    dispatch(setEmptytEw());
   };
 
   const handleResubmit = async (id) => {
     try {
-      const res = await amcResubmit(id);
+      const res = await ewResubmit(id);
       if (roleType === "2" && userId) {
         dispatch(
-          fetchamcLists({ page, perPage, option: null, userId, option: null })
+          fetchEwLists({ page, perPage, option: null, userId, option: null })
         );
       } else if (roleType === "0" || roleType === "1") {
         dispatch(
-          fetchamcLists({
+          fetchEwLists({
             page,
             perPage,
             option: null,
@@ -111,7 +108,7 @@ const AdminAmcList = () => {
     try {
       const res = await amcCancelByAdmin(id);
       dispatch(
-        fetchamcLists({
+        fetchEwLists({
           page,
           perPage,
           searchTerm,
@@ -127,11 +124,11 @@ const AdminAmcList = () => {
   };
   const handleStatus = async (userId, type, reason) => {
     try {
-      const response = await updateAMCStatus(userId, type, reason);
+      const response = await updateEwStatus(userId, type, reason);
 
       toast.success(response?.message || "AMC Updated Successfully");
       dispatch(
-        fetchamcLists({
+        fetchEwLists({
           option: null,
           option: null,
           option: null,
@@ -145,61 +142,9 @@ const AdminAmcList = () => {
     }
   };
 
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-
-    if (file && file.type === "text/csv") {
-      Papa.parse(file, {
-        complete: async (result) => {
-          const parsedData = result.data;
-
-          if (parsedData.length === 0) {
-            toast.error("CSV file is empty.");
-            return;
-          }
-
-          const groupedData = parsedData.reduce((acc, entry) => {
-            const { serviceVinNumber, serviceDate } = entry;
-
-            if (!serviceVinNumber || !serviceDate) {
-              return acc;
-            }
-
-            const key = `${serviceVinNumber}-${serviceDate}`;
-
-            if (!acc[key]) {
-              acc[key] = {
-                serviceVinNumber,
-                serviceDate,
-                expenses: [],
-              };
-            }
-
-            acc[key].expenses.push(entry);
-            return acc;
-          }, {});
-
-          const groupedArray = Object.values(groupedData);
-
-          // console.log("Grouped CSV Data:", groupedArray);
-          await Promise.all(
-            groupedArray.map((data) =>
-              amcExpenseNewExpense(data.serviceVinNumber, data.expenses)
-            )
-          );
-
-          toast.success("All expenses uploaded successfully!");
-        },
-        header: true,
-        // skipEmptyLines: true,
-      });
-    } else {
-      toast.error("Please upload a valid CSV file.");
-    }
-  };
-
+  
   const handleDownload = async () => {
-    const path = "/amc-download"
+    const path = "/ew-download"
     await downloadCsvData(path);
   };
 
@@ -213,39 +158,28 @@ const AdminAmcList = () => {
       <div>
         <Header />
       </div>
-      <div className="md:pt-20 sm:pt-20 pt-6 flex md:flex-row sm:flex-row flex-col-reverse justify-between md:items-center sm:items-center md:px-20 mx-6 ">
+      <div className="md:pt-20 sm:pt-20 pt-6 flex md:flex-row sm:flex-row flex-col-reverse justify-between md:items-center sm:items-center md:px-20 mx-6">
         <Link
           onClick={handleDispatch}
-          to={roleType === "2" ? "/agent/amc-form" : "/admin/add-amc"}
-          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[15.5%] sm:ml-[26%] mt-4 sm:mt-4 md:mt-4 "
+          to={roleType === "2" ? "/agent/ewpolicy-form" : "/admin/add-ewpolicy"}
+          className="px-6 bg-primary text-white rounded-md py-2 text-[16px] md:ml-[15.5%] sm:ml-[26%] mt-4 sm:mt-4 md:mt-4"
         >
-          + Add New AMC
+          + Add New Ew
         </Link>
 
         {roleType === "0" && (
-          <span className="flex flex-row items-center gap-6 ">
             <span
               onClick={handleDownload}
-              className="px-6 bg-primary flex flex-row items-center cursor-pointer gap-3 text-white rounded-md py-2 text-[16px]  mt-4 sm:mt-4 md:mt-4"
+              className="px-6 bg-primary flex flex-row items-center cursor-pointer gap-3 text-white rounded-md py-2 text-[16px] md:ml-[15.5%] sm:ml-[26%] mt-4 sm:mt-4 md:mt-4"
             >
               Download CSV
               <IoMdDownload />
             </span>
-            <label className="px-6 bg-primary flex flex-row items-center cursor-pointer gap-3 text-white rounded-md py-2 text-[16px]  mt-4 sm:mt-4 md:mt-4">
-              <input
-                type="file"
-                accept=".csv"
-                onChange={handleFileUpload}
-                className="hidden"
-              />
-              Upload CSV
-              <RiUpload2Fill />
-            </label>
-          </span>
+          
         )}
       </div>
 
-      <div className="px-6 flex justify-start md:ml-[18.5%] sm:ml-48 mt-6 ">
+      <div className="px-6 flex justify-start md:ml-[18.5%] sm:ml-48 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
@@ -256,7 +190,7 @@ const AdminAmcList = () => {
       </div>
 
       <p className="pt-5 text-[20px] font-semibold md:ml-[21%] sm:ml-[28%] ml-6">
-        AMC Lists-
+        Ew Lists-
       </p>
 
       <div className="font-head pt-4">
@@ -268,7 +202,7 @@ const AdminAmcList = () => {
           <div className="flex justify-center items-center h-[300px]">
             <DataNotFound
               className="flex justify-center flex-col w-full items-center md:mt-20 mt-12 md:ml-28 sm:ml-28"
-              message="No AMC found"
+              message="No EW Policy found"
             />
           </div>
         ) : (
@@ -278,10 +212,9 @@ const AdminAmcList = () => {
                 tableHead={TABLE_HEAD}
                 tableRows={TABLE_ROWS}
                 link={
-                  roleType === "2" ? "/agent/edit-AMC" : "/admin/update-AMC"
+                  roleType === "2" ? "/agent/edit-ewpolicy" : "/admin/update-ewpolicy"
                 }
-                redirectLink={"/amc-view"}
-                profileRedirectLink={"/amc/profile-view"}
+                redirectLink={"/ew-view"}
                 action="Edit"
                 icon={<FaPencil />}
                 handleResubmit={handleResubmit}
@@ -307,4 +240,4 @@ const AdminAmcList = () => {
   );
 };
 
-export default AdminAmcList;
+export default AdminEwLists;

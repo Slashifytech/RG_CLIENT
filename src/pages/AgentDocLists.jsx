@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Nav from "../admin/Nav";
-import BuyBackApproval from "../admin/BuyBackApproval";
+import BuyBackApproval from "../Components/AdminComponents/BuyBackApproval";
 import AgentAmcsData from "../admin/AgentAmcsData";
 import AgentBuybacks from "../admin/AgentBuybacks";
 import Header from "../Components/Header";

@@ -3,6 +3,7 @@ import Nav from "../admin/Nav";
 import InvoiceAmcList from "../Components/AdminComponents/InvoiceAmcList";
 import InvoiceBuyBackList from "../Components/AdminComponents/InvoiceBuyBackList";
 import Header from "../Components/Header";
+import EwInvoiceList from "../Components/AdminComponents/EwInvoiceList";
 
 const InvvoiceList = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -10,6 +11,8 @@ const InvvoiceList = () => {
   const tabs = [
     { id: 0, label: "AMC Invoice Lists", component: <InvoiceAmcList /> },
     { id: 1, label: "Buyback Invoice Lists", component: <InvoiceBuyBackList /> },
+    { id: 2, label: "Ew Policy Invoice Lists", component: <EwInvoiceList/> },
+
   ];
 
   return (

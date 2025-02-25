@@ -17,6 +17,8 @@ module.exports = {
       fontFamily: {
         head: ['Montserrat', 'sans-serif'],
         body: ['DM Sans', 'sans-serif'],
+        heading: ['Host Grotesk', 'sens-serif']
+        
       },
     },
     screens: {

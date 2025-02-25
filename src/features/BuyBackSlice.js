@@ -29,7 +29,7 @@ export const fetchBuyBackLists = createAsyncThunk(
 const buyBackSlice = createSlice({
   name: "buyBack",
   initialState: {
-    buyBackByIdorStatus: [],
+    buyBackByIdorStatus: null,
     BuyBackLists: null,
   },
   reducers:{

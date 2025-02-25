@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Nav from "./Nav";
-import InputField from "../Components/Input";
+import InputField, { CustomSelect } from "../Components/Input";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ import { fetchAllUserDataById } from "../../Util/UtilityFunction";
 import { FaRegEyeSlash } from 'react-icons/fa6';
 import { FaRegEye } from 'react-icons/fa6';
 import Header from "../Components/Header";
+import { locationOption } from "../data";
 
 const AddTeam = () => {
   const location = useLocation()
@@ -27,6 +28,7 @@ const AddTeam = () => {
     password: "",
     confirmPassword: "",
     roleType: "1",
+    location:""
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -82,6 +84,7 @@ const [aId, setAId] = useState();
     contact: "Contact Number",
     password: "Password",
     confirmPassword: "Confirm Password",
+  location: "Location",
   };
   
   const validateForm = () => {
@@ -110,6 +113,7 @@ const [aId, setAId] = useState();
     if (agentData.confirmPassword.length < 10) {
       newErrors.confirmPassword = "Confirm password must be at least 10 characters long";
     }
+
   
     setErrors(newErrors);
   
@@ -157,6 +161,7 @@ useEffect(()=>{
       password: res.password|| "",
       confirmPassword: res.confirmPassword|| "",
       roleType: res.roleType|| "",
+      location: res.location || "",
     })
   }
 
@@ -215,6 +220,22 @@ useEffect(()=>{
                 )}
                 <p className="text-primary text-[13px] font-DMsan">{isEmailValid}</p>
               </div>
+              <div className="pt-3 pb-2">
+                <p className="font-semibold">Location <span className="text-red-500">*</span></p>
+                <CustomSelect
+                  customClass="w-full h-10 bg-secondary rounded-md px-3 mt-2"
+                  placeholder="Location"
+                  name="location"
+                  onChange={handleInput}
+                  value={agentData.location}
+                  options={locationOption}
+                />
+                {errors.location && (
+                  <p className="text-red-500 mt-1 text-sm">{errors.location}</p>
+                )}
+                <p className="text-primary text-[13px] font-DMsan">{isEmailValid}</p>
+              </div>
+            
               <div className="pt-3 pb-2 relative">
                 <label className="font-semibold">Password <span className="text-red-500">*</span></label>
                 <InputField

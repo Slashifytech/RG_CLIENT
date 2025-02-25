@@ -38,20 +38,18 @@ export const getCancelledCountPolicy = async () => {
   }
 };
 
-export const downloadCsvData = async (manufacturer) => {
+export const downloadCsvData = async (path) => {
   try {
-    const response = await apiurl.get("/downloadCSV", {
+    const response = await apiurl.get(`${path}`, {
       responseType: "blob",
-      params: {
-        vehicleManufacturer: manufacturer,
-      },
+ 
     });
 
     const url = window.URL.createObjectURL(new Blob([response.data]));
 
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", "policyData.csv");
+    link.setAttribute("download", "data.csv");
     document.body.appendChild(link);
     link.click();
 
@@ -126,7 +124,7 @@ export const decodeToken = (token) => {
   }
 };
 
-function addPercentageToNumber(percent, number) {
+export function addPercentageToNumber(percent, number) {
   const percentageValue = (percent / 100) * number;
 
   const result = number + percentageValue;
@@ -134,5 +132,4 @@ function addPercentageToNumber(percent, number) {
   return result;
 }
 
-const result = addPercentageToNumber(2, 20);
 

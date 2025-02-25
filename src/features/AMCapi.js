@@ -63,11 +63,7 @@ export const getAllAmcList = async (
   }
 };
 
-export const updateAMCStatus = async (
-  amcId,
-  type,
-  reason
-) => {
+export const updateAMCStatus = async (amcId, type, reason) => {
   try {
     const response = await apiurl.patch(
       "/update-amc-status",
@@ -92,10 +88,9 @@ export const updateAMCStatus = async (
   }
 };
 
-
 export const amcResubmit = async (id) => {
   try {
-    const response = await apiurl.patch(`/amc-resubmit`,null, {
+    const response = await apiurl.patch(`/amc-resubmit`, null, {
       params: {
         amcId: id,
       },
@@ -119,6 +114,19 @@ export const amcCancelByAdmin = async (id) => {
     return response.data;
   } catch (error) {
     console.log("Error in cancellation Amc:", error);
+    throw error;
+  }
+};
+export const amcExpenseNewExpense = async (vinNumber, payload) => {
+  try {
+    const response = await apiurl.post(`/add-expense-amc`, {
+      vinNumber,
+      serviceData: payload,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log("Error in upload amc expenses Amc:", error);
     throw error;
   }
 };
