@@ -10,6 +10,7 @@ import html2pdf from "html2pdf.js";
 import { getAMCbyId } from "../features/AMCapi";
 import Loader from "../Components/Loader";
 import { formatDate } from "../helper/commonHelperFunc";
+import { stamp } from "../assets";
 
 const ViewAmc = forwardRef(({ id }, ref) => {
   const [data, setData] = useState();
@@ -1065,13 +1066,7 @@ const ViewAmc = forwardRef(({ id }, ref) => {
                 due unless payment is directly hindered by Force Majeure.
               </p>
 
-              <p className="pt-6">Signatures & stamp:</p>
-              <br />
-              <br />
-              <br />
-              <br />
-
-              <p>Raam 4 Wheelers LLP</p>
+             <img src={stamp} alt="stamp" className="mt-9 w-[30%]" />
             </div>
           </>
         )}

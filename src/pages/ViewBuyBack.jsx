@@ -10,6 +10,7 @@ import html2pdf from "html2pdf.js";
 import Loader from "../Components/Loader";
 import { getBuyBackById } from "../features/BuybackApi";
 import { formatDate } from "../helper/commonHelperFunc";
+import { stamp } from "../assets";
 
 const ViewBuyBack = forwardRef(({ id }, ref) => {
   const [data, setData] = useState();
@@ -482,9 +483,7 @@ const ViewBuyBack = forwardRef(({ id }, ref) => {
                     any changes will not affect customers who have already
                     enrolled in the Buyback Program.
                   </p>
-                  <p className="font-bold text-[16px] pt-20">
-                    RAAM 4 WHEELERS LLP
-                  </p>
+             <img src={stamp} alt="stamp" className="mt-9 w-[30%]" />
                 </div>
               </div>
             </div>
