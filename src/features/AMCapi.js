@@ -117,10 +117,9 @@ export const amcCancelByAdmin = async (id) => {
     throw error;
   }
 };
-export const amcExpenseNewExpense = async (vinNumber, payload) => {
+export const amcExpenseNewExpense = async (payload) => {
   try {
     const response = await apiurl.post(`/add-expense-amc`, {
-      vinNumber,
       serviceData: payload,
     });
 

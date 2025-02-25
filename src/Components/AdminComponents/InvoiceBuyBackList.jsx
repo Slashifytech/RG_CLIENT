@@ -5,6 +5,7 @@ import Pagination from "../Pagination";
 import { CustomTableOne } from "../Table";
 import { FaPencil } from "react-icons/fa6";
 import { fetchInvoiceByStatus } from "../../features/adminDashboardSlice";
+import Loader from "../Loader";
 
 const InvoiceBuyBackList = ({createdBy}) => {
   const dispatch = useDispatch();
@@ -12,7 +13,8 @@ const InvoiceBuyBackList = ({createdBy}) => {
   const { invoicesByStatus } = useSelector((state) => state.admin);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  console.log(location);
+  const [loading, setLoading] = useState(true);
+
   const perPage = 10;
   const currentPage = invoicesByStatus?.data?.currentPage;
   const totalPagesCount = invoicesByStatus?.data?.totalPagesCount;
@@ -60,10 +62,23 @@ const InvoiceBuyBackList = ({createdBy}) => {
       appId: data?._id,
     })
   );
-  return (
-    // <div>InvoiceList</div>
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
 
+    return () => clearTimeout(timer);
+  }, []);
+  return (
     <>
+
+{loading ? (
+      <div className="mt-60 flex justify-center md:ml-32 sm:ml-32">
+        <Loader />
+      </div>
+    ) : (
+<>
+    
       <input
         type="text"
         placeholder="Search by Invoice Id"
@@ -105,6 +120,8 @@ const InvoiceBuyBackList = ({createdBy}) => {
         </div>
       )}
     </>
+  )}
+  </>
   );
 };
 

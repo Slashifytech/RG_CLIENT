@@ -112,17 +112,26 @@ export const formatFieldName = (field) => {
 export const getRelativeTime = (createdAt) => {
   const createdDate = new Date(createdAt);
   const currentDate = new Date();
-  
-  const diffTime = Math.floor((currentDate - createdDate) / (1000 * 60 * 60 * 24));
 
-  if (diffTime < 1) {
-    return "Today";
-  } else if (diffTime < 7) {
-    return `${diffTime} day${diffTime > 1 ? "s" : ""} left`;
-  } else {
-    return "More than a week ago";
-  }
+  // Convert both dates to UTC to avoid time zone issues
+  const createdUTC = Date.UTC(
+    createdDate.getFullYear(),
+    createdDate.getMonth(),
+    createdDate.getDate()
+  );
+
+  const currentUTC = Date.UTC(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate()
+  );
+
+  const diffTime = Math.floor((currentUTC - createdUTC) / (1000 * 60 * 60 * 24));
+  const remainingDays = Math.max(7 - diffTime, 0);
+
+  return remainingDays > 0 ? `${remainingDays} day${remainingDays > 1 ? "s" : ""} left` : "Time expired";
 };
+
 export function extractFileNames(filePath) {
   // Get the last part of the path (filename)
   const fullName = filePath.split('/').pop();

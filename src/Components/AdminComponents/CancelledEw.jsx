@@ -14,7 +14,7 @@ const CancelledEw = () => {
     );
   const { EwLists } = useSelector((state) => state.amc);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const perPage = 10;
@@ -31,7 +31,7 @@ const CancelledEw = () => {
         fetchEwLists({ page, perPage, searchTerm, userId: null, status: true })
       );
 
-    setLoading(false);
+  
   }, [page, perPage, searchTerm]);
 
   const TABLE_HEAD = [
@@ -53,7 +53,13 @@ const CancelledEw = () => {
     status: data?.isDisabled || "NA",
     type: "amc",
   }));
+useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
 
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>

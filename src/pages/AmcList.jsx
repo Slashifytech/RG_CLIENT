@@ -26,7 +26,7 @@ const AdminAmcList = () => {
   const userId = roleType === "2" ? _id : null;
   const { amcLists } = useSelector((state) => state.amc);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
 
@@ -56,7 +56,7 @@ const AdminAmcList = () => {
       );
     }
 
-    setLoading(false);
+  
   }, [page, perPage, searchTerm, userId]);
 
   const TABLE_HEAD = [
@@ -147,7 +147,7 @@ const AdminAmcList = () => {
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-
+    if (!file) return;
     if (file && file.type === "text/csv") {
       Papa.parse(file, {
         complete: async (result) => {
@@ -155,54 +155,63 @@ const AdminAmcList = () => {
 
           if (parsedData.length === 0) {
             toast.error("CSV file is empty.");
+            event.target.value = "";
             return;
           }
 
-          const groupedData = parsedData.reduce((acc, entry) => {
-            const { serviceVinNumber, serviceDate } = entry;
+        const groupedData = parsedData.reduce((acc, entry) => {
+          const { serviceVinNumber } = entry;
 
-            if (!serviceVinNumber || !serviceDate) {
-              return acc;
-            }
-
-            const key = `${serviceVinNumber}-${serviceDate}`;
-
-            if (!acc[key]) {
-              acc[key] = {
-                serviceVinNumber,
-                serviceDate,
-                expenses: [],
-              };
-            }
-
-            acc[key].expenses.push(entry);
+          if (!serviceVinNumber) {
             return acc;
-          }, {});
+          }
 
-          const groupedArray = Object.values(groupedData);
+          if (!acc[serviceVinNumber]) {
+            acc[serviceVinNumber] = {
+              serviceVinNumber,
+              expenses: [],
+            };
+          }
 
-          // console.log("Grouped CSV Data:", groupedArray);
-          await Promise.all(
-            groupedArray.map((data) =>
-              amcExpenseNewExpense(data.serviceVinNumber, data.expenses)
-            )
-          );
+          acc[serviceVinNumber].expenses.push(entry);
+          return acc;
+        }, {});
 
+        // Convert grouped data to an array
+        const groupedArray = Object.values(groupedData);
+
+        console.log("Grouped CSV Data:", groupedArray);
+
+        // Send all data in one API call
+        try {
+          await amcExpenseNewExpense(groupedArray);
           toast.success("All expenses uploaded successfully!");
-        },
-        header: true,
-        // skipEmptyLines: true,
-      });
-    } else {
-      toast.error("Please upload a valid CSV file.");
-    }
-  };
+          event.target.value = "";
+        } catch (error) {
+          event.target.value = "";
+          console.error(error);
+          toast.error(error?.response?.data?.message || "Error uploading expenses.");
+        }
+      },
+      header: true,
+    });
+  } else {
+    toast.error("Please upload a valid CSV file.");
+    event.target.value = "";
+  }
+};
 
   const handleDownload = async () => {
     const path = "/amc-download"
     await downloadCsvData(path);
   };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
 
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
       <div className="fixed">

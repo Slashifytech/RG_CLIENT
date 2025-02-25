@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 import Loader from "../Components/Loader";
 import html2pdf from "html2pdf.js";
 import { getInvoiceById } from "../features/InvoiceApi";
-import { mgBlack } from "../assets";
+import { mgBlack, stampEw } from "../assets";
 import { formatDate } from "../helper/commonHelperFunc";
 
 const InvoiceView = forwardRef(({ id }, ref) => {
@@ -78,33 +78,50 @@ const InvoiceView = forwardRef(({ id }, ref) => {
         >
           <div className="text-center">
             <h2 style={{ margin: "0", fontSize: "18px", fontWeight: "bold" }}>
-              RAAM4WHEELERS LLP
+             {data?.invoiceId?.includes("EW") ? "360 CAR PROTECT INDIA LLP"  :  "RAAM4WHEELERS LLP"}
             </h2>
             <p
-              style={{
-                textAlign: "center",
-                fontSize: "12px",
-                lineHeight: "1.5",
-                margin: "3px, 0",
-              }}
-            >
-              8-2-120/86/10,10A,11B,11C and 11D,
-              <br />
-              Opp: Hotel Park Hyatt,
-              <br />
-              Road Number 2, Banjara Hills Hyderabad, PIN-500033
-              <br />
-              Ph: 7799935258, Email Id: hyderabad.crmhead@mgdealer.co.in
-              <br />
-              Website: https://www.mghyderabad.co.in
-              <br />
-              GSTIN: 36AAYFR9176L1ZY, CIN NO: AAN-7654, PAN: AAYFR9176L
-            </p>
+  style={{
+    textAlign: "center",
+    fontSize: "12px",
+    lineHeight: "1.5",
+    margin: "3px 0",
+  }}
+>
+  {data?.invoiceId?.includes("EW") ? (
+    <span>
+      -4-138, 138/A Flat No.501, Royal Elegance, <br />
+      Himayathnagar, Barkatpura, Hyderabad, Hyderabad, Telangana, 500027
+      <br />
+    </span>
+  ) : (
+    <span>
+      8-2-120/86/10,10A,11B,11C and 11D,
+      <br />
+      Opp: Hotel Park Hyatt,
+      <br />
+      Road Number 2, Banjara Hills Hyderabad, PIN-500033
+      <br />
+    </span>
+  )}
+  
+  <span>
+    Ph: 7799935258, Email Id: hyderabad.crmhead@mgdealer.co.in
+    <br />
+    Website: <a href="https://www.mghyderabad.co.in" target="_blank" rel="noopener noreferrer">
+      www.mghyderabad.co.in
+    </a>
+    <br />
+    GSTIN: 36AAYFR9176L1ZY, CIN NO: AAN-7654, PAN: AAYFR9176L
+  </span>
+</p>
+
           </div>
+          {!data?.invoiceId?.includes("EW") &&
           <div className="flex flex-col items-center">
             <img src={mgBlack} alt="MG Logo" style={{ height: "80px" }} />
             <p className="font-medium ">Morris Garages</p>
-          </div>
+          </div>}
         </div>
 
         {/* Invoice Details Section */}
@@ -350,8 +367,18 @@ const InvoiceView = forwardRef(({ id }, ref) => {
           <p>
             Whether tax is payable on reverse charge basis - <b>No</b>
           </p>
-          <p style={{ textAlign: "right", marginTop: "20px" }}>
-            For <b>RAAM4WHEELERS LLP</b>
+          
+
+          <div className="flex justify-end">
+  {data?.invoiceId?.includes("EW") && (
+    <img src={stampEw} alt="ewstamp" className="w-[10%]" />
+  )}
+</div>
+
+
+          <p style={{ textAlign: "right" }}>
+          
+            For   {data?.invoiceId?.includes("EW") ?<b>360 CAR PROTECT INDIA LLP</b>  : <b>RAAM4WHEELERS LLP</b> }
           </p>
         </div>
       </div>

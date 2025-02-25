@@ -1,83 +1,80 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../Loader";
-import DataNotFound from "../../admin/DataNotFound";
-import { CustomTableFour } from "../Table";
+import { Link, useLocation } from "react-router-dom";
+import Pagination from "../Components/Pagination";
+import Loader from "../Components/Loader";
+import DataNotFound from "./DataNotFound";
+import { CustomTableFour } from "../Components/Table";
 import { FaPencil } from "react-icons/fa6";
-import Pagination from "../Pagination";
-import { fetchBuyBackLists } from "../../features/BuyBackSlice";
-import Header from "../Header";
+import { fetchEwLists } from "../features/EwSlice";
 
-const CancelledBuyBack = () => {
-  const { _id, roleType } = useSelector((state) => state.users?.users);
-  const userId = _id;
-  const { BuyBackLists } = useSelector((state) => state.buyBack);
+const AgentEwPolicy = () => {
+  const location = useLocation();
+  const userId = location?.state?.agentId;
+  const { EwLists } = useSelector((state) => state.ewPolicy);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const perPage = 10;
-  const currentPage = BuyBackLists?.pagination?.currentPage;
-  const totalPagesCount = BuyBackLists?.pagination?.totalPages;
-  const totalCount = BuyBackLists?.pagination?.totalItems;
+  const currentPage = EwLists?.pagination?.currentPage;
+  const totalPagesCount = EwLists?.pagination?.totalPages;
+  const totalCount = EwLists?.pagination?.totalItems;
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
   };
 
   useEffect(() => {
     setLoading(true);
-    dispatch(
-      fetchBuyBackLists({
-        page,
-        perPage,
-        searchTerm,
-        userId: null,
-        status: true,
-      })
-    );
+    if (userId) {
+      dispatch(
+        fetchEwLists({ page, perPage, searchTerm, userId, option: null })
+      );
+    }
 
-  }, [page, perPage, searchTerm]);
+    setLoading(false);
+  }, [page, perPage, searchTerm, userId]);
 
   const TABLE_HEAD = [
     "S.No.",
-    "Buyback Id",
+    "Ew Id",
+    "Bakend Policy Id ",
     "Name",
     "Email",
     "VIN No.",
-    "AMC Issue date",
+    "Ew Issue date",
     "View/Download",
     "Status",
     "Action",
   ];
 
-  const TABLE_ROWS = BuyBackLists?.data?.map((data, index) => ({
+
+  const TABLE_ROWS = EwLists?.data?.map((data, index) => ({
     sno: (currentPage - 1) * perPage + index + 1,
     data: data || "NA",
-    status: data?.isDisabled || "NA",
-    type: "buyBack",
+    status: data?.ewStatus || "NA",
+    type: "ewPolicy",
   }));
-useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); 
 
-    return () => clearTimeout(timer);
-  }, []);
   return (
     <>
+   
 
-      <div className="px-6 flex justify-start md:ml-[18%] sm:ml-44 mt-6">
+    
 
+      
+
+      <div className="px-6 flex justify-start md:ml-60 sm:ml-60 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-[20rem] py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
+         className="w-[20rem] py-2 border border-gray-300 ml-7 bg-white px-3 rounded-2xl outline-none"
         />
       </div>
 
-      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[28%] ml-6">
+      <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[33%] ml-6">
         Buy Back Lists-
       </p>
 
@@ -100,14 +97,10 @@ useEffect(() => {
               <CustomTableFour
                 tableHead={TABLE_HEAD}
                 tableRows={TABLE_ROWS}
-                link={
-                  roleType === "2"
-                    ? "/agent/edit-buyback"
-                    : "/admin/update-buyback"
-                }
+                link="/admin/update-ewpolicy"
                 action="Edit"
                 icon={<FaPencil />}
-                redirectLink={"/buyback-view"}
+                redirectLink={"/ew-view"}
               />
             </div>
             {totalPagesCount > 1 && (
@@ -128,4 +121,4 @@ useEffect(() => {
   );
 };
 
-export default CancelledBuyBack;
+export default AgentEwPolicy;

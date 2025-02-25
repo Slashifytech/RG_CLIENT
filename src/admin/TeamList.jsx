@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import AdminCards from "../Components/AdminCards";
 import {
   deleteAgentData,
-  fetchAllMbAgents,
-  fetchAllMgAgents,
   fetchTeamMembers,
 } from "../features/adminDashboardSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,16 +9,13 @@ import { toast } from "react-toastify";
 import Nav from "./Nav";
 import DataNotFound from "./DataNotFound";
 import { Link } from "react-router-dom";
-import { SiMercedes } from "react-icons/si";
-
-
-import { SiMg } from 'react-icons/si';
 import Header from "../Components/Header";
+import Loader from "../Components/Loader";
 
 const TeamList = () => {
   const dispatch = useDispatch();
   const { TeamMembers } = useSelector((state) => state.admin);
-
+  const [loading, setLoading] = useState(true);
   const [toggle, setToggle] = useState("MG");
   const path = location.pathname;
 
@@ -43,7 +38,13 @@ const TeamList = () => {
       toast.error("Failed to delete Team memeber");
     }
   };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
 
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
       <div className="fixed">
@@ -52,6 +53,13 @@ const TeamList = () => {
         </span>
       </div>
       <div><Header/></div>
+
+      {loading ? (
+      <div className="mt-60 flex justify-center md:ml-32 sm:ml-32">
+        <Loader />
+      </div>
+    ) : (
+      <>
       <div className="flex flex-row items-start justify-between mr-9  mt-20">
         <p className="md:ml-[22%] sm:ml-[30%] ml-6  text-[23px] font-medium">
           Team Lists -{" "}
@@ -78,6 +86,7 @@ const TeamList = () => {
                 id={agent._id}
                 name={agent.agentName}
                 agentId={agent.agentId}
+                locationData={agent.location}
                 handleDelete={handleDelete}
                 link="/admin/team-invoices"
                 editLink="/admin/update-team"
@@ -94,6 +103,8 @@ const TeamList = () => {
           )}
         </div>
       </div>
+    </>
+    )}
     </>
   );
 };

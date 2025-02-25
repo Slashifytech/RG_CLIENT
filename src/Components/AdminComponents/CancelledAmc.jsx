@@ -15,7 +15,7 @@ const CancelledAmc = () => {
     );
   const { amcLists } = useSelector((state) => state.amc);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const perPage = 10;
@@ -32,7 +32,7 @@ const CancelledAmc = () => {
         fetchamcLists({ page, perPage, searchTerm, userId: null, status: true })
       );
 
-    setLoading(false);
+   
   }, [page, perPage, searchTerm]);
 
   const TABLE_HEAD = [
@@ -55,7 +55,13 @@ const CancelledAmc = () => {
     type: "amc",
   }));
 
+useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
 
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
     

@@ -69,7 +69,7 @@ const AgentBuybacks = () => {
           placeholder="Search by VIN number"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-[20rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none"
+          className="w-[20rem] py-2 border border-gray-300 ml-7 bg-secondary px-3 rounded-2xl outline-none"
         />
       </div>
 

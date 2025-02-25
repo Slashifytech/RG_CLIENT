@@ -5,12 +5,14 @@ import Pagination from "../Pagination";
 import { CustomTableOne } from "../Table";
 import { FaPencil } from "react-icons/fa6";
 import { fetchInvoiceByStatus } from "../../features/adminDashboardSlice";
+import Loader from "../Loader";
 
 const InvoiceAmcList = ({createdBy}) => {
   const dispatch = useDispatch();
   const { invoicesByStatus } = useSelector((state) => state.admin);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const perPage = 10;
   const currentPage = invoicesByStatus?.data?.currentPage;
@@ -59,9 +61,23 @@ const InvoiceAmcList = ({createdBy}) => {
       appId: data?._id,
     })
   );
+    useEffect(() => {
+        const timer = setTimeout(() => {
+          setLoading(false);
+        }, 2000); 
+    
+        return () => clearTimeout(timer);
+      }, []);
   return (
     // <div>InvoiceList</div>
 
+    <>
+
+    {loading ? (
+          <div className="mt-60 flex justify-center md:ml-32 sm:ml-32">
+            <Loader />
+          </div>
+        ) : (
     <>
       <input
         type="text"
@@ -104,6 +120,8 @@ const InvoiceAmcList = ({createdBy}) => {
         </div>
       )}
     </>
+        )}
+        </>
   );
 };
 

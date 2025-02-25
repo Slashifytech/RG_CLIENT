@@ -4,6 +4,7 @@ import BuyBackApproval from "../Components/AdminComponents/BuyBackApproval";
 import AgentAmcsData from "../admin/AgentAmcsData";
 import AgentBuybacks from "../admin/AgentBuybacks";
 import Header from "../Components/Header";
+import AgentEwPolicy from "../admin/AgentEwPolicy";
 
 const AgentDocLists = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -11,7 +12,7 @@ const AgentDocLists = () => {
   const tabs = [
     { id: 0, label: "AMC List", component: <AgentAmcsData /> },
     { id: 1, label: "Buyback List", component: <AgentBuybacks /> },
-    // { id: 2, label: "Policy Approval", component: <AgentPoliciesData /> },
+    { id: 2, label: "EW Policy List", component: <AgentEwPolicy /> },
 
   ];
 

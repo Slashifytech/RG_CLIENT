@@ -770,19 +770,20 @@ export function CustomTableFour({
                         </span>
                       </span>
                       {!row?.data?.backendPolicyId &&
-                      <span
-                        className={`${
-                          getRelativeTime(row?.data?.createdAt)?.includes(
-                            "day left"
-                          )
-                            ? "text-yellow-500"
-                            : getRelativeTime(row?.data?.createdAt)?.includes(
-                                "More than a week ago"
-                              )
-                            ? "text-red-500"
-                            : "text-green-500"
-                        } font-medium`}
-                      >
+                        <span
+  className={`${
+    (() => {
+      const remainingText = getRelativeTime(row?.data?.createdAt);
+      const match = remainingText.match(/(\d+)/);
+      const remainingDays = match ? parseInt(match[0], 10) : 0;
+
+      if (remainingDays >= 5) return "text-green-500";
+      if (remainingDays >= 2) return "text-orange-500";
+      return "text-red-500";
+    })()
+  } font-semibold`}
+>
+
                         {getRelativeTime(row?.data?.createdAt)}
                       </span>}
                     </Typography>

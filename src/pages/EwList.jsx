@@ -17,13 +17,13 @@ import { toast } from "react-toastify";
 import { IoMdDownload } from "react-icons/io";
 import { downloadCsvData } from "../../Util/UtilityFunction";
 import { fetchEwLists, setEmptytEw } from "../features/EwSlice";
-import { ewResubmit, updateEwStatus } from "../features/EwApi";
+import { ewCancelByAdmin, ewResubmit, updateEwStatus } from "../features/EwApi";
 const AdminEwLists = () => {
   const { _id, roleType } = useSelector((state) => state.users?.users);
   const userId = roleType === "2" ? _id : null;
   const { EwLists } = useSelector((state) => state.ewPolicy);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
 
@@ -53,7 +53,6 @@ const AdminEwLists = () => {
       );
     }
 
-    setLoading(false);
   }, [page, perPage, searchTerm, userId]);
 
   const TABLE_HEAD = [
@@ -106,7 +105,7 @@ const AdminEwLists = () => {
   };
   const handleCancel = async (id) => {
     try {
-      const res = await amcCancelByAdmin(id);
+      const res = await ewCancelByAdmin(id);
       dispatch(
         fetchEwLists({
           page,
@@ -147,7 +146,13 @@ const AdminEwLists = () => {
     const path = "/ew-download"
     await downloadCsvData(path);
   };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
 
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
       <div className="fixed">

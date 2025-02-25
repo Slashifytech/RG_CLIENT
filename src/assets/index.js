@@ -22,12 +22,16 @@ import pdfHeaderTwo from "./pdfHeaderTwo.png";
 import pdfHeaderThree from "./pdfHeaderThree.png";
 import pdfHeaderFour from "./pdfHeaderFour.png";
 import topHeaderPdf from "./topHeaderPdf.jpg";
+import stamp from "./stamp.jpeg";
+import stampEw from "./stampEw.png";
 
 
 
 
 
 export {
+  stampEw,
+  stamp,
   topHeaderPdf,
   pdfHeaderFour,
   pdfHeaderThree,

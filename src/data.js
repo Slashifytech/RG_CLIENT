@@ -52,4 +52,8 @@ export const invoiceOption = [
       { id: 2, value: "Comprehensive", label: "Comprehensive" },
 
     ];
+    export const regTypeOption = [
+      { id: 1, value: "Private", label: "Private" },
+
+    ];
     

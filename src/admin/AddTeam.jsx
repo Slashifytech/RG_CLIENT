@@ -193,7 +193,7 @@ useEffect(()=>{
                 <label className="font-semibold">Team Member Name <span className="text-red-500">*</span></label>
                 <InputField
                   className="w-full h-10 bg-secondary rounded-md px-3 mt-2"
-                  placeholder="Agent Name"
+                  placeholder="Team Name"
                   name="agentName"
                   onchange={handleInput}
                   type="text"
@@ -237,34 +237,35 @@ useEffect(()=>{
               </div>
             
               <div className="pt-3 pb-2 relative">
-                <label className="font-semibold">Password <span className="text-red-500">*</span></label>
+                <label className="font-semibold">Confirm Password <span className="text-red-500">*</span></label>
                 <InputField
                   className="w-full h-10 bg-secondary rounded-md px-3 mt-2"
-                  placeholder="Password"
-                  name="password"
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
                   onchange={handleInput}
-                  type={showPassword ? "text" : "password"}
-                  value={agentData.password}
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={agentData.confirmPassword}
                 />
                 <button
                   type="button"
-                  onClick={togglePasswordVisibility}
+                  onClick={toggleConfirmPasswordVisibility}
                   className="absolute inset-y-0 right-3 top-9 text-[18px] flex items-center"
                 >
-                  {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+              {showConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}
                 </button>
-                {errors.password && (
-                  <p className="text-red-500 mt-1 text-sm">{errors.password}</p>
+                {errors.confirmPassword && (
+                  <p className="text-red-500 mt-1 text-sm">
+                    {errors.confirmPassword}
+                  </p>
                 )}
               </div>
-             
             </span>
             <span className="md:w-[40%] sm:w-[40%]">
               <div className="pt-3 pb-2">
                 <label className="font-semibold">Team Member Id <span className="text-red-500">*</span></label>
                 <InputField
                   className="w-full h-10 bg-secondary rounded-md px-3 outline-none mt-2"
-                  placeholder="Agent Id"
+                  placeholder="Team Id"
                   name="agentId"
                   onchange={handleInput}
                   type="text"
@@ -289,28 +290,27 @@ useEffect(()=>{
                 )}
               </div>
               <div className="pt-3 pb-2 relative">
-                <label className="font-semibold">Confirm Password <span className="text-red-500">*</span></label>
+                <label className="font-semibold">Password <span className="text-red-500">*</span></label>
                 <InputField
                   className="w-full h-10 bg-secondary rounded-md px-3 mt-2"
-                  placeholder="Confirm Password"
-                  name="confirmPassword"
+                  placeholder="Password"
+                  name="password"
                   onchange={handleInput}
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={agentData.confirmPassword}
+                  type={showPassword ? "text" : "password"}
+                  value={agentData.password}
                 />
                 <button
                   type="button"
-                  onClick={toggleConfirmPasswordVisibility}
+                  onClick={togglePasswordVisibility}
                   className="absolute inset-y-0 right-3 top-9 text-[18px] flex items-center"
                 >
-              {showConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                  {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
                 </button>
-                {errors.confirmPassword && (
-                  <p className="text-red-500 mt-1 text-sm">
-                    {errors.confirmPassword}
-                  </p>
+                {errors.password && (
+                  <p className="text-red-500 mt-1 text-sm">{errors.password}</p>
                 )}
               </div>
+             
             </span>
           </div>
           <div className=" mt-9">

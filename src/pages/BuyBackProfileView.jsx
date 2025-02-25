@@ -17,10 +17,10 @@ const BuyBackProfileView = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [buyBackDetails, setBuyBackDetails] = useState({
-    deliveryDate: "",
+    deliveryDate: buyBackByIdorStatus?.data?.vehicleDetails?.deliveryDate,
     raamGroupPrice: "",
-    priceDifference: "",
     marketPrice: "",
+    priceDifference: "",
   });
   const [loading, setLoading] = useState();
   const id = location?.state?.id;
@@ -59,11 +59,23 @@ const BuyBackProfileView = () => {
   ];
   const handleInput = (e) => {
     const { name, value } = e.target;
-    setBuyBackDetails((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  
+    setBuyBackDetails((prevState) => {
+      const updatedState = {
+        ...prevState,
+        [name]: value,
+      };
+  
+      if (updatedState.raamGroupPrice && updatedState.marketPrice) {
+        updatedState.priceDifference =
+        parseFloat(updatedState.raamGroupPrice || 0)-
+          parseFloat(updatedState.marketPrice || 0) ;
+      }
+  
+      return updatedState;
+    });
   };
+  
 
   const validateForm = () => {
     let newErrors = {};

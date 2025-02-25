@@ -11,7 +11,7 @@ const Approval = () => {
   const tabs = [
     { id: 0, label: "AMC Approval", component: <AmcApproval /> },
     { id: 1, label: "Buyback Approval", component: <BuyBackApproval /> },
-    { id: 2, label: "Ew Poicy Approval", component: <EwApproval /> },
+    { id: 2, label: "Ew Policy Approval", component: <EwApproval /> },
 
   ];
 

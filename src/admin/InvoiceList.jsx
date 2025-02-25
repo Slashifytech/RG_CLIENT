@@ -11,7 +11,7 @@ const InvvoiceList = () => {
   const tabs = [
     { id: 0, label: "AMC Invoice Lists", component: <InvoiceAmcList /> },
     { id: 1, label: "Buyback Invoice Lists", component: <InvoiceBuyBackList /> },
-    { id: 2, label: "Ew Policy Invoice Lists", component: <EwInvoiceList/> },
+    { id: 2, label: "EW Policy Invoice Lists", component: <EwInvoiceList/> },
 
   ];
 

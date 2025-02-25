@@ -14,7 +14,7 @@ import { updateEwStatus } from "../../features/EwApi";
 
 const EwCancelApproval = () => {
   const dispatch = useDispatch();
-  const { EwLists } = useSelector((state) => state.amc);
+  const { EwLists } = useSelector((state) => state.ewPolicy);
   const [page, setPage] = useState(1);
   const perPage = 10;
   const currentPage = EwLists?.pagination?.currentPage;
@@ -37,15 +37,21 @@ const EwCancelApproval = () => {
       })
     );
 
-    setLoading(false);
+   
   }, [page, perPage]);
+useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
 
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
       <div></div>
 
       <p className="font-semibold text-[24px] md:ml-72 sm:ml-44 ml-6 ">
-        Pending Cancel AMC Request
+        Pending Cancel EW Request
       </p>
       <div className="overflow-x-scroll w-full md:w-full md:overflow-hidden ">
         <ul className="bg-secondary text-[15px] py-7 flex flex-row justify-around items-center sm:w-[93%] w-[180%]  mr-10 md:ml-72 sm:ml-44 md:w-[75%]  gap-2 rounded-lg mt-8 h-[6vh]  text-black font-medium">
@@ -66,7 +72,7 @@ const EwCancelApproval = () => {
               message="No pending Ew Policy found"
             />
           ) : (
-            amcLists?.data?.map((item, index) => (
+            EwLists?.data?.map((item, index) => (
               <ApprovalCard
                 key={item._id}
                 item={item}

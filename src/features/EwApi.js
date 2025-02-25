@@ -6,7 +6,7 @@ export const addNewEw = async (payload) => {
 
     return response.data;
   } catch (error) {
-    console.log("Error in Adding Buy Back:", error);
+    console.log("Error in Adding EW policy:", error);
     throw error;
   }
 };
@@ -17,7 +17,7 @@ export const updateEw = async (payload, id) => {
 
     return response.data;
   } catch (error) {
-    console.log("Error in Adding Buy Back:", error);
+    console.log("Error in Adding EW policy:", error);
     throw error;
   }
 };
@@ -33,7 +33,7 @@ export const getEwId = async (id, status) => {
 
     return response.data;
   } catch (error) {
-    console.log("Error in Adding Buy Back:", error);
+    console.log("Error in Adding EW policy:", error);
     throw error;
   }
 };
@@ -58,7 +58,7 @@ export const getAllEwLists = async (
 
     return response.data;
   } catch (error) {
-    console.log("Error in Adding Buy Back:", error);
+    console.log("Error in Adding EW policy:", error);
     throw error;
   }
 };
@@ -91,13 +91,13 @@ export const ewResubmit = async (id) => {
   try {
     const response = await apiurl.patch(`/ew-resubmit`,null, {
       params: {
-        buyBackId: id,
+        ewId: id,
       },
     });
 
     return response.data;
   } catch (error) {
-    console.log("Error in resubmitting Buy Back:", error);
+    console.log("Error in resubmitting EW policy:", error);
     throw error;
   }
 };
@@ -106,13 +106,13 @@ export const ewCancelByAdmin = async (id) => {
   try {
     const response = await apiurl.patch(`/disable-ew`,null, {
       params: {
-        buyBackId: id,
+        ewId: id,
       },
     });
 
     return response.data;
   } catch (error) {
-    console.log("Error in cancellation Buy Back:", error);
+    console.log("Error in cancellation EW policy:", error);
     throw error;
   }
 };

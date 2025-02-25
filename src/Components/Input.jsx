@@ -57,9 +57,7 @@ const CustomSelect = ({
         className={`select-input ${customClass}`}
         disabled={isDisabled}
       >
-        <option value="" >
-          {placeholder}
-        </option>
+        <option value="">{placeholder}</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -69,8 +67,6 @@ const CustomSelect = ({
     </>
   );
 };
-
-
 
 const SelectInput = ({
   label,
@@ -121,16 +117,21 @@ const CustomInput = ({
   placeHolder,
   checked,
   handleClick,
-  errorMessage, 
+  errorMessage,
   title,
-  imp
+  imp,
+  customText,
 }) => {
+  console.log(customText);
   return (
     <div className="flex flex-col mt-3">
-    <span className="font-semibold pb-3 ">  {title} <span className="text-red-500">{imp ? "*" : ""}</span></span>
+      <span className="font-semibold pb-3 ">
+        {" "}
+        {title} <span className="text-red-500">{imp ? "*" : ""}</span>
+      </span>
       <input
         type={type}
-        className={`${className} ${errorMessage ? 'border-red-500' : ''}`}
+        className={`${className} ${errorMessage ? "border-red-500" : ""}`}
         onChange={onChange}
         onClick={handleClick}
         value={value}
@@ -138,14 +139,13 @@ const CustomInput = ({
         checked={checked}
         name={name}
       />
+
       {errorMessage && (
         <span className="text-red-500 text-sm mt-1">{errorMessage}</span>
       )}
     </div>
   );
 };
-
-
 
 const GroupedInput = ({
   title,
@@ -159,43 +159,49 @@ const GroupedInput = ({
     if (field.type === "select") {
       return (
         <div key={field.name} className="flex flex-col gap-2 mt-4">
-          <label className="font-medium">{field.label}  <span className="text-red-500">{field.required ? "*" : ""}</span></label>
+          <label className="font-medium">
+            {field.label}{" "}
+            <span className="text-red-500">{field.required ? "*" : ""}</span>
+          </label>
           <select
             name={field.name}
             value={stateName[field.name]}
             onChange={onChange}
             className="w-full h-10 bg-white rounded-md px-3 outline-none "
           >
-            <option value="" >
-              {field.placeholder || "Select an option"}
-            </option>
+            <option value="">{field.placeholder || "Select an option"}</option>
             {field.options?.map((option, index) => (
               <option key={index} value={option.value}>
                 {option.label}
               </option>
             ))}
+           
           </select>
+          {field.customText && (
+              <span className="font-medium text-[13px] text-black">{field.customText}</span>
+            )}
           {errors[field.name] && (
             <span className="text-red-500 text-sm">{errors[field.name]}</span>
           )}
         </div>
       );
     }
-
     // Default: Render input field
     return (
-      <CustomInput
-        key={field.name}
-        title={field.label}
-        imp={field.required}
-        className="w-full h-10 bg-white rounded-md px-3 outline-none "
-        type={field.type}
-        name={field.name}
-        placeHolder={field.placeholder}
-        value={stateName[field?.name]}
-        onChange={onChange}
-        errorMessage={errors[field?.name]}
-      />
+      <>
+        <CustomInput
+          key={field.name}
+          title={field.label}
+          imp={field.required}
+          className="w-full h-10 bg-white rounded-md px-3 outline-none "
+          type={field.type}
+          name={field.name}
+          placeHolder={field.placeholder}
+          value={stateName[field?.name]}
+          onChange={onChange}
+          errorMessage={errors[field?.name]}
+        />
+      </>
     );
   };
 
@@ -225,9 +231,9 @@ const FileUpload = ({
   name,
   customClass,
   errorMessage = "Please use JPG, JPEG, PNG, and PDF format.",
-  fileUrl, 
+  fileUrl,
   maxFileSizeMB = 5,
-  imp
+  imp,
 }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
@@ -236,9 +242,9 @@ const FileUpload = ({
 
   useEffect(() => {
     if (fileUrl) {
-      const extractedFileName = extractFileNames(fileUrl) 
+      const extractedFileName = extractFileNames(fileUrl);
       setFileName(extractedFileName);
-      setPreviewUrl(fileUrl); 
+      setPreviewUrl(fileUrl);
     }
   }, [fileUrl]);
 
@@ -266,7 +272,7 @@ const FileUpload = ({
       setSelectedFile(file);
       setError("");
       setPreviewUrl(URL.createObjectURL(file));
-      setFileName(file.name); 
+      setFileName(file.name);
 
       if (onFileSelect) onFileSelect(file);
     }
@@ -289,7 +295,9 @@ const FileUpload = ({
 
   return (
     <div className={`flex flex-col gap-2 font-poppins ${customClass}`}>
-      <label className="text-[14px] text-black mt-3">{label} {imp ? <span className="text-primary">*</span>: ""}</label>
+      <label className="text-[14px] text-black mt-3">
+        {label} {imp ? <span className="text-primary">*</span> : ""}
+      </label>
       <div className="flex md:flex-row-reverse sm:flex-col items-center gap-2 ">
         <input
           type="file"
@@ -297,12 +305,16 @@ const FileUpload = ({
           className="hidden"
           id={`file-input-${name}`}
           name={name}
-          disabled={!!selectedFile || fileUrl} 
+          disabled={!!selectedFile || fileUrl}
           accept={acceptedFormats.join(",")}
         />
         <label
           htmlFor={`file-input-${name}`}
-          className={`px-4 py-2 ${selectedFile || fileUrl ? "bg-gray-300 cursor-not-allowed" : "bg-primary text-white"} border rounded cursor-pointer`}
+          className={`px-4 py-2 ${
+            selectedFile || fileUrl
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-primary text-white"
+          } border rounded cursor-pointer`}
         >
           Browse
         </label>
@@ -328,25 +340,24 @@ const FileUpload = ({
   );
 };
 
-
 const ToggleButton = ({ value, name, onChange, checkedToggle }) => {
   const handleToggleChange = () => {
-    const newStatus = !checkedToggle ? "approved" : "send"; 
+    const newStatus = !checkedToggle ? "approved" : "send";
     onChange(newStatus);
   };
   return (
     <label className="relative inline-block w-14 h-8">
-    <input
-      type="checkbox"
-      className="peer opacity-0 w-0 h-0"
-      value={value}
-      name={name}
-      onChange={handleToggleChange}
-      checked={checkedToggle}
-    />
-    <span className="absolute inset-0 bg-purple-300 rounded-full transition-all duration-300 ease-in-out peer-checked:bg-green-600"></span>
-    <span className="absolute left-0.5 bottom-0.5 w-7 h-7 bg-white rounded-full shadow-md transition-transform duration-300 ease-in-out peer-checked:translate-x-6"></span>
-  </label>
+      <input
+        type="checkbox"
+        className="peer opacity-0 w-0 h-0"
+        value={value}
+        name={name}
+        onChange={handleToggleChange}
+        checked={checkedToggle}
+      />
+      <span className="absolute inset-0 bg-purple-300 rounded-full transition-all duration-300 ease-in-out peer-checked:bg-green-600"></span>
+      <span className="absolute left-0.5 bottom-0.5 w-7 h-7 bg-white rounded-full shadow-md transition-transform duration-300 ease-in-out peer-checked:translate-x-6"></span>
+    </label>
   );
 };
 const ImageComponent = ({ src, alt, className, fallbackSrc }) => {
@@ -354,9 +365,9 @@ const ImageComponent = ({ src, alt, className, fallbackSrc }) => {
 
   const handleError = () => {
     if (fallbackSrc) {
-      setImageSrc(fallbackSrc); 
+      setImageSrc(fallbackSrc);
     } else {
-      setImageSrc(profilePic); 
+      setImageSrc(profilePic);
     }
   };
 
@@ -371,36 +382,49 @@ const ImageComponent = ({ src, alt, className, fallbackSrc }) => {
   );
 };
 
-
-
-const PasswordField = ({ name, value, handleInput, showPassword, toggleVisibility, error, label }) => {
+const PasswordField = ({
+  name,
+  value,
+  handleInput,
+  showPassword,
+  toggleVisibility,
+  error,
+  label,
+}) => {
   return (
     <>
-    <div className=" relative font-poppins">
-      <span className="text-black font-semibold text-[14px]">{label}*</span>
-      <CustomInput
-        className="w-full h-12 bg-input text-body rounded-md  px-3 outline-none placeholder:text-[16px]"
-        name={name}
-        value={value}
-        onChange={handleInput}
-        type={showPassword ? "text" : "password"}
-        placeHodler={label}
-      />
-      <button
-        type="button"
-        onClick={toggleVisibility}
-        className="absolute inset-y-0 right-3 top-10 text-[18px] flex items-center"
-      >
-        {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
-      </button>
-      {error && <p className="text-red-500 mt-1 text-sm">{error}</p>}
-    </div>
-
-  
-
+      <div className=" relative font-poppins">
+        <span className="text-black font-semibold text-[14px]">{label}*</span>
+        <CustomInput
+          className="w-full h-12 bg-input text-body rounded-md  px-3 outline-none placeholder:text-[16px]"
+          name={name}
+          value={value}
+          onChange={handleInput}
+          type={showPassword ? "text" : "password"}
+          placeHodler={label}
+        />
+        <button
+          type="button"
+          onClick={toggleVisibility}
+          className="absolute inset-y-0 right-3 top-10 text-[18px] flex items-center"
+        >
+          {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+        </button>
+        {error && <p className="text-red-500 mt-1 text-sm">{error}</p>}
+      </div>
     </>
-
-  )}
-export { SelectInput,CustomSelect, InputField, CustomInput, GroupedInput, FileUpload, ToggleButton,  ImageComponent, PasswordField};
+  );
+};
+export {
+  SelectInput,
+  CustomSelect,
+  InputField,
+  CustomInput,
+  GroupedInput,
+  FileUpload,
+  ToggleButton,
+  ImageComponent,
+  PasswordField,
+};
 
 export default InputField;

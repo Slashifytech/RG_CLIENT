@@ -9,11 +9,14 @@ import { graphLine, icon, TwoUser } from "../assets";
 import { useSelector } from "react-redux";
 import { CustomInput, CustomSelect, SelectInput } from "../Components/Input";
 import { locationOption, modelOption } from "../data";
+import Loader from "../Components/Loader";
 
 const DashboardComponent = () => {
   const { roleType, agentName, email } = useSelector(
     (state) => state.users.users
   );
+  const [loading, setLoading] = useState(true);
+
   const [amcData, setAmcData] = useState({
     location: "",
     vehicleModel: "",
@@ -56,6 +59,11 @@ const DashboardComponent = () => {
       }));
     } else if (dataType === "buyBack") {
       setBuyBackData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }else if (dataType === "ewPolicy") {
+      setEwPolicyData((prevData) => ({
         ...prevData,
         [name]: value,
       }));
@@ -118,7 +126,6 @@ const DashboardComponent = () => {
       console.log(error);
     }
   };
-console.log(ewPolicyData)
   useEffect(() => {
     getAmcData();
   }, [amcData.endDate, amcData.startDate, amcData.location, amcData.vehicleModel]);
@@ -181,7 +188,13 @@ console.log(ewPolicyData)
     },
  
   ];
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
 
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
       <div className="fixed">
@@ -192,12 +205,21 @@ console.log(ewPolicyData)
       <div>
         <Header />
       </div>
+
+
       <div className="ml-0 sm:ml-[28%] md:ml-[20%] mt-20 ">
         <p className="text-[30px] font-bold">Dashboard</p>
         <p className="text-[16px] font-normal">
           Hi, {agentName} welcome back to RaamGroup Portal!
         </p>
       </div>
+
+      {loading ? (
+      <div className="mt-28 flex justify-center md:ml-32 sm:ml-32">
+        <Loader />
+      </div>
+    ) : (
+      <>
       <div className="flex flex-row items-center gap-6 sm:ml-[28%] md:ml-[20%] mr-6 mt-6">
         <CustomSelect
           options={locationOption}
@@ -209,7 +231,7 @@ console.log(ewPolicyData)
         />
         <CustomSelect
           options={modelOption}
-          name={"location"}
+          name={"vehicleModel"}
           customClass="bg-white w-60 rounded-md h-10 border border-black"
           value={amcData.vehicleModel}
           onChange={(e) => handleInputChange(e, "amc")}
@@ -255,7 +277,7 @@ console.log(ewPolicyData)
         />
         <CustomSelect
           options={modelOption}
-          name={"location"}
+          name={"vehicleModel"}
           customClass="bg-white w-60 rounded-md h-10 border border-black"
           value={buyBackData.vehicleModel}
           onChange={(e) => handleInputChange(e, "buyBack")}
@@ -295,15 +317,15 @@ console.log(ewPolicyData)
           name={"location"}
           customClass="bg-white w-60 rounded-md h-10 border border-black"
           value={ewPolicyData.location}
-          onChange={(e) => handleInputChange(e, "buyBack")}
+          onChange={(e) => handleInputChange(e, "ewPolicy")}
           placeholder={"Choose Location"}
         />
         <CustomSelect
           options={modelOption}
-          name={"location"}
+          name={"vehicleModel"}
           customClass="bg-white w-60 rounded-md h-10 border border-black"
           value={ewPolicyData.vehicleModel}
-          onChange={(e) => handleInputChange(e, "buyBack")}
+          onChange={(e) => handleInputChange(e, "ewPolicy")}
           placeholder={"Choose Model"}
         />
         <CustomInput
@@ -311,14 +333,14 @@ console.log(ewPolicyData)
           name={"startDate"}
           className="bg-white w-full rounded-md h-10 border border-black -mt-6 px-3"
           value={ewPolicyData.startDate}
-          onChange={(e) => handleInputChange(e, "buyBack")}
+          onChange={(e) => handleInputChange(e, "ewPolicy")}
         />
         <CustomInput
           type={"date"}
           name={"endDate"}
           className="bg-white w-full rounded-md h-10 border border-black -mt-6 px-3"
           value={ewPolicyData.endDate}
-          onChange={(e) => handleInputChange(e, "buyBack")}
+          onChange={(e) => handleInputChange(e, "ewPolicy")}
         />
       </div>
       <div className="ml-8 sm:ml-[33%] md:ml-[20%] md:w-[70%] gap-9  pb-20 grid grid-cols-3 mt-6">
@@ -333,6 +355,8 @@ console.log(ewPolicyData)
         ))}
       </div>
     </>
+      )}
+      </>
   );
 };
 

@@ -24,7 +24,7 @@ const BuyBackLists = () => {
   const { BuyBackLists } = useSelector((state) => state.buyBack);
   const dispatch = useDispatch();
   const userId = _id;
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const perPage = 10;
@@ -53,7 +53,6 @@ const BuyBackLists = () => {
       );
     }
 
-    setLoading(false);
   }, [page, perPage, searchTerm, userId]);
 
   const TABLE_HEAD = [
@@ -147,6 +146,13 @@ const BuyBackLists = () => {
     const path = "/buyBack-download";
     await downloadCsvData(path);
   };
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000); 
+  
+      return () => clearTimeout(timer);
+    }, []);
   return (
     <>
       <div className="fixed">
@@ -182,7 +188,7 @@ const BuyBackLists = () => {
           placeholder="Search by VIN number"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-[20rem] py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
+          className="w-[20rem] ml-7 py-2 border border-gray-300 bg-white px-3 rounded-2xl outline-none"
         />
       </div>
 

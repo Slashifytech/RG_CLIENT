@@ -30,6 +30,7 @@ const initialInvoiceData = {
     customerGst: "",
     zipCode: "",
     stateCode: "",
+    
   },
   shippingDetails: {
     customerName: "",
@@ -487,7 +488,7 @@ console.log(location)
         }
       }
       setisLoading(false);
-      // navigate("/admin/invoice-lists");
+      navigate("/admin/invoice-lists");
     } catch (error) {
       console.log(error);
       setisLoading(false);

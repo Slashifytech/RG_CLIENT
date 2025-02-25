@@ -4,6 +4,7 @@ import InvoiceAmcList from "../Components/AdminComponents/InvoiceAmcList";
 import InvoiceBuyBackList from "../Components/AdminComponents/InvoiceBuyBackList";
 import Header from "../Components/Header";
 import { useLocation } from "react-router-dom";
+import EwInvoiceList from "../Components/AdminComponents/EwInvoiceList";
 
 const TeamInvoices = () => {
   const location = useLocation();
@@ -13,6 +14,8 @@ const TeamInvoices = () => {
   const tabs = [
     { id: 0, label: "AMC Invoice Lists", component: <InvoiceAmcList  createdBy={createdBy}/> },
     { id: 1, label: "Buyback Invoice Lists", component: <InvoiceBuyBackList createdBy={createdBy}/> },
+    { id: 2, label: "EW Invoice Lists", component: <EwInvoiceList createdBy={createdBy}/> },
+
   ];
 
   return (

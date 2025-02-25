@@ -62,7 +62,7 @@ const AgentAmcsData = () => {
     
   
 
-      <div className="flex items-center gap-3 justify-center md:ml-28 text-[18px] md:mt-10 sm:mt-10 mt-20">
+      <div className="flex items-center gap-3 justify-center md:ml-28 text-[18px] md:mt-7 sm:mt-10 mt-20">
       </div>
 
   
@@ -73,7 +73,7 @@ const AgentAmcsData = () => {
           placeholder="Search by VIN number"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-[20rem] py-2 border border-gray-300 bg-secondary px-3 rounded-2xl outline-none"
+          className="w-[20rem] py-2 border border-gray-300 ml-7 bg-secondary px-3 rounded-2xl outline-none"
         />
       </div>
 
