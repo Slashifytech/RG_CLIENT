@@ -31,7 +31,7 @@ const BuyBackApproval = () => {
       fetchBuyBackLists({
         page,
         perPage,
-        option: null,
+        options: null,
         option: null,
         status: "pending",
       })
