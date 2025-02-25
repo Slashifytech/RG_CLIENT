@@ -31,7 +31,7 @@ const EwApproval = () => {
       fetchEwLists({
         page,
         perPage,
-        option: null,
+        options: null,
         option: null,
         status: "pending",
       })

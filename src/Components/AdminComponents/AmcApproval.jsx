@@ -32,7 +32,7 @@ const AmcApproval = () => {
         page,
         perPage,
         option: null,
-        option: null,
+        options: null,
         status: "pending",
       })
     );

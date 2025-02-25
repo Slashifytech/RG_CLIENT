@@ -32,7 +32,7 @@ const AmcCancelApproval = () => {
       fetchamcLists({
         page,
         perPage,
-        option: null,
+        options: null,
         option: null,
         status: "reqCancel",
       })

@@ -31,7 +31,7 @@ const BuybackCancelApproval = () => {
       fetchBuyBackLists({
         page,
         perPage,
-        option: null,
+        options: null,
         option: null,
         status: "reqCancel",
       })

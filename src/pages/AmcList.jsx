@@ -88,7 +88,7 @@ const AdminAmcList = () => {
       const res = await amcResubmit(id);
       if (roleType === "2" && userId) {
         dispatch(
-          fetchamcLists({ page, perPage, option: null, userId, option: null })
+          fetchamcLists({ page, perPage, options: null, userId, option: null })
         );
       } else if (roleType === "0" || roleType === "1") {
         dispatch(

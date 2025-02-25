@@ -83,7 +83,7 @@ const BuyBackLists = () => {
           fetchBuyBackLists({
             page,
             perPage,
-            option: null,
+            optionq: null,
             userId,
             option: null,
           })

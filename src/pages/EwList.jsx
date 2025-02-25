@@ -84,7 +84,7 @@ const AdminEwLists = () => {
       const res = await ewResubmit(id);
       if (roleType === "2" && userId) {
         dispatch(
-          fetchEwLists({ page, perPage, option: null, userId, option: null })
+          fetchEwLists({ page, perPage, option1: null, userId, option: null })
         );
       } else if (roleType === "0" || roleType === "1") {
         dispatch(
