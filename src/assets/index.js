@@ -14,7 +14,7 @@ import mgLogo from "./mg.webp";
 import mgBlack from "./mgBlack.png";
 import graphLine from "./graphLine.png";
 import TwoUser from "./TwoUser.png";
-import icon from "./icon.png";
+import icon from "./Icon.png";
 import carHead from "./carHead.png";
 import carVector from "./carVector.png";
 import pdfHeaderOne from "./pdfHeaderOne.png";
