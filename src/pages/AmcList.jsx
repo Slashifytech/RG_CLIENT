@@ -151,14 +151,21 @@ const AdminAmcList = () => {
     if (file && file.type === "text/csv") {
       Papa.parse(file, {
         complete: async (result) => {
-          const parsedData = result.data;
-          parsedData = parsedData.filter(entry => entry.issueType === "INT");
+          let parsedData = result.data;
+        
           if (parsedData.length === 0) {
             toast.error("CSV file is empty.");
             event.target.value = "";
             return;
           }
+          parsedData = parsedData.filter(entry => entry.issueType === "INT");
 
+          if (parsedData.length === 0) {
+            toast.error("No valid INT issueType entries found.");
+            event.target.value = "";
+            return;
+          }
+  
         const groupedData = parsedData.reduce((acc, entry) => {
           const { serviceVinNumber } = entry;
 
