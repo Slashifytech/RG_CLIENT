@@ -39,6 +39,7 @@ const AdminAmcList = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     if (roleType === "2" && userId) {
       dispatch(
         fetchamcLists({ page, perPage, searchTerm, userId, option: null })
@@ -124,9 +125,9 @@ const AdminAmcList = () => {
       toast.error(error?.message || "Something Went Wrong");
     }
   };
-  const handleStatus = async (userId, type, reason) => {
+  const handleStatus = async (userIdData, type, reason) => {
     try {
-      const response = await updateAMCStatus(userId, type, reason);
+      const response = await updateAMCStatus(userIdData, type, reason);
 
       toast.success(response?.message || "AMC Updated Successfully");
       dispatch(
@@ -134,7 +135,7 @@ const AdminAmcList = () => {
           optionf: null,
           optiond: null,
           options: null,
-          userId,
+      userId,
           status:  undefined,
         })
       );

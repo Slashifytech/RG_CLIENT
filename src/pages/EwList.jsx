@@ -120,9 +120,9 @@ const AdminEwLists = () => {
       toast.error(error?.message || "Something Went Wrong");
     }
   };
-  const handleStatus = async (userId, type, reason) => {
+  const handleStatus = async (userIdData, type, reason) => {
     try {
-      const response = await updateEwStatus(userId, type, reason);
+      const response = await updateEwStatus(userIdData, type, reason);
 
       toast.success(response?.message || "AMC Updated Successfully");
       dispatch(

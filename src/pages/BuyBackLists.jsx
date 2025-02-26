@@ -122,9 +122,9 @@ const BuyBackLists = () => {
       toast.error(error?.message || "Something Went Wrong");
     }
   };
-  const handleStatus = async (userId, type, reason) => {
+  const handleStatus = async (userIdData, type, reason) => {
     try {
-      const response = await updatBuyBackStatus(userId, type, reason);
+      const response = await updatBuyBackStatus(userIdData, type, reason);
 
       toast.success(response?.message || "Buyback Updated Successfully");
       dispatch(
