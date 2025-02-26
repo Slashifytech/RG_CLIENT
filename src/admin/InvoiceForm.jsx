@@ -54,6 +54,7 @@ const initialInvoiceData = {
     rmName: "",
     rmEmployeeId: "",
     gmEmail: "",
+    totalAmountInWords: "",
   },
 };
 
@@ -204,6 +205,12 @@ const InvoiceForm = () => {
       required: true,
     },
     {
+      name: "totalAmountInWords",
+      type: "text",
+      placeholder:  "Total Amount In Words",
+      label: "Total Amount In Words",
+    },
+    {
       name: "rmName",
       type: "text",
       placeholder: "Relationship Manager / Service Advisor Name",
@@ -289,6 +296,7 @@ const InvoiceForm = () => {
       "vehicleDetails.gmEmail",
       "vehicleDetails.hypothecated",
       "vehicleDetails.branchName",
+      "vehicleDetails.totalAmountInWords"
     ];
     const notRequiredCustomerFields = [
       "billingDetail.address",
