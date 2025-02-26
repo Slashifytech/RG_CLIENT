@@ -20,7 +20,6 @@ import { updateEwStatus } from "../features/EwApi";
 const initialInvoiceData = {
   invoiceType: "",
   serviceId: "",
-  location: "",
   billingDetail: {
     customerName: "",
     address: "",
@@ -434,6 +433,14 @@ const InvoiceForm = () => {
     }
   }, [typeData, mergedData]);
 
+
+  const payload =
+  
+  {
+      ...invoiceData,
+      ...(createdBy && { createdBy }),
+      ...(mergedData?.vehicleDetails?.dealerLocation && { location: mergedData.vehicleDetails.dealerLocation }) // Add only if location exists
+    };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateFields();
@@ -480,23 +487,16 @@ const InvoiceForm = () => {
     //   }, {});
     // };
 
-    const { createdBy, location, ...restInvoiceData } = invoiceData;
-
-    const payload = invoiceId
-      ? { ...restInvoiceData }
-      : {
-          ...invoiceData,
-          createdBy,
-          location: mergedData?.vehicleDetails?.dealerLocation,
-        };
-    
+ 
+  
+     
     const role = localStorage.getItem("roleType");
     try {
       setisLoading(true);
       let res;
 
       if (invoiceId) {
-        res = await editInovoice(payload, invoiceId);
+        res = await editInovoice(invoiceData, invoiceId);
         toast.success(res?.message || "Invoice updated successfully");
       } else {
         const updateResponse =
