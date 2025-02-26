@@ -36,7 +36,6 @@ const Nav = () => {
       icon: <BsPieChartFill />,
       label: "Dashboard",
       otherPathTwo: "/admin/add-policies",
-      otherPathThree: "/admin/add-amc",
     },
     {
       pathPage: "/admin/team-lists",

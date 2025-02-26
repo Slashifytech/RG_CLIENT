@@ -248,8 +248,8 @@ const AMCForm = () => {
           validDate.setMonth(validDate.getMonth() + months);
 
           updatedSection.agreementValidDate = validDate
-            .toISOString()
-            .split("T")[0];
+            ?.toISOString()
+            ?.split("T")[0];
         }
       }
 
