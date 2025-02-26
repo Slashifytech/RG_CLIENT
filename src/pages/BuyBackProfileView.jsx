@@ -17,7 +17,7 @@ const BuyBackProfileView = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [buyBackDetails, setBuyBackDetails] = useState({
-    deliveryDate: buyBackByIdorStatus?.data?.vehicleDetails?.deliveryDate,
+    deliveryDate: "",
     raamGroupPrice: "",
     marketPrice: "",
     priceDifference: "",
@@ -76,7 +76,14 @@ const BuyBackProfileView = () => {
     });
   };
   
-
+  useEffect(() => {
+    if (buyBackByIdorStatus?.data?.vehicleDetails?.deliveryDate) {
+      setBuyBackDetails((prevState) => ({
+        ...prevState,
+        deliveryDate: buyBackByIdorStatus.data.vehicleDetails.deliveryDate,
+      }));
+    }
+  }, [buyBackByIdorStatus]);
   const validateForm = () => {
     let newErrors = {};
     Object.keys(buyBackDetails).forEach((key) => {
