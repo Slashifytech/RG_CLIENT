@@ -472,13 +472,16 @@ const InvoiceForm = () => {
     //   }, {});
     // };
 
+    const { createdBy, location, ...restInvoiceData } = invoiceData;
+
     const payload = invoiceId
-      ? {...invoiceData}
+      ? { ...restInvoiceData }
       : {
           ...invoiceData,
-          createdBy: createdBy,
+          createdBy,
           location: mergedData?.vehicleDetails?.dealerLocation,
         };
+    
     const role = localStorage.getItem("roleType");
     try {
       setisLoading(true);
