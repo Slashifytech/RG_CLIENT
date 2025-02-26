@@ -92,7 +92,7 @@ const AdminEwLists = () => {
             page,
             perPage,
             option: null,
-            userId: null,
+            userId,
             status: false,
           })
         );
@@ -111,7 +111,7 @@ const AdminEwLists = () => {
           page,
           perPage,
           searchTerm,
-          userId: null,
+          userId,
           status: false,
         })
       );
