@@ -496,7 +496,8 @@ const InvoiceForm = () => {
       let res;
 
       if (invoiceId) {
-        res = await editInovoice(invoiceData, invoiceId);
+        const { createdBy, createdAt, ...editPayload } = invoiceData; 
+        res = await editInovoice(editPayload, invoiceId);
         toast.success(res?.message || "Invoice updated successfully");
       } else {
         const updateResponse =
