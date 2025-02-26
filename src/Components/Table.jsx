@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Card, Typography } from "@material-tailwind/react";
 import { formatDate, getRelativeTime } from "../helper/commonHelperFunc";
 import { ToggleButton } from "./Input";
@@ -673,6 +673,7 @@ export function CustomTableFour({
   profileRedirectLink,
 }) {
   const pdfRef = useRef();
+  const location = useLocation();
   const { roleType } = useSelector((state) => state.users?.users);
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [isAgentPopUpOpen, setIsAgentPopUpOpen] = useState(false);
@@ -955,7 +956,7 @@ export function CustomTableFour({
                       </div>
                     </Typography>
                   </td>
-                ) : roleType === "0" && row?.data?.isDisabled === true ? (
+                ) : roleType === "0" && row?.data?.isDisabled === true && location.pathname === "admin/cancelled-policy" ? (
                   <td className="p-4">
                     <Typography
                       as="a"
@@ -1003,7 +1004,7 @@ export function CustomTableFour({
                     </Typography>
                   </td>
                 ) : (
-                  <span>__</span>
+                  <span></span>
                 )}
                 {row.type === "amc" ? (
                   <span className="hidden">

@@ -44,7 +44,7 @@ const CancelledBuyBack = () => {
     "Name",
     "Email",
     "VIN No.",
-    "AMC Issue date",
+    "Buyback Issue date",
     "View/Download",
     "Status",
     "Action",

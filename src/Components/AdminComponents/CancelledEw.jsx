@@ -36,11 +36,11 @@ const CancelledEw = () => {
 
   const TABLE_HEAD = [
     "S.No.",
-    "AMC Id",
+    "EW Id",
     "Name",
     "Email",
     "VIN No.",
-    "AMC Issue date",
+    "Ew Issue date",
     "View/Download",
     "Status",
     "Action",
@@ -51,7 +51,7 @@ const CancelledEw = () => {
     sno: (currentPage - 1) * perPage + index + 1,
     data: data || "NA",
     status: data?.isDisabled || "NA",
-    type: "amc",
+    type: "ewPolicy",
   }));
 useEffect(() => {
     const timer = setTimeout(() => {
