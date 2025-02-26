@@ -85,7 +85,7 @@ const BuyBackLists = () => {
             perPage,
             optionq: null,
             userId,
-            option: null,
+             status:  undefined,
           })
         );
       } else if (roleType === "0" || roleType === "1") {
