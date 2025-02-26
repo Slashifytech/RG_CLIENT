@@ -432,34 +432,34 @@ const InvoiceForm = () => {
     //   }, {});
     // };
 
-    const getChangedFields = (current, original) => {
-      return Object.keys(current).reduce((changes, key) => {
-        if (key === "vehicleDetails" && current[key]?.vinNumber) {
-          changes.vehicleDetails = {
-            ...changes.vehicleDetails,
-            vinNumber: current[key].vinNumber,
-            rmEmail: current[key].rmEmail,
-            gmEmail: current[key].gmEmail,
-          };
-        }
+    // const getChangedFields = (current, original) => {
+    //   return Object.keys(current).reduce((changes, key) => {
+    //     if (key === "vehicleDetails" && current[key]?.vinNumber) {
+    //       changes.vehicleDetails = {
+    //         ...changes.vehicleDetails,
+    //         vinNumber: current[key].vinNumber,
+    //         rmEmail: current[key].rmEmail,
+    //         gmEmail: current[key].gmEmail,
+    //       };
+    //     }
 
-        if (JSON.stringify(current[key]) !== JSON.stringify(original[key])) {
-          changes[key] = current[key];
-        }
+    //     if (JSON.stringify(current[key]) !== JSON.stringify(original[key])) {
+    //       changes[key] = current[key];
+    //     }
 
-        if (key === "billingDetail" && current[key]?.email) {
-          changes.billingDetail = {
-            ...changes.billingDetail,
-            email: current[key].email,
-          };
-        }
+    //     if (key === "billingDetail" && current[key]?.email) {
+    //       changes.billingDetail = {
+    //         ...changes.billingDetail,
+    //         email: current[key].email,
+    //       };
+    //     }
 
-        return changes;
-      }, {});
-    };
+    //     return changes;
+    //   }, {});
+    // };
 
     const payload = invoiceId
-      ? getChangedFields(invoiceData, invoiceById?.invoice || {})
+      ? {...invoiceData}
       : {
           ...invoiceData,
           createdBy: createdBy,
