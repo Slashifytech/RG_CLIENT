@@ -243,11 +243,11 @@ const InvoiceForm = () => {
 
   const calculateVehicleDetails = () => {
     setInvoiceData((prevState) => {
-      const gstAmount = parseFloat(prevState.vehicleDetails.gstAmount || 0);
+      const gstAmount = Number(prevState.vehicleDetails?.gstAmount) || 0;
 
-      const cgst = gstAmount * 0.09; // 9% of GST
-      const sgst = gstAmount * 0.09; // 9% of GST
-      const totalAmount = gstAmount + cgst + sgst;
+      const cgst = Number((gstAmount * 0.09).toFixed(2)); // 9% of GST
+      const sgst = Number((gstAmount * 0.09).toFixed(2)); // 9% of GST
+      const totalAmount = Number((gstAmount + cgst + sgst).toFixed(2));
       return {
         ...prevState,
         vehicleDetails: {
@@ -259,7 +259,6 @@ const InvoiceForm = () => {
       };
     });
   };
-  console.log(location);
   const handleCheckboxChange = (e) => {
     setSameAsBilling(e.target.checked);
     if (e.target.checked) {
