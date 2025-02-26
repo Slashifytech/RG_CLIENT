@@ -30,7 +30,6 @@ const initialInvoiceData = {
     customerGst: "",
     zipCode: "",
     stateCode: "",
-    
   },
   shippingDetails: {
     customerName: "",
@@ -260,7 +259,7 @@ const InvoiceForm = () => {
       };
     });
   };
-console.log(location)
+  console.log(location);
   const handleCheckboxChange = (e) => {
     setSameAsBilling(e.target.checked);
     if (e.target.checked) {
@@ -360,7 +359,7 @@ console.log(location)
   }, [id, invoiceId]);
 
   useEffect(() => {
-    if (invoiceById?.invoice) {
+    if (location.pathname === "/admin/invoice-edit" && invoiceById?.invoice) {
       setInvoiceData((prev) => ({
         ...prev,
         ...invoiceById?.invoice,

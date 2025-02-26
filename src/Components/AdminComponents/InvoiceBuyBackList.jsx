@@ -93,7 +93,7 @@ const InvoiceBuyBackList = ({createdBy}) => {
             <CustomTableOne
               tableHead={TABLE_HEAD}
               tableRows={TABLE_ROWS}
-              link="/admin/invoice-form"
+          link="/admin/invoice-edit"
               action={"Edit"}
               icon={<FaPencil />}
             />

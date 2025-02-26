@@ -311,7 +311,14 @@ const router = createBrowserRouter([
       </ProtectedAdminTeam>
     ),
   },
- 
+  {
+    path: "/admin/invoice-edit",
+    element: (
+      <ProtectedAdminTeam>
+        <InvoiceForm/>
+      </ProtectedAdminTeam>
+    ),
+  },
   {
     path: "/ew-view",
     element: (

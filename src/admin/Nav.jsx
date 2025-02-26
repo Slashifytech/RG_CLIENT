@@ -90,6 +90,7 @@ const Nav = () => {
       label: "Invoice Lists",
       otherPath: "/admin/edit-invoice",
       otherPathTwo: "/admin/invoice-form",
+      otherPathThree: "/admin/invoice-edit"
     },
     {
       pathPage: "/admin/approval-lists",
