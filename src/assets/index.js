@@ -24,12 +24,23 @@ import pdfHeaderFour from "./pdfHeaderFour.png";
 import topHeaderPdf from "./topHeaderPdf.jpg";
 import stamp from "./stamp.jpeg";
 import stampEw from "./stampEw.png";
-
+import faq from "./faq.jpg";
+import motorWarranty from "./motorWarranty.jpg";
+import generalTerms from "./generalTerms.jpg";
+import generalCond from "./generalCond.jpg";
+import coverageOne from "./coverageOne.png";
+import coverageTwo from "./coverageTwo.png";
 
 
 
 
 export {
+  generalCond,
+  coverageOne,
+  coverageTwo,
+  motorWarranty,
+  generalTerms,
+  faq,
   stampEw,
   stamp,
   topHeaderPdf,

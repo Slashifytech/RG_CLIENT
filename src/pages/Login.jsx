@@ -43,7 +43,7 @@ const Login = () => {
           dispatch(fetchUsers());
 
           if (res?.payload?.user?.roleType === "0") {
-            navigate("/admin/amc-lists");
+            navigate("/admin/dashboard");
           } else if (res?.payload?.user?.roleType === "2") {
             navigate("/agent/amcs-list");
           } else if (res?.payload?.user?.roleType === "1") {

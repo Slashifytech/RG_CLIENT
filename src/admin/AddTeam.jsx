@@ -66,7 +66,6 @@ const [aId, setAId] = useState();
       setAgentData((data) => ({
         ...data,
         brandName: value,
-        roleType: value === "MG" ? "2" : value === "MB" ? "2" : "",
       }));
     } else {
       setAgentData((data) => ({
