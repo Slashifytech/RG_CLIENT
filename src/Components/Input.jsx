@@ -122,7 +122,6 @@ const CustomInput = ({
   imp,
   customText,
 }) => {
-  console.log(customText);
   return (
     <div className="flex flex-col mt-3">
       <span className="font-semibold pb-3 ">

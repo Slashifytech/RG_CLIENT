@@ -208,7 +208,7 @@ const AmcProfileView = () => {
                 <span className="w-1/2 flex flex-col text-[15px]">
                   <span className="font-light mt-4">Available Credit</span>
                   <span className="font-medium">
-                    {amcByIdorStatus?.data?.vehicleDetails?.agreementPeriod ||
+                    {amcByIdorStatus?.data?.amcCredit ||
                       "NA"}
                   </span>
                   <span className="font-light mt-4">Expenses</span>

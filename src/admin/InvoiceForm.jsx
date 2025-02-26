@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { GroupedInput } from "../Components/Input";
 import { createdDate } from "../helper/commonHelperFunc";
 import Nav from "./Nav";
@@ -77,6 +77,7 @@ const InvoiceForm = () => {
     invoiceType: typeData,
     serviceId: id,
   });
+
   const [sameAsBilling, setSameAsBilling] = useState(false);
   const [errors, setErrors] = useState({});
   const formattedDate = createdDate();
@@ -235,19 +236,25 @@ const InvoiceForm = () => {
       dispatch(setEmptyInvoiceData());
     };
   }, []);
-  useEffect(() => {
-    if (invoiceData.vehicleDetails.gstAmount !== undefined) {
-      calculateVehicleDetails();
-    }
-  }, [invoiceData.vehicleDetails.gstAmount]);
 
-  const calculateVehicleDetails = () => {
+  const calculateVehicleDetails = useCallback(() => {
     setInvoiceData((prevState) => {
       const gstAmount = Number(prevState.vehicleDetails?.gstAmount) || 0;
-
-      const cgst = Number((gstAmount * 0.09).toFixed(2)); // 9% of GST
-      const sgst = Number((gstAmount * 0.09).toFixed(2)); // 9% of GST
+  
+      if (!gstAmount) return prevState; 
+      const cgst = Number((gstAmount * 0.09).toFixed(2)); 
+      const sgst = Number((gstAmount * 0.09).toFixed(2)); 
       const totalAmount = Number((gstAmount + cgst + sgst).toFixed(2));
+  
+    
+      if (
+        prevState.vehicleDetails.cgst === cgst &&
+        prevState.vehicleDetails.sgst === sgst &&
+        prevState.vehicleDetails.totalAmount === totalAmount
+      ) {
+        return prevState;
+      }
+  
       return {
         ...prevState,
         vehicleDetails: {
@@ -258,7 +265,15 @@ const InvoiceForm = () => {
         },
       };
     });
-  };
+  }, [invoiceData.vehicleDetails.gstAmount]);
+  
+  useEffect(() => {
+    if (invoiceData.vehicleDetails.gstAmount) {
+      calculateVehicleDetails();
+    }
+  }, [invoiceData.vehicleDetails.gstAmount, calculateVehicleDetails]);
+  
+  
   const handleCheckboxChange = (e) => {
     setSameAsBilling(e.target.checked);
     if (e.target.checked) {
