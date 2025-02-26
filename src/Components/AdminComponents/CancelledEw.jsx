@@ -12,7 +12,7 @@ const CancelledEw = () => {
   const { _id,  roleType } = useSelector(
       (state) => state.users?.users
     );
-  const { EwLists } = useSelector((state) => state.amc);
+  const { EwLists } = useSelector((state) => state.ewPolicy);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
