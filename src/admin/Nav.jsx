@@ -75,7 +75,6 @@ const Nav = () => {
       label: "EW Lists",
       otherPath: "/admin/add-ewpolicy",
       otherPathTwo: "/admin/update-ewpolicy",
-      otherPathThree: "/amc/profile-view"
     },
     {
       pathPage: "/admin/buyback-lists",
