@@ -360,7 +360,7 @@ const InvoiceView = forwardRef(({ id }, ref) => {
           <p style={{ marginTop: "20px" }}>
             Amount In Words:{" "}
             <b>
-            {data?.vehicleDetails?.totalAmountInWords || "NoT Available"}
+            {data?.vehicleDetails?.totalAmountInWords || "Not Available"}
             </b>
           </p>
           <p>

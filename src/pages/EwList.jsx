@@ -20,7 +20,7 @@ import { fetchEwLists, setEmptytEw } from "../features/EwSlice";
 import { ewCancelByAdmin, ewResubmit, updateEwStatus } from "../features/EwApi";
 const AdminEwLists = () => {
   const { _id, roleType } = useSelector((state) => state.users?.users);
-  const userId = roleType === "2" ? _id : null;
+  const userId = roleType === "2" ? _id : undefined;
   const { EwLists } = useSelector((state) => state.ewPolicy);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -47,7 +47,7 @@ const AdminEwLists = () => {
           page,
           perPage,
           searchTerm,
-          userId: null,
+          userId: undefined,
           status: false,
         })
       );
@@ -131,7 +131,7 @@ const AdminEwLists = () => {
           optionf: null,
           optiond: null,
           options: null,
-          optionh: null,
+          optionh: undefined,
           status: "reqCancel",
         })
       );
