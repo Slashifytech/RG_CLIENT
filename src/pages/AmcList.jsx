@@ -152,7 +152,7 @@ const AdminAmcList = () => {
       Papa.parse(file, {
         complete: async (result) => {
           const parsedData = result.data;
-
+          parsedData = parsedData.filter(entry => entry.issueType === "INT");
           if (parsedData.length === 0) {
             toast.error("CSV file is empty.");
             event.target.value = "";
