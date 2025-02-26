@@ -134,7 +134,7 @@ const BuyBackLists = () => {
           optiond: null,
           options: null,
           optionh: null,
-          status: "reqCancel",
+          status:  undefined,
         })
       );
     } catch (error) {

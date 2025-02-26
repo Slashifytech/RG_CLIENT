@@ -64,18 +64,18 @@ const AgentEwPolicy = () => {
 
       
 
-      <div className="px-6 flex justify-start md:ml-60 sm:ml-60 mt-6">
+      <div className="px-6 flex justify-start md:ml-[18%] sm:ml-60 mt-6">
         <input
           type="text"
           placeholder="Search by VIN number"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-         className="w-[20rem] py-2 border border-gray-300 ml-7 bg-white px-3 rounded-2xl outline-none"
+         className="w-[20rem] py-2 border border-gray-300  bg-white px-3 rounded-2xl outline-none"
         />
       </div>
 
       <p className="pt-5 text-[20px] font-semibold md:ml-[20%] sm:ml-[33%] ml-6">
-        Buy Back Lists-
+        Ew Lists-
       </p>
 
       <div className="font-head pt-4">
