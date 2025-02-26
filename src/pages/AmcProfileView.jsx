@@ -141,7 +141,7 @@ const AmcProfileView = () => {
                   <span className="font-light mt-4">Agreement Period</span>
                   <span className="font-medium">
                     {amcByIdorStatus?.data?.vehicleDetails
-                      ?.agreementStartDate || "NA"}
+                      ?.agreementPeriod || "NA"}
                   </span>
                   <span className="font-light mt-4">Agreement Valid Date</span>
                   <span className="font-medium">

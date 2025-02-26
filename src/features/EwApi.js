@@ -116,3 +116,18 @@ export const ewCancelByAdmin = async (id) => {
     throw error;
   }
 };
+
+
+
+
+
+
+// export const getData = async() =>{
+//   try{
+//    const res = await apiurl.get("https://api.restful-api.dev/objects")
+//    console.log(res)
+//   return res
+//   }catch(error){
+//     console.log(error)
+//   }
+// }

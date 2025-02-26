@@ -61,7 +61,7 @@ const BuyBackLists = () => {
     "Name",
     "Email",
     "VIN No.",
-    "AMC Issue date",
+    "Buyback Issue date",
     "Profile View",
     "View/Download",
     "Status",

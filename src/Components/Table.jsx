@@ -758,7 +758,7 @@ export function CustomTableFour({
                       className="font-normal text-center"
                     >
                       <span
-                        onClick={()=>openIdPopUp(row?.data?._id)}
+                        onClick={() => openIdPopUp(row?.data?._id)}
                         className="flex flex-row items-center gap-3 cursor-pointer"
                       >
                         <span>
@@ -770,23 +770,25 @@ export function CustomTableFour({
                             : "Backend Id"}
                         </span>
                       </span>
-                      {!row?.data?.backendPolicyId &&
+                      {!row?.data?.backendPolicyId && (
                         <span
-  className={`${
-    (() => {
-      const remainingText = getRelativeTime(row?.data?.createdAt);
-      const match = remainingText.match(/(\d+)/);
-      const remainingDays = match ? parseInt(match[0], 10) : 0;
+                          className={`${(() => {
+                            const remainingText = getRelativeTime(
+                              row?.data?.createdAt
+                            );
+                            const match = remainingText.match(/(\d+)/);
+                            const remainingDays = match
+                              ? parseInt(match[0], 10)
+                              : 0;
 
-      if (remainingDays >= 5) return "text-green-500";
-      if (remainingDays >= 2) return "text-orange-500";
-      return "text-red-500";
-    })()
-  } font-semibold`}
->
-
-                        {getRelativeTime(row?.data?.createdAt)}
-                      </span>}
+                            if (remainingDays >= 5) return "text-green-500";
+                            if (remainingDays >= 2) return "text-orange-500";
+                            return "text-red-500";
+                          })()} font-semibold`}
+                        >
+                          {getRelativeTime(row?.data?.createdAt)}
+                        </span>
+                      )}
                     </Typography>
                   </td>
                 )}
@@ -956,7 +958,9 @@ export function CustomTableFour({
                       </div>
                     </Typography>
                   </td>
-                ) : roleType === "0" && row?.data?.isDisabled === true && location.pathname === "admin/cancelled-policy" ? (
+                ) : roleType === "0" &&
+                  row?.data?.isDisabled === true &&
+                  location.pathname === "admin/cancelled-policy" ? (
                   <td className="p-4">
                     <Typography
                       as="a"
@@ -1173,5 +1177,78 @@ export function CustomTableFive({ tableHead = [], tableRows = [] }) {
         </table>
       </Card>
     </>
+  );
+}
+
+//test table
+
+export function CustomTestTable({ tableHead = [], tableRows = [] }) {
+  return (
+    <Card className="h-full w-full overflow-scroll scrollbar-hide font-poppins">
+      <table className="w-full min-w-max table-auto text-left">
+        <thead>
+          <tr>
+            {tableHead.map((head) => (
+              <th
+                key={head}
+                className="border-b border-blue-gray-100 bg-input p-4"
+              >
+                <Typography
+                  variant="small"
+                  color="sidebar"
+                  className="font-medium leading-none opacity-70 "
+                >
+                  {head}
+                </Typography>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {tableRows.map((row, index) => (
+            <tr key={index} className="even:bg-blue-gray-50/50">
+              {/* Render only the values you want to display */}
+              <td className="p-4">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="font-normal"
+                >
+                  {row?.sno || "NA"}
+                </Typography>
+              </td>
+            
+              <td className="p-4">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="font-normal"
+                >
+                  {row?.name || "NA"}
+                </Typography>
+              </td>
+              <td className="p-4">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="font-normal"
+                >
+                  {row.data.capacity}
+                </Typography>
+              </td>
+              <td className="p-4">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="font-normal"
+                >
+                  {row.data.color}
+                </Typography>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </Card>
   );
 }

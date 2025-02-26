@@ -200,12 +200,12 @@ const InvoiceView = forwardRef(({ id }, ref) => {
 
           {/* Address of Delivery */}
           <div style={{ width: "30%" }}>
-            <h4 style={{ margin: "0", fontSize: "14px" }}>
+            {/* <h4 style={{ margin: "0", fontSize: "14px" }}>
               Address Of Delivery:
             </h4>
             <p style={{ margin: "5px 0", lineHeight: "1.5" }}>
            {data?.addressOfDelivery || "Not Available"}
-            </p>
+            </p> */}
           </div>
         </div>
 

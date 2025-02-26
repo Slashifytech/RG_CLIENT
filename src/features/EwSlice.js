@@ -27,6 +27,7 @@ export const fetchEwLists = createAsyncThunk(
       }
     }
   );
+  
 const ewSlice = createSlice({
   name: "ewPolicy",
   initialState: {
