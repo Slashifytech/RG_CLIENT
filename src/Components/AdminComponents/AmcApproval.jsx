@@ -26,7 +26,6 @@ const AmcApproval = () => {
     setPage(pageNumber);
   };
   useEffect(() => {
-    setLoading(true);
     dispatch(
       fetchamcLists({
         page,

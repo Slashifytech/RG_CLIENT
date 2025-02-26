@@ -25,14 +25,12 @@ const AgentEwPolicy = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     if (userId) {
       dispatch(
         fetchEwLists({ page, perPage, searchTerm, userId, option: null })
       );
     }
 
-    setLoading(false);
   }, [page, perPage, searchTerm, userId]);
 
   const TABLE_HEAD = [

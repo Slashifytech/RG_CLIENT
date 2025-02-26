@@ -26,7 +26,6 @@ const EwApproval = () => {
     setPage(pageNumber);
   };
   useEffect(() => {
-    setLoading(true);
     dispatch(
       fetchEwLists({
         page,

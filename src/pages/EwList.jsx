@@ -36,7 +36,6 @@ const AdminEwLists = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     if (roleType === "2" && userId) {
       dispatch(
         fetchEwLists({ page, perPage, searchTerm, userId, option: null })

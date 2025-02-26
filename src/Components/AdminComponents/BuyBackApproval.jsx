@@ -26,7 +26,6 @@ const BuyBackApproval = () => {
     setPage(pageNumber);
   };
   useEffect(() => {
-    setLoading(true);
     dispatch(
       fetchBuyBackLists({
         page,

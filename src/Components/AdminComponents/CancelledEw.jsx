@@ -26,7 +26,6 @@ const CancelledEw = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
       dispatch(
         fetchEwLists({ page, perPage, searchTerm, userId: null, status: true })
       );

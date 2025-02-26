@@ -26,7 +26,6 @@ const AgentBuybacks = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     if (userId) {
       dispatch(
         fetchBuyBackLists({ page, perPage, searchTerm, userId, option: null })

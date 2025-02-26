@@ -25,7 +25,6 @@ const CancelledBuyBack = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     dispatch(
       fetchBuyBackLists({
         page,

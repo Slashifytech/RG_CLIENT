@@ -26,7 +26,6 @@ const AgentAmcsData = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     if (userId) {
       dispatch(
         fetchamcLists({ page, perPage, searchTerm, userId, option: null })

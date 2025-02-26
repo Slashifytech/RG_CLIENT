@@ -27,7 +27,6 @@ const CancelledAmc = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
       dispatch(
         fetchamcLists({ page, perPage, searchTerm, userId: null, status: true })
       );

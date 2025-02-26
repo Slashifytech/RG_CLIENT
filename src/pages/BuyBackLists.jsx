@@ -36,7 +36,6 @@ const BuyBackLists = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     if (roleType === "2" && userId) {
       dispatch(
         fetchBuyBackLists({ page, perPage, searchTerm, userId, option: null })
