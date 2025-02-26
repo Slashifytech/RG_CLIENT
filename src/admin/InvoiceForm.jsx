@@ -248,15 +248,16 @@ const InvoiceForm = () => {
       const gstAmount = Number(prevState.vehicleDetails?.gstAmount) || 0;
   
       if (!gstAmount) return prevState; 
+  
       const cgst = Number((gstAmount * 0.09).toFixed(2)); 
       const sgst = Number((gstAmount * 0.09).toFixed(2)); 
       const totalAmount = Number((gstAmount + cgst + sgst).toFixed(2));
   
-    
+      // Avoid unnecessary re-renders if values are the same
       if (
-        prevState.vehicleDetails.cgst === cgst &&
-        prevState.vehicleDetails.sgst === sgst &&
-        prevState.vehicleDetails.totalAmount === totalAmount
+        prevState.vehicleDetails?.cgst === cgst &&
+        prevState.vehicleDetails?.sgst === sgst &&
+        prevState.vehicleDetails?.totalAmount === totalAmount
       ) {
         return prevState;
       }
@@ -271,13 +272,13 @@ const InvoiceForm = () => {
         },
       };
     });
-  }, [invoiceData.vehicleDetails.gstAmount]);
+  }, []);
   
   useEffect(() => {
-    if (invoiceData.vehicleDetails.gstAmount) {
+    if (invoiceData.vehicleDetails?.gstAmount) {
       calculateVehicleDetails();
     }
-  }, [invoiceData.vehicleDetails.gstAmount, calculateVehicleDetails]);
+  }, [invoiceData.vehicleDetails?.gstAmount, calculateVehicleDetails]);
   
   
   const handleCheckboxChange = (e) => {
