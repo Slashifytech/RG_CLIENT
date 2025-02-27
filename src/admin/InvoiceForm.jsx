@@ -45,10 +45,10 @@ const initialInvoiceData = {
     vinNumber: "",
     branchName: "",
     model: "",
-    gstAmount: "",
-    cgst: "",
-    sgst: "",
-    totalAmount: "",
+    gstAmount: 0,
+    cgst: 0,
+    sgst: 0,
+    totalAmount: 0,
     rmEmail: "",
     rmName: "",
     rmEmployeeId: "",
@@ -247,10 +247,10 @@ const InvoiceForm = () => {
     setInvoiceData((prevState) => {
       const gstAmount = Number(prevState.vehicleDetails?.gstAmount) || 0;
   
-      if (!gstAmount) return prevState; 
+      if (!gstAmount) return prevState; // Prevent unnecessary calculations
   
-      const cgst = Number((gstAmount * 0.09).toFixed(2)); 
-      const sgst = Number((gstAmount * 0.09).toFixed(2)); 
+      const cgst = Number((gstAmount * 0.09).toFixed(2));
+      const sgst = Number((gstAmount * 0.09).toFixed(2));
       const totalAmount = Number((gstAmount + cgst + sgst).toFixed(2));
   
       // Avoid unnecessary re-renders if values are the same
@@ -266,6 +266,7 @@ const InvoiceForm = () => {
         ...prevState,
         vehicleDetails: {
           ...prevState.vehicleDetails,
+          gstAmount,  // Ensure gstAmount is stored as a number
           cgst,
           sgst,
           totalAmount,
@@ -278,9 +279,10 @@ const InvoiceForm = () => {
     if (invoiceData.vehicleDetails?.gstAmount) {
       calculateVehicleDetails();
     }
-  }, [invoiceData.vehicleDetails?.gstAmount, calculateVehicleDetails]);
+  }, [invoiceData.vehicleDetails?.gstAmount, calculateVehicleDetails]); 
   
   
+  console.log(invoiceData.vehicleDetails, invoiceData.vehicleDetails.gstAmount)
   const handleCheckboxChange = (e) => {
     setSameAsBilling(e.target.checked);
     if (e.target.checked) {
