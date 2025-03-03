@@ -89,12 +89,21 @@ const InvoiceView = forwardRef(({ id }, ref) => {
   }}
 >
   {data?.invoiceId?.includes("EW") ? (
+    <>
     <span>
       -4-138, 138/A Flat No.501, Royal Elegance, <br />
       Himayathnagar, Barkatpura, Hyderabad, Hyderabad, Telangana, 500027
       <br />
     </span>
+    <span>
+    Ph: 7799935258, Email Id: ew@360carprotect.in
+  
+    <br />
+    GSTIN: 36AADFZ5034G1Z5, PAN: AADFZ5034G
+  </span>
+  </>
   ) : (
+    <>
     <span>
       8-2-120/86/10,10A,11B,11C and 11D,
       <br />
@@ -103,9 +112,7 @@ const InvoiceView = forwardRef(({ id }, ref) => {
       Road Number 2, Banjara Hills Hyderabad, PIN-500033
       <br />
     </span>
-  )}
-  
-  <span>
+    <span>
     Ph: 7799935258, Email Id: hyderabad.crmhead@mgdealer.co.in
     <br />
     Website: <a href="https://www.mghyderabad.co.in" target="_blank" rel="noopener noreferrer">
@@ -114,6 +121,10 @@ const InvoiceView = forwardRef(({ id }, ref) => {
     <br />
     GSTIN: 36AAYFR9176L1ZY, CIN NO: AAN-7654, PAN: AAYFR9176L
   </span>
+    </>
+  )}
+  
+
 </p>
 
           </div>
