@@ -10,9 +10,19 @@ body {
 .avoid-break {
   page-break-inside: avoid;
   break-inside: avoid;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
+
 .page-break {
   page-break-before: always;
+  break-before: always;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block;
+  width: 100%;
 }
 
 input[type="radio"] {

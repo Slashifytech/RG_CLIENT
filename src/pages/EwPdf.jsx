@@ -50,7 +50,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: "in", format: "a2", orientation: "portrait" },
-      pagebreak: { mode: ["avoid-all", "css"] },
+      pagebreak: { mode: ["css", "avoid-all"] },
     };
     html2pdf().from(input).set(opt).save()
   };
@@ -75,7 +75,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
         }`}
       />
       <div
-        className={`border border-black pt-6 px-6 mb-6 ${
+        className={`border border-black pt-6 px-6  ${
           location.pathname === "/ew-view" ? "hidden" : "block"
         }`}
       >
@@ -101,18 +101,19 @@ const EwPdf = forwardRef(({ id }, ref) => {
           such cases, no claims will be entertained, and any paid amount may be
           forfeited
         </p>
-        <img src={carVector} alt="img" loading="lazy" />
+        <img src={carVector} alt="img" loading="lazy"  />
       </div>
       <div
-        className={` avoid-break ${location.pathname === "/ew-view" ? "mt-6 " : ""}`}
+        className={` ${location.pathname === "/ew-view" ? "mt-6 " : "page-break "}`}
       >
+      <div className = "avoid-break ">
         <img
           src={pdfHeaderOne}
           alt="header"
           loading="lazy"
-          className={`${location.pathname === "/ew-view" ? "hidden" : "block"} `}
+          className={`${location.pathname === "/ew-view" ? "hidden" : "block "} avoid-break`}
         />
-
+        </div>
         {/* CUSTOMER DETAILS */}
         <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-9 pb-4">
           Customer Details
