@@ -41,11 +41,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
     };
     fetchData();
   }, [ewId]);
-  useEffect(() => {
-    setTimeout(() => {
-      window.dispatchEvent(new Event("resize"));
-    }, 500); 
-  }, []);
+
   
   const handleDownloadPDF = () => {
     const input = pdfRef.current;
@@ -109,14 +105,14 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <img src={carVector} alt="img" loading="lazy"  />
       </div>
       <div
-        className={` ${location.pathname === "/ew-view" ? "mt-6 " : "page-break "}`}
+        className={`   ${location.pathname === "/ew-view" ? "mt-6 " : ""}`}
       >
       <div className = "avoid-break ">
         <img
           src={pdfHeaderOne}
           alt="header"
           loading="lazy"
-          className={`${location.pathname === "/ew-view" ? "hidden" : "block "} avoid-break`}
+          className={`${location.pathname === "/ew-view" ? "hidden" : "block "} `}
         />
         </div>
         {/* CUSTOMER DETAILS */}

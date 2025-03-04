@@ -703,6 +703,7 @@ export function CustomTableFour({
     if (pdfRef.current[id]) {
       pdfRef.current[id].handleDownloadPDF();
     }
+    
   };
 
   return (
