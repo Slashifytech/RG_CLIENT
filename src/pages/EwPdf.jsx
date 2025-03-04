@@ -75,14 +75,14 @@ const EwPdf = forwardRef(({ id }, ref) => {
         }`}
       />
       <div
-        className={`border border-black pt-6 px-6  ${
-          location.pathname === "/ew-view" ? "hidden" : "block min-h-[calc(100vh-50px)] "
+        className={`border border-black pt-6 px-6 mb-6 ${
+          location.pathname === "/ew-view" ? "hidden" : "block"
         }`}
       >
-        The contract under <b>policy number</b> {data?.customId} has been
-        concluded based on the details and declarations provided by you. The
-        summarized transcript of the same is outlined below. You are required to
-        review and confirm the accuracy of this information. <br />
+        The contract under <b>policy number</b> {data?.customId} has
+        been concluded based on the details and declarations provided by you.
+        The summarized transcript of the same is outlined below. You are
+        required to review and confirm the accuracy of this information. <br />
         <br />
         <p>
           If you identify any discrepancies, require modifications, or disagree
@@ -104,15 +104,13 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <img src={carVector} alt="img" loading="lazy" />
       </div>
       <div
-        className={`${location.pathname === "/ew-view" ? "mt-6 " : " "}`}
+        className={`${location.pathname === "/ew-view" ? "mt-6 " : "mt-[15%]"}`}
       >
         <img
           src={pdfHeaderOne}
           alt="header"
           loading="lazy"
-          className={`${
-            location.pathname === "/ew-view" ? "hidden " : "block "
-          }`}
+          className={`${location.pathname === "/ew-view" ? "hidden" : "block"}`}
         />
 
         {/* CUSTOMER DETAILS */}
@@ -323,13 +321,15 @@ const EwPdf = forwardRef(({ id }, ref) => {
           location.pathname === "/ew-view" ? "hidden" : "block mt-[80%]"
         }`}
       >
-        <img src={coverageOne} alt="header" loading="lazy" className="mt-12" />
+        <img src={coverageOne} alt="header" loading="lazy" className="mt-9" />
         <img src={coverageTwo} alt="header" loading="lazy" className="mt-9" />
         <img src={faq} alt="header" loading="lazy" className="mt-9" />
         <img src={motorWarranty} alt="header" loading="lazy" className="mt-9" />
         <img src={generalTerms} alt="header" loading="lazy" className="mt-9" />
         <img src={generalCond} alt="header" loading="lazy" className="mt-9" />
-      </div>
+     
+        
+    </div>
     </div>
   );
 });
