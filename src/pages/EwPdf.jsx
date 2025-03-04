@@ -104,13 +104,13 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <img src={carVector} alt="img" loading="lazy" />
       </div>
       <div
-        className={`page-break ${location.pathname === "/ew-view" ? "mt-6 " : "-mt-[20%]"}`}
+        className={` avoid-break ${location.pathname === "/ew-view" ? "mt-6 " : ""}`}
       >
         <img
           src={pdfHeaderOne}
           alt="header"
           loading="lazy"
-          className={`${location.pathname === "/ew-view" ? "hidden" : "block"} avoid-break`}
+          className={`${location.pathname === "/ew-view" ? "hidden" : "block"} `}
         />
 
         {/* CUSTOMER DETAILS */}
