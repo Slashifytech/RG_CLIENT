@@ -7,6 +7,13 @@
 body {
   background-color: #f7f7f8;
 }
+.avoid-break {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.page-break {
+  page-break-before: always;
+}
 
 input[type="radio"] {
   -webkit-appearance: none;

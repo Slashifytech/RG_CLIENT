@@ -50,7 +50,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: "in", format: "a2", orientation: "portrait" },
-      pagebreak: { mode: "avoid-all" },
+      pagebreak: { mode: ["avoid-all", "css"] },
     };
     html2pdf().from(input).set(opt).save();
   };
@@ -104,13 +104,13 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <img src={carVector} alt="img" loading="lazy" />
       </div>
       <div
-        className={`${location.pathname === "/ew-view" ? "mt-6 " : "mt-[15%]"}`}
+        className={`page-break ${location.pathname === "/ew-view" ? "mt-6 " : "mt-[15%]"}`}
       >
         <img
           src={pdfHeaderOne}
           alt="header"
           loading="lazy"
-          className={`${location.pathname === "/ew-view" ? "hidden" : "block"}`}
+          className={`${location.pathname === "/ew-view" ? "hidden" : "block"} avoid-break`}
         />
 
         {/* CUSTOMER DETAILS */}
