@@ -323,7 +323,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
           location.pathname === "/ew-view" ? "hidden" : "block mt-[80%]"
         }`}
       >
-        <img src={coverageOne} alt="header" loading="lazy" className="mt-9" />
+        <img src={coverageOne} alt="header" loading="lazy" className="mt-12" />
         <img src={coverageTwo} alt="header" loading="lazy" className="mt-9" />
         <img src={faq} alt="header" loading="lazy" className="mt-9" />
         <img src={motorWarranty} alt="header" loading="lazy" className="mt-9" />
