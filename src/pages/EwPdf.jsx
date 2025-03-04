@@ -75,7 +75,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
         }`}
       />
       <div
-        className={`border border-black pt-6 px-6 mb-[17%] ${
+        className={`border border-black pt-6 px-6  ${
           location.pathname === "/ew-view" ? "hidden" : "block"
         }`}
       >
