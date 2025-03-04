@@ -76,7 +76,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
       />
       <div
         className={`border border-black pt-6 px-6  ${
-          location.pathname === "/ew-view" ? "hidden" : "block  "
+          location.pathname === "/ew-view" ? "hidden" : "block min-h-[calc(100vh-50px)] "
         }`}
       >
         The contract under <b>policy number</b> {data?.customId} has been
