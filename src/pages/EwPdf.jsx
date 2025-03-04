@@ -75,7 +75,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
         }`}
       />
       <div
-        className={`border border-black pt-6 px-6 mb-6 ${
+        className={`border border-black pt-6 px-6 mb-[12%] ${
           location.pathname === "/ew-view" ? "hidden" : "block"
         }`}
       >
@@ -110,7 +110,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
           src={pdfHeaderOne}
           alt="header"
           loading="lazy"
-          className={`${location.pathname === "/ew-view" ? "hidden pt-9" : "block"}`}
+          className={`${location.pathname === "/ew-view" ? "hidden " : "block"}`}
         />
 
         {/* CUSTOMER DETAILS */}
