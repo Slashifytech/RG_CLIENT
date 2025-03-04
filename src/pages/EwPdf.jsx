@@ -105,7 +105,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <img src={carVector} alt="img" loading="lazy"  />
       </div>
       <div
-        className={`   ${location.pathname === "/ew-view" ? "mt-6 " : "mt-[17%]"}`}
+        className={`   ${location.pathname === "/ew-view" ? "mt-6 " : "mt-[20%]"}`}
       >
       <div className = "avoid-break ">
         <img
