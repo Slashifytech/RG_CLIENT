@@ -174,6 +174,7 @@ const router = createBrowserRouter([
       </ProtectedAgent>
     ),
   },
+  
   {
     path: "/amc-view",
     element: (
@@ -325,6 +326,7 @@ const router = createBrowserRouter([
         <EwPdf/>
     ),
   },
+  
   {
     path: "/admin/invoice-lists",
     element: (
