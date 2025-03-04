@@ -41,7 +41,12 @@ const EwPdf = forwardRef(({ id }, ref) => {
     };
     fetchData();
   }, [ewId]);
-
+  useEffect(() => {
+    setTimeout(() => {
+      window.dispatchEvent(new Event("resize"));
+    }, 500); 
+  }, []);
+  
   const handleDownloadPDF = () => {
     const input = pdfRef.current;
     const opt = {
