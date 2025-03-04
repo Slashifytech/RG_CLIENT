@@ -52,7 +52,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
       jsPDF: { unit: "in", format: "a2", orientation: "portrait" },
       pagebreak: { mode: ["avoid-all", "css"] },
     };
-    html2pdf().from(input).set(opt).save();
+    html2pdf().from(input).set(opt).save()
   };
 
   useImperativeHandle(ref, () => ({
