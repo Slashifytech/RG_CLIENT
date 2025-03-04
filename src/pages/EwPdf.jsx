@@ -76,13 +76,13 @@ const EwPdf = forwardRef(({ id }, ref) => {
       />
       <div
         className={`border border-black pt-6 px-6  ${
-          location.pathname === "/ew-view" ? "hidden" : "block"
+          location.pathname === "/ew-view" ? "hidden" : "block mb-[10%]"
         }`}
       >
-        The contract under <b>policy number</b> {data?.customId} has
-        been concluded based on the details and declarations provided by you.
-        The summarized transcript of the same is outlined below. You are
-        required to review and confirm the accuracy of this information. <br />
+        The contract under <b>policy number</b> {data?.customId} has been
+        concluded based on the details and declarations provided by you. The
+        summarized transcript of the same is outlined below. You are required to
+        review and confirm the accuracy of this information. <br />
         <br />
         <p>
           If you identify any discrepancies, require modifications, or disagree
@@ -104,13 +104,15 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <img src={carVector} alt="img" loading="lazy" />
       </div>
       <div
-        className={`${location.pathname === "/ew-view" ? "mt-6 " : "mt-[17%] pt-16 flex flex-col min-h-screen"}`}
+        className={`${location.pathname === "/ew-view" ? "mt-6 " : " min-h-[calc(100vh-50px)]"}`}
       >
         <img
           src={pdfHeaderOne}
           alt="header"
           loading="lazy"
-          className={`${location.pathname === "/ew-view" ? "hidden " : "block"}`}
+          className={`${
+            location.pathname === "/ew-view" ? "hidden " : "block pt-12"
+          }`}
         />
 
         {/* CUSTOMER DETAILS */}
@@ -327,9 +329,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <img src={motorWarranty} alt="header" loading="lazy" className="mt-9" />
         <img src={generalTerms} alt="header" loading="lazy" className="mt-9" />
         <img src={generalCond} alt="header" loading="lazy" className="mt-9" />
-     
-        
-    </div>
+      </div>
     </div>
   );
 });
