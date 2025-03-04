@@ -130,7 +130,7 @@ const AMCForm = () => {
     },
     {
       name: "total",
-      type: "number",
+      type: "text",
       placeholder: "Total Amount",
       label: "Total Amount",
       required: true,
@@ -171,7 +171,7 @@ const AMCForm = () => {
     },
     {
       name: "agreementPeriod",
-      type: "number",
+      type: "text",
       placeholder: "Agreement Period",
       label: "Agreement Period",
       required: true,
@@ -185,7 +185,7 @@ const AMCForm = () => {
     },
     {
       name: "agreementValidMilage",
-      type: "number",
+      type: "text",
       placeholder: "Agreement Valid Milage",
       label: "Agreement Valid Milage",
       required: true,

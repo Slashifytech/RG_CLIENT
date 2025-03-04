@@ -169,7 +169,7 @@ const BuyBackForm = () => {
     },
     {
       name: "totalPayment",
-      type: "number",
+      type: "text",
       placeholder: "Total Payment",
       label: "Total Payment",
       required: true,

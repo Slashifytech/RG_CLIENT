@@ -101,19 +101,19 @@ const EwPdf = forwardRef(({ id }, ref) => {
           such cases, no claims will be entertained, and any paid amount may be
           forfeited
         </p>
-        <img src={carVector} alt="img" loading="lazy" />
+        <img src={carVector} alt="img" loading="lazy" className="mb-[32%]" />
       </div>
-      <div
-     
-      >
-          <img
+      <img
             src={pdfHeaderOne}
             alt="header"
             loading="lazy"
-            className={`${
+            className={` avoid-break mt-[20%]  ${
               location.pathname === "/ew-view" && "hidden"
             } `}
           />
+      <div
+      >
+     
         {/* CUSTOMER DETAILS */}
         <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-9 pb-4">
           Customer Details
