@@ -50,7 +50,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: "in", format: "a2", orientation: "portrait" },
-      pagebreak: { mode: ["css", "avoid-all"] },
+      pagebreak: { mode: "avoid-all" },
     };
     html2pdf().from(input).set(opt).save();
   };
@@ -70,19 +70,19 @@ const EwPdf = forwardRef(({ id }, ref) => {
       <img
         src={topHeaderPdf}
         alt="img"
-        className={`w-full ${
-          location.pathname === "/ew-view"  && "hidden "
+        className={`w-full mt-[14%] ${
+          location.pathname === "/ew-view" ? "hidden " : "block"
         }`}
       />
       <div
-        className={`border border-black pt-6 px-6  ${
-          location.pathname === "/ew-view" &&  "hidden"
+        className={`border border-black pt-6 px-6 mb-6 ${
+          location.pathname === "/ew-view" ? "hidden" : "block"
         }`}
       >
-        The contract under <b>policy number</b> {data?.customId} has been
-        concluded based on the details and declarations provided by you. The
-        summarized transcript of the same is outlined below. You are required to
-        review and confirm the accuracy of this information. <br />
+        The contract under <b>policy number</b> {data?.customId} has
+        been concluded based on the details and declarations provided by you.
+        The summarized transcript of the same is outlined below. You are
+        required to review and confirm the accuracy of this information. <br />
         <br />
         <p>
           If you identify any discrepancies, require modifications, or disagree
@@ -101,19 +101,18 @@ const EwPdf = forwardRef(({ id }, ref) => {
           such cases, no claims will be entertained, and any paid amount may be
           forfeited
         </p>
-        <img src={carVector} alt="img" loading="lazy" className="mb-[32%]" />
+        <img src={carVector} alt="img" loading="lazy"  className="mb-[10%]"/>
       </div>
-      <img
-            src={pdfHeaderOne}
-            alt="header"
-            loading="lazy"
-            className={` avoid-break mt-[26%]  ${
-              location.pathname === "/ew-view" && "hidden"
-            } `}
-          />
       <div
+        className={`${location.pathname === "/ew-view" ? "mt-6 " : "pt-[10%]"}`}
       >
-     
+        <img
+          src={pdfHeaderOne}
+          alt="header"
+          loading="lazy"
+          className={`${location.pathname === "/ew-view" ? "hidden" : "block"}`}
+        />
+
         {/* CUSTOMER DETAILS */}
         <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-9 pb-4">
           Customer Details
@@ -328,7 +327,9 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <img src={motorWarranty} alt="header" loading="lazy" className="mt-9" />
         <img src={generalTerms} alt="header" loading="lazy" className="mt-9" />
         <img src={generalCond} alt="header" loading="lazy" className="mt-9" />
-      </div>
+     
+        
+    </div>
     </div>
   );
 });
