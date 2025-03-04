@@ -107,7 +107,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
             src={pdfHeaderOne}
             alt="header"
             loading="lazy"
-            className={` avoid-break mt-[20%]  ${
+            className={` avoid-break mt-[26%]  ${
               location.pathname === "/ew-view" && "hidden"
             } `}
           />
