@@ -58,6 +58,12 @@ const EwPdf = forwardRef(({ id }, ref) => {
   useImperativeHandle(ref, () => ({
     handleDownloadPDF,
   }));
+  useEffect(() => {
+    if (data) {
+      setTimeout(() => setData({ ...data }), 100);
+    }
+  }, [data]);
+
   if (!data) {
     return (
       <div className="mt-64 flex justify-center md:ml-32 sm:ml-32">
@@ -70,7 +76,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
       <img
         src={topHeaderPdf}
         alt="img"
-        className={`w-full mt-[14%] ${
+        className={`w-full mt-[24%] ${
           location.pathname === "/ew-view" ? "hidden " : "block"
         }`}
       />
@@ -79,10 +85,10 @@ const EwPdf = forwardRef(({ id }, ref) => {
           location.pathname === "/ew-view" ? "hidden" : "block"
         }`}
       >
-        The contract under <b>policy number</b> {data?.customId} has
-        been concluded based on the details and declarations provided by you.
-        The summarized transcript of the same is outlined below. You are
-        required to review and confirm the accuracy of this information. <br />
+        The contract under <b>policy number</b> {data?.customId} has been
+        concluded based on the details and declarations provided by you. The
+        summarized transcript of the same is outlined below. You are required to
+        review and confirm the accuracy of this information. <br />
         <br />
         <p>
           If you identify any discrepancies, require modifications, or disagree
@@ -101,155 +107,149 @@ const EwPdf = forwardRef(({ id }, ref) => {
           such cases, no claims will be entertained, and any paid amount may be
           forfeited
         </p>
-        <img src={carVector} alt="img" loading="lazy"  className="mb-[10%]"/>
+        <img src={carVector} alt="img" loading="lazy" className="mb-[4%]" />
       </div>
-      <div
-        className={`${location.pathname === "/ew-view" ? "mt-6 " : "pt-[10%]"}`}
-      >
+      <div className="w-full block mt-[15%]">
         <img
           src={pdfHeaderOne}
           alt="header"
           loading="lazy"
           className={`${location.pathname === "/ew-view" ? "hidden" : "block"}`}
         />
-
-        {/* CUSTOMER DETAILS */}
-        <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-9 pb-4">
-          Customer Details
-        </div>
-        <div className="p-4 space-y-2 bg-white">
-          <div className="grid grid-cols-1 gap-4">
-            <div className="flex items-center">
-              <span className="font-semibold w-44 ">Name :</span>{" "}
-              <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
-                {data?.customerDetails?.customerName}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <span className="font-semibold w-44 ">Address :</span>{" "}
-              <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
-                {data?.customerDetails?.address}
-              </span>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4 w-full">
-            <div className="flex items-center w-full">
-              <span className="font-semibold w-44 ">City :</span>
-              <span className="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
-                {data?.customerDetails?.city}
-              </span>
-            </div>
-            <div className="flex items-center w-full">
-              <span className="font-semibold w-44 ">State :</span>
-              <span className="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
-                {data?.customerDetails?.state}
-              </span>
-            </div>
-            <div className="flex items-center w-full">
-              <span className="font-semibold w-44 ">Pin Code :</span>
-              <span className="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
-                {data?.customerDetails?.zipCode}
-              </span>
-            </div>
-            <div className="flex items-center w-full">
-              <span className="font-semibold w-44 ">Mobile No. :</span>
-              <span className="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
-                {data?.customerDetails?.contact}
-              </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex items-center">
-              <span className="font-semibold w-44 ">Email :</span>{" "}
-              <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
-                {data?.customerDetails?.email}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <span className="font-semibold w-44 ">DOB :</span>
-              <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
-                {data?.customerDetails?.dob}
-              </span>
-            </div>
-          </div>
-        </div>
-        {/* EXTENDED WARRANTY POLICY DETAILS */}
-        <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-6 pb-4">
-          Extended Warranty Policy Details
-        </div>
-        <div className="p-4 space-y-2 bg-white">
+      </div>
+      {/* CUSTOMER DETAILS */}
+      <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-9 pb-4">
+        Customer Details
+      </div>
+      <div className="p-4 space-y-2 bg-white">
+        <div className="grid grid-cols-1 gap-4">
           <div className="flex items-center">
-            <span className="font-semibold w-44 "> Policy Number :</span>{" "}
+            <span className="font-semibold w-44 ">Name :</span>{" "}
             <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
-              {data?.customId}
+              {data?.customerDetails?.customerName}
             </span>
           </div>
-
-          <div className="grid grid-cols-2 gap-4 w-full mt-3">
-            <div className="flex items-center w-full">
-              <span className="font-semibold w-44  ">Policy Issue Date:</span>
-              <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
-                {data?.ewDetails?.policyDate}
-              </span>
-            </div>
-            <div className="flex items-center w-full">
-              <span className="font-semibold w-44  ">Warranty Amount :</span>
-              <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
-                {data?.ewDetails?.warrantyAmount}
-              </span>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4 w-full mt-3">
-            <div className="flex items-center w-full">
-              <span className="font-semibold w-44  ">Plan Type :</span>
-              <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
-                {data?.ewDetails?.planType}
-              </span>
-            </div>
-            <div className="flex items-center w-full">
-              <span className="font-semibold w-44  ">Plan Sub Type :</span>
-              <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
-                {data?.ewDetails?.planSubType}
-              </span>
-            </div>
-          </div>
-
           <div className="flex items-center">
-            <span className="font-semibold w-44 ">Registration Type :</span>{" "}
-            <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
-              {data?.ewDetails?.registrationType}
-            </span>
-          </div>
-          <div className="grid grid-cols-2 gap-4 w-full mt-3">
-            <div className="flex items-center w-full">
-              <span className="font-semibold w-44  ">Kilometers :</span>
-              <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
-                {data?.ewDetails?.startKm}
-              </span>
-            </div>
-            <div className="flex items-center w-full">
-              <span className="font-semibold w-44  "> KM To :</span>
-              <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-1/2">
-                {data?.ewDetails?.endKm} KM
-              </span>
-            </div>
-          </div>
-          <div className="flex items-center">
-            <span className="font-semibold w-44  ">Status :</span>{" "}
-            <span className="flex-1  border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
-              {data?.ewDetails?.ewStatus}
+            <span className="font-semibold w-44 ">Address :</span>{" "}
+            <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
+              {data?.customerDetails?.address}
             </span>
           </div>
         </div>
-        {/* VEHICLES DETAILS */}
-        <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-6 pb-4">
-          Vehicles Details
+        <div className="grid grid-cols-2 gap-4 w-full">
+          <div className="flex items-center w-full">
+            <span className="font-semibold w-44">City :</span>
+            <div className="border border-gray-400 p-1 bg-blue-100 h-9 flex-1 flex items-center">
+              {data?.customerDetails?.city}
+            </div>
+          </div>
+
+          <div className="flex items-center w-full">
+            <span className="font-semibold w-44 ">State :</span>
+            <span className="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
+              {data?.customerDetails?.state}
+            </span>
+          </div>
+          <div className="flex items-center w-full">
+            <span className="font-semibold w-44 ">Pin Code :</span>
+            <span className="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
+              {data?.customerDetails?.zipCode}
+            </span>
+          </div>
+          <div className="flex items-center w-full">
+            <span className="font-semibold w-44 ">Mobile No. :</span>
+            <span className="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
+              {data?.customerDetails?.contact}
+            </span>
+          </div>
         </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex items-center">
+            <span className="font-semibold w-44 ">Email :</span>{" "}
+            <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
+              {data?.customerDetails?.email}
+            </span>
+          </div>
+          <div className="flex items-center">
+            <span className="font-semibold w-44 ">DOB :</span>
+            <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
+              {data?.customerDetails?.dob}
+            </span>
+          </div>
+        </div>
+      </div>
+      {/* EXTENDED WARRANTY POLICY DETAILS */}
+      <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-6 pb-4">
+        Extended Warranty Policy Details
+      </div>
+      <div className="flex items-center">
+        <span className="font-semibold w-44 "> Policy Number :</span>{" "}
+        <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
+          {data?.customId}
+        </span>
+      </div>
+      <div className="grid grid-cols-2 gap-4 w-full mt-3">
+        <div className="flex items-center w-full">
+          <span className="font-semibold w-44  ">Policy Issue Date:</span>
+          <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+            {data?.ewDetails?.policyDate}
+          </span>
+        </div>
+        <div className="flex items-center w-full">
+          <span className="font-semibold w-44  ">Warranty Amount :</span>
+          <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+            {data?.ewDetails?.warrantyAmount}
+          </span>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-4 w-full mt-3">
+        <div className="flex items-center w-full">
+          <span className="font-semibold w-44  ">Plan Type :</span>
+          <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+            {data?.ewDetails?.planType}
+          </span>
+        </div>
+        <div className="flex items-center w-full">
+          <span className="font-semibold w-44  ">Plan Sub Type :</span>
+          <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+            {data?.ewDetails?.planSubType}
+          </span>
+        </div>
+      </div>
+      <div className="flex items-center">
+        <span className="font-semibold w-44 ">Registration Type :</span>{" "}
+        <span className="flex-1 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+          {data?.ewDetails?.registrationType}
+        </span>
+      </div>
+      <div className="grid grid-cols-2 gap-4 w-full mt-3">
+        <div className="flex items-center w-full">
+          <span className="font-semibold w-44  ">Kilometers :</span>
+          <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+            {data?.ewDetails?.startKm}
+          </span>
+        </div>
+        <div className="flex items-center w-full">
+          <span className="font-semibold w-44  "> KM To :</span>
+          <span className="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-1/2">
+            {data?.ewDetails?.endKm} KM
+          </span>
+        </div>
+      </div>
+      <div className="flex items-center">
+        <span className="font-semibold w-44  ">Status :</span>{" "}
+        <span className="flex-1  border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+          {data?.ewDetails?.ewStatus}
+        </span>
+      </div>
+      {/* VEHICLES DETAILS */}
+      <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-6 pb-4">
+        Vehicles Details
       </div>
       <div
         className={`flex items-center  ${
-          location.pathname === "/ew-view" ? "mt-6" : "mt-[50%]"
+          location.pathname === "/ew-view" ? "mt-6" : "mt-[60%] "
         }`}
       >
         <span className="font-semibold w-44  ">Registration Number :</span>{" "}
@@ -309,7 +309,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
       <p className="pt-9 font-bold">
         RSA (Roadside Assistance) Coverage Details:
       </p>
-      <p className="mt-6 ">
+      <p className="mt-6  ">
         One towing service per policy year from the breakdown location to the
         nearest authorized OEM service center, up to a distance of 50 km. <br />
         Onsite repair assistance, including battery jump-start, minor repairs,
@@ -318,18 +318,16 @@ const EwPdf = forwardRef(({ id }, ref) => {
       </p>
       <div
         className={`${
-          location.pathname === "/ew-view" ? "hidden" : "block mt-[80%]"
+          location.pathname === "/ew-view" ? "hidden" : "block mt-[100%]"
         }`}
       >
         <img src={coverageOne} alt="header" loading="lazy" className="mt-9" />
         <img src={coverageTwo} alt="header" loading="lazy" className="mt-9" />
-        <img src={faq} alt="header" loading="lazy" className="mt-9" />
+        <img src={faq} alt="header" loading="lazy" className="pt-[25%]" />
         <img src={motorWarranty} alt="header" loading="lazy" className="mt-9" />
         <img src={generalTerms} alt="header" loading="lazy" className="mt-9" />
         <img src={generalCond} alt="header" loading="lazy" className="mt-9" />
-     
-        
-    </div>
+      </div>
     </div>
   );
 });

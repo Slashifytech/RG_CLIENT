@@ -135,7 +135,7 @@ const AMCForm = () => {
       label: "Total Amount",
       required: true,
     },
- 
+
     {
       name: "rmName",
       type: "text",
@@ -198,15 +198,15 @@ const AMCForm = () => {
       label: "Location of the Dealer",
       required: true,
     },
- 
+
     {
       name: "rmEmployeeId",
       type: "text",
       placeholder: "Employee Id of Relationship Manager/ Service Advisor",
       label: "Employee Id of Relationship Manager/ Service Advisor",
       required: true,
-    }, 
-  
+    },
+
     {
       name: "gmEmail",
       type: "email",
@@ -282,13 +282,14 @@ const AMCForm = () => {
               : fuelType === "Electric Vehicle" && model === "Windsor"
               ? 15000
               : fuelType === "Electric Vehicle" &&
-              (model !== "Comet" || model !== "ZS EV")
+                (model !== "Comet" || model !== "ZS EV")
               ? null
               : 15000;
           if (
             fuelType === "Electric Vehicle" &&
             model !== "Comet" &&
-            model !== "Windsor" && model !== "ZS EV"
+            model !== "Windsor" &&
+            model !== "ZS EV"
           ) {
             updatedSection.agreementValidMilage = 0;
           } else {
@@ -308,12 +309,7 @@ const AMCForm = () => {
   const validateFields = () => {
     const newErrors = {};
 
-    const {
-      customerName,
-      contact,
-      email,
-    
-    } = AMCData.customerDetails;
+    const { customerName, contact, email } = AMCData.customerDetails;
 
     if (!customerName) newErrors.customerName = "Customer name is required.";
 
@@ -322,7 +318,6 @@ const AMCForm = () => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       newErrors.email = "Email must be valid.";
     // if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan)) newErrors.pan = "PAN must be valid.";
-
 
     // Vehicle Details Validation
     const {
@@ -394,8 +389,27 @@ const AMCForm = () => {
       return;
     }
     try {
+      const previousAgreementPeriod =
+    amcByIdorStatus?.data?.vehicleDetails?.agreementPeriod
+      || 0;
+    
+      const currentAgreementPeriod = AMCData?.vehicleDetails?.agreementPeriod || 0;
+
+
+   
+      const clonedAmcData = JSON.parse(JSON.stringify(AMCData)); // Deep clone
+      delete clonedAmcData.amcCredit; // Remove amcCredit
+      
+      const payload = { ...clonedAmcData };
+      
+      if (previousAgreementPeriod !== currentAgreementPeriod) {
+        payload.amcCredit = currentAgreementPeriod;
+      }
+      ;
+      
+      console.log("Final Payload:", payload);
       let res;
-      res = id ? await updateAMC(AMCData, id) : await addNewAMC(AMCData);
+      res = id ? await updateAMC(payload, id) : await addNewAMC(AMCData);
       toast.success(res?.message || "Buyback Added successfully");
       navigate(-1);
     } catch (error) {
