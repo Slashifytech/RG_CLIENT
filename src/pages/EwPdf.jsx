@@ -323,8 +323,8 @@ const EwPdf = forwardRef(({ id }, ref) => {
       >
         <img src={coverageOne} alt="header" loading="lazy" className="mt-9" />
         <img src={coverageTwo} alt="header" loading="lazy" className="mt-9" />
-        <img src={faq} alt="header" loading="lazy" className="pt-[18%]" />
-        <img src={motorWarranty} alt="header" loading="lazy" className="mt-9" />
+        <img src={faq} alt="header" loading="lazy" className="pt-[19.5%]" />
+        <img src={motorWarranty} alt="header" loading="lazy" className="mt-8" />
         <img src={generalTerms} alt="header" loading="lazy" className="mt-9" />
         <img src={generalCond} alt="header" loading="lazy" className="mt-9" />
       </div>
