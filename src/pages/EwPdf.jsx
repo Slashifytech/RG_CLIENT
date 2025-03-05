@@ -125,13 +125,13 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <div className="grid grid-cols-1 gap-4">
           <div className="flex items-center">
             <span className="font-semibold w-44 ">Name :</span>{" "}
-            <span className="flex-1 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9  mt-3">
+            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
               {data?.customerDetails?.customerName}
             </span>
           </div>
           <div className="flex items-center">
             <span className="font-semibold w-44 ">Address :</span>{" "}
-            <span className="flex-1 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9  mt-3">
+            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
               {data?.customerDetails?.address}
             </span>
           </div>
@@ -139,26 +139,26 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <div className="grid grid-cols-2 gap-4 w-full">
           <div className="flex items-center w-full">
             <span className="font-semibold w-44">City :</span>
-            <div className="border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 flex-1 flex items-center">
+            <div className="border border-gray-400 p-1  bg-blue-100 h-10 flex-1 flex items-center">
               {data?.customerDetails?.city}
             </div>
           </div>
 
           <div className="flex items-center w-full">
             <span className="font-semibold w-44 ">State :</span>
-            <span className="border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
+            <span className="border border-gray-400 p-1  bg-blue-100 h-10  mt-3 flex-1 w-3/4">
               {data?.customerDetails?.state}
             </span>
           </div>
           <div className="flex items-center w-full">
             <span className="font-semibold w-44 ">Pin Code :</span>
-            <span className="border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
+            <span className="border border-gray-400 p-1  bg-blue-100 h-10  mt-3 flex-1 w-3/4">
               {data?.customerDetails?.zipCode}
             </span>
           </div>
           <div className="flex items-center w-full">
             <span className="font-semibold w-44 ">Mobile No. :</span>
-            <span className="border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
+            <span className="border border-gray-400 p-1  bg-blue-100 h-10  mt-3 flex-1 w-3/4">
               {data?.customerDetails?.contact}
             </span>
           </div>
@@ -167,13 +167,13 @@ const EwPdf = forwardRef(({ id }, ref) => {
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-center">
             <span className="font-semibold w-44 ">Email :</span>{" "}
-            <span className="flex-1 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9  mt-3">
+            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
               {data?.customerDetails?.email}
             </span>
           </div>
           <div className="flex items-center">
             <span className="font-semibold w-44 ">DOB :</span>
-            <span className="flex-1 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9  mt-3">
+            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
               {data?.customerDetails?.dob}
             </span>
           </div>
@@ -185,20 +185,20 @@ const EwPdf = forwardRef(({ id }, ref) => {
       </div>
       <div className="flex items-center">
         <span className="font-semibold w-44 "> Policy Number :</span>{" "}
-        <span className="flex-1 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9  mt-3">
+        <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
           {data?.customId}
         </span>
       </div>
       <div className="grid grid-cols-2 gap-4 w-full mt-3">
         <div className="flex items-center w-full">
           <span className="font-semibold w-44  ">Policy Issue Date:</span>
-          <span className="border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+          <span className="border border-gray-400 p-1  bg-blue-100 h-10 mt-3 flex-1 w-2/3">
             {data?.ewDetails?.policyDate}
           </span>
         </div>
         <div className="flex items-center w-full">
           <span className="font-semibold w-44  ">Warranty Amount :</span>
-          <span className="border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+          <span className="border border-gray-400 p-1  bg-blue-100 h-10 mt-3 flex-1 w-2/3">
             {data?.ewDetails?.warrantyAmount}
           </span>
         </div>
@@ -206,40 +206,40 @@ const EwPdf = forwardRef(({ id }, ref) => {
       <div className="grid grid-cols-2 gap-4 w-full mt-3">
         <div className="flex items-center w-full">
           <span className="font-semibold w-44  ">Plan Type :</span>
-          <span className="border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+          <span className="border border-gray-400 p-1  bg-blue-100 h-10 mt-3 flex-1 w-2/3">
             {data?.ewDetails?.planType}
           </span>
         </div>
         <div className="flex items-center w-full">
           <span className="font-semibold w-44  ">Plan Sub Type :</span>
-          <span className="border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+          <span className="border border-gray-400 p-1  bg-blue-100 h-10 mt-3 flex-1 w-2/3">
             {data?.ewDetails?.planSubType}
           </span>
         </div>
       </div>
       <div className="flex items-center">
         <span className="font-semibold w-44 ">Registration Type :</span>{" "}
-        <span className="flex-1 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.ewDetails?.registrationType}
         </span>
       </div>
       <div className="grid grid-cols-2 gap-4 w-full mt-3">
         <div className="flex items-center w-full">
           <span className="font-semibold w-44  ">Kilometers :</span>
-          <span className="border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+          <span className="border border-gray-400 p-1  bg-blue-100 h-10 mt-3 flex-1 w-2/3">
             {data?.ewDetails?.startKm}
           </span>
         </div>
         <div className="flex items-center w-full">
           <span className="font-semibold w-44  "> KM To :</span>
-          <span className="border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3 flex-1 w-1/2">
+          <span className="border border-gray-400 p-1  bg-blue-100 h-10 mt-3 flex-1 w-1/2">
             {data?.ewDetails?.endKm} KM
           </span>
         </div>
       </div>
       <div className="flex items-center">
         <span className="font-semibold w-44  ">Status :</span>{" "}
-        <span className="flex-1  border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1  border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.ewDetails?.ewStatus}
         </span>
       </div>
@@ -253,55 +253,55 @@ const EwPdf = forwardRef(({ id }, ref) => {
         }`}
       >
         <span className="font-semibold w-44  ">Registration Number :</span>{" "}
-        <span className="flex-1 ml-3 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1 ml-3 border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.vehicleDetails?.registrationNumber}
         </span>
       </div>
       <div className="flex items-center">
         <span className="font-semibold w-44  ">Date of Sale :</span>{" "}
-        <span className="flex-1 ml-3 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1 ml-3 border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.vehicleDetails?.saleDate}
         </span>
       </div>
       <div className="flex items-center">
         <span className="font-semibold w-44  ">Present Kilometer :</span>{" "}
-        <span className="flex-1 ml-3 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1 ml-3 border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.vehicleDetails?.presentKm}
         </span>
       </div>
       <div className="flex items-center">
         <span className="font-semibold w-44  ">Date of Delivery:</span>{" "}
-        <span className="flex-1 ml-3 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1 ml-3 border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.vehicleDetails?.deliveryDate}
         </span>
       </div>
       <div className="flex items-center">
         <span className="font-semibold w-44  ">Warranty Limit :</span>{" "}
-        <span className="flex-1 ml-3 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1 ml-3 border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.vehicleDetails?.warrantyLimit}
         </span>
       </div>
       <div className="flex items-center">
         <span className="font-semibold w-44  ">Model :</span>{" "}
-        <span className="flex-1 ml-3 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1 ml-3 border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.vehicleDetails?.vehicleModel}
         </span>
       </div>
       <div className="flex items-center">
         <span className="font-semibold w-44  ">Fuel Type :</span>{" "}
-        <span className="flex-1 ml-3 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1 ml-3 border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.vehicleDetails?.fuelType}
         </span>
       </div>
       <div className="flex items-center">
         <span className="font-semibold w-44  ">Vin Number/ Chesis No. :</span>{" "}
-        <span className="flex-1 ml-3 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1 ml-3 border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.vehicleDetails?.vinNumber}
         </span>
       </div>{" "}
       <div className="flex items-center">
         <span className="font-semibold w-44  ">Engine Number :</span>{" "}
-        <span className="flex-1 ml-3 border border-gray-400 px-1 pt-2 pb-2 bg-blue-100 h-9 mt-3">
+        <span className="flex-1 ml-3 border border-gray-400 p-1  bg-blue-100 h-10 mt-3">
           {data?.vehicleDetails?.engineNumber}
         </span>
       </div>
