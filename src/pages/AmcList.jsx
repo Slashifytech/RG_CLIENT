@@ -39,7 +39,7 @@ const AdminAmcList = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
+ 
     if (roleType === "2" && userId) {
       dispatch(
         fetchamcLists({ page, perPage, searchTerm, userId, option: null })
