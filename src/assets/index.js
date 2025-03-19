@@ -30,14 +30,14 @@ import generalTerms from "./generalTerms.jpg";
 import generalCond from "./generalCond.jpg";
 import coverageOne from "./coverageOne.png";
 import coverageTwo from "./coverageTwo.png";
-import rgStamp from "./rgstamp.png";
+import rgstamp from "./rgstamp.png";
 
 
 
 
 
 export {
-   rgStamp,
+   rgstamp,
   generalCond,
   coverageOne,
   coverageTwo,
