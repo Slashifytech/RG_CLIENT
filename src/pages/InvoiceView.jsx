@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 import Loader from "../Components/Loader";
 import html2pdf from "html2pdf.js";
 import { getInvoiceById } from "../features/InvoiceApi";
-import { mgBlack, stampEw, rgstamp } from "../assets";
+import { mgBlack, rgstamp, stampEw } from "../assets";
 import { formatDate } from "../helper/commonHelperFunc";
 
 const InvoiceView = forwardRef(({ id }, ref) => {
@@ -382,7 +382,7 @@ const InvoiceView = forwardRef(({ id }, ref) => {
           <div className="flex justify-end">
   {data?.invoiceId?.includes("EW") ? (
     <img src={stampEw} alt="ewstamp" className="w-[10%]" />
-  ) : 
+  ) : (
     <img src={rgstamp} alt="rgstamp" className="w-[10%]" />
   )  }
 </div>
