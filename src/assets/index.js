@@ -31,12 +31,18 @@ import generalCond from "./generalCond.jpg";
 import coverageOne from "./coverageOne.png";
 import coverageTwo from "./coverageTwo.png";
 import rgstamp from "./rgstamp.png";
+import typeThreePageFour from "./typeThreePageFour.png";
+import typeTwoPageFive from "./typeTwoPageFive.png";
+import typeTwoPageFour from "./typeTwoPageFour.png";
 
 
 
 
 
 export {
+  typeThreePageFour,
+  typeTwoPageFive,
+  typeTwoPageFour,
    rgstamp,
   generalCond,
   coverageOne,
