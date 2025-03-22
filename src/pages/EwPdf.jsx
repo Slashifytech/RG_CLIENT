@@ -4,6 +4,7 @@ import React, {
   useImperativeHandle,
   useRef,
   useState,
+    useMemo,
 } from "react";
 import {
   carVector,
@@ -18,6 +19,9 @@ import {
   pdfHeaderThree,
   pdfHeaderTwo,
   topHeaderPdf,
+    typeThreePageFour,
+  typeTwoPageFive,
+  typeTwoPageFour,
 } from "../assets";
 import { useLocation } from "react-router-dom";
 import { getEwId } from "../features/EwApi";
@@ -63,7 +67,37 @@ const EwPdf = forwardRef(({ id }, ref) => {
       setTimeout(() => setData({ ...data }), 100);
     }
   }, [data]);
-
+const evModels = ["Windsor", "Comet", "ZS EV"];
+  const nonEvModels = ["Hector", "Astor", "Gloster"];
+  const pageTypeAData = useMemo(() => {
+    const comprehensiveData = data?.ewDetails?.planSubType === "Comprehensive";
+    
+    if (comprehensiveData && data?.ewDetails?.planType === "Type A") {
+      if (evModels.some(model => data?.vehicleDetails?.vehicleModel.includes(model))) {
+        return "defaultPages";
+      } else if (nonEvModels.some(model => data?.vehicleDetails?.vehicleModel.includes(model))) {
+        return "typeTwoPages";
+      }
+    }
+    return "defaultPages";
+  }, [data]);
+  
+  const pageTypeBData = useMemo(() => {
+    const comprehensiveData = data?.ewDetails?.planSubType === "Comprehensive";
+    const standardData = data?.ewDetails?.planSubType === "Standard";
+  
+    if (comprehensiveData && data?.ewDetails?.planType === "Type B") {
+      if (evModels.some(model => data?.vehicleDetails?.vehicleModel.includes(model))) {
+        return "typeTwoPages";
+      }
+    } else if (standardData && data?.ewDetails?.planType === "Type B") {
+      if (evModels.some(model => data?.vehicleDetails?.vehicleModel.includes(model)) ||
+          nonEvModels.some(model => data?.vehicleDetails?.vehicleModel.includes(model))) {
+        return "typeThreePages";
+      }
+    }
+    return "defaultPages";
+  }, [data]);
   if (!data) {
     return (
       <div className="mt-64 flex justify-center md:ml-32 sm:ml-32">
@@ -321,9 +355,8 @@ const EwPdf = forwardRef(({ id }, ref) => {
           location.pathname === "/ew-view" ? "hidden" : "block mt-[100%]"
         }`}
       >
-        <img src={coverageOne} alt="header" loading="lazy" className="mt-9" />
-        <img src={coverageTwo} alt="header" loading="lazy" className="mt-9" />
-        <img src={faq} alt="header" loading="lazy" className="pt-[20%]" />
+       <img src={pageTypeAData === "defaultPages"  ? coverageOne : (pageTypeAData === "typeTwoPages" || pageTypeBData === "typeTwoPages") ? typeTwoPageFour : pageTypeBData === "typeThreePages"  ? typeThreePageFour : coverageOne} alt="header" loading="lazy" className="mt-9" />
+        <img src={pageTypeBData === "typeTwoPages" ? typeTwoPageFive : pageTypeBData === "typeThreePages" ? null :  coverageTwo} alt="header" loading="lazy" className="mt-9" />
         <img src={motorWarranty} alt="header" loading="lazy" className="mt-8" />
         <img src={generalTerms} alt="header" loading="lazy" className="mt-9" />
         <img src={generalCond} alt="header" loading="lazy" className="mt-9" />
