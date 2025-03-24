@@ -381,7 +381,7 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
 )}
 
         <img src={faq} alt="header" loading="lazy" className="pt-[16%]" />
-        <img src={motorWarranty} alt="header" loading="lazy" className="mt-9 pt-[5%]" />
+        <img src={motorWarranty} alt="header" loading="lazy" className="mt-9 pt-[4%]" />
         <img src={generalTerms} alt="header" loading="lazy" className="mt-9" />
         <img src={generalCond} alt="header" loading="lazy" className="mt-9" />
       </div>
