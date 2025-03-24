@@ -87,7 +87,7 @@ const EwPdf = forwardRef(({ id }, ref) => {
     const comprehensiveData = data?.ewDetails?.planSubType === "Comprehensive";
     const standardData = data?.ewDetails?.planSubType === "Standard";
   
-    if (comprehensiveData && data?.ewDetails?.planType === "Type B") {
+    if (comprehensiveData && data?.ewDetails?.planType === "Type B" || comprehensiveData && data?.ewDetails?.planType === "Type A" ) {
       if (nonEvModels.some(model => data?.vehicleDetails?.vehicleModel.includes(model))) {
         return "typeTwoPages";
       }
@@ -371,9 +371,17 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
   className="mt-9"
 />
 
-        <img src={pageTypeBData === "typeTwoPages" ? typeTwoPageFive : pageTypeBData === "typeThreePages" ? null :  coverageTwo} alt="header" loading="lazy" className="mt-9" />
-        <img src={faq} alt="header" loading="lazy" className="pt-[20%]" />
-        <img src={motorWarranty} alt="header" loading="lazy" className="mt-8" />
+{pageTypeBData !== "typeThreePages" && (
+  <img
+    src={pageTypeBData === "typeTwoPages" ? typeTwoPageFive : coverageTwo}
+    alt="header"
+    loading="lazy"
+    className="mt-9"
+  />
+)}
+
+        <img src={faq} alt="header" loading="lazy" className="pt-[16%]" />
+        <img src={motorWarranty} alt="header" loading="lazy" className="mt-9 pt-6" />
         <img src={generalTerms} alt="header" loading="lazy" className="mt-9" />
         <img src={generalCond} alt="header" loading="lazy" className="mt-9" />
       </div>
