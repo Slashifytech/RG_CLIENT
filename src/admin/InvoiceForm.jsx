@@ -46,7 +46,7 @@ const initialInvoiceData = {
     branchName: "",
     model: "",
 gstAmount: "",
-
+initialGstAmount:"",
     cgst: 0,
     sgst: 0,
     totalAmount: 0,
@@ -429,6 +429,10 @@ const updatedGstAmount = gstAmount + (gstAmount * 0.18);
               mergedData.vehicleDetails?.totalPayment ||
               mergedData.ewDetails?.warrantyAmount ||
               0) * 0.82),
+          initialGstAmount:  mergedData.vehicleDetails?.total ||
+            mergedData.vehicleDetails?.totalPayment ||
+            mergedData.ewDetails?.warrantyAmount ||
+            "",
           rmEmail: mergedData.vehicleDetails?.rmEmail || "",
           rmName: mergedData.vehicleDetails?.rmName || "",
           rmEmployeeId: mergedData.vehicleDetails?.rmEmployeeId || "",
