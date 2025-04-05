@@ -153,7 +153,7 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
         />
       </div>
       {/* CUSTOMER DETAILS */}
-      <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-9 pb-4">
+      <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm mt-14  uppercase tracking-widest mt-9 pb-4">
         Customer Details
       </div>
       <div className="p-4 space-y-2 bg-white">
@@ -172,7 +172,7 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4 w-full">
-          <div className="flex items-center w-full">
+          <div className="flex items-center w-full mt-6">
             <span className="font-semibold w-44">City :</span>
             <div className="border border-gray-400 p-1  bg-blue-100 h-10 flex-1 flex items-center">
               {data?.customerDetails?.city}
@@ -215,10 +215,10 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
         </div>
       </div>
       {/* EXTENDED WARRANTY POLICY DETAILS */}
-      <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-6 pb-4">
+      <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-10 pb-4">
         Extended Warranty Policy Details
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center mt-11">
         <span className="font-semibold w-44 "> Policy Number :</span>{" "}
         <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
           {data?.customId}
@@ -279,7 +279,7 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
         </span>
       </div>
       {/* VEHICLES DETAILS */}
-      <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-6 pb-4">
+      <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-16 pb-4">
         Vehicles Details
       </div>
       <div
