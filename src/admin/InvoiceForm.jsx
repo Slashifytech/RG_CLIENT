@@ -248,7 +248,7 @@ const handleInput = (e) => {
     setInvoiceData((prevState) => {
    const gstAmount = Number(prevState.vehicleDetails?.initialGstAmount || 0);
  
-     const gstAmount = Number(prevState.vehicleDetails?.gstAmount || 0);
+     const preGst = Number(prevState.vehicleDetails?.gstAmount || 0);
       if (!gstAmount) return prevState; // Prevent unnecessary calculations
   
       const cgst = Number((gstAmount * 0.09).toFixed(2));
