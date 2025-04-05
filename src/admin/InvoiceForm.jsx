@@ -45,7 +45,7 @@ const initialInvoiceData = {
     vinNumber: "",
     branchName: "",
     model: "",
-gstAmount: initialInvoiceData.vehicleDetails.gstAmount * (1 - 0.18),
+gstAmount: "",
 
     cgst: 0,
     sgst: 0,
