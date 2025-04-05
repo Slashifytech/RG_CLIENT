@@ -264,11 +264,13 @@ const handleInput = (e) => {
         return prevState;
       }
   
+      const reducedGstAmount = gstAmount - (gstAmount * 0.18);
+
       return {
         ...prevState,
         vehicleDetails: {
           ...prevState.vehicleDetails,
-          gstAmount,  // Ensure gstAmount is stored as a number
+          gstAmount: reducedGstAmount,  // Ensure gstAmount is stored as a number
           cgst,
           sgst,
           totalAmount,
@@ -424,13 +426,11 @@ const handleInput = (e) => {
             mergedData.vehicleDetails?.model ||
             mergedData.vehicleDetails?.vehicleModel ||
             "",
-gstAmount:
-  (parseFloat(
-    mergedData.vehicleDetails?.total ||
-    mergedData.vehicleDetails?.totalPayment ||
-    mergedData.ewDetails?.warrantyAmount ||
-    "0"
-  ) * 0.82).toFixed(2), // optional: keeps 2 decimal places
+  gstAmount:
+            mergedData.vehicleDetails?.total ||
+            mergedData.vehicleDetails?.totalPayment ||
+            mergedData.ewDetails?.warrantyAmount ||
+            "",
 
           initialGstAmount:  mergedData.vehicleDetails?.total ||
             mergedData.vehicleDetails?.totalPayment ||
