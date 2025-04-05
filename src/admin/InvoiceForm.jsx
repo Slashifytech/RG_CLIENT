@@ -424,11 +424,14 @@ const handleInput = (e) => {
             mergedData.vehicleDetails?.model ||
             mergedData.vehicleDetails?.vehicleModel ||
             "",
-         gstAmount:
-            ((mergedData.vehicleDetails?.total ||
-              mergedData.vehicleDetails?.totalPayment ||
-              mergedData.ewDetails?.warrantyAmount ||
-              0) * 0.82),
+      gstAmount:
+  Number(
+    mergedData.vehicleDetails?.total ||
+    mergedData.vehicleDetails?.totalPayment ||
+    mergedData.ewDetails?.warrantyAmount ||
+    0
+  ) * 0.82,
+
           initialGstAmount:  mergedData.vehicleDetails?.total ||
             mergedData.vehicleDetails?.totalPayment ||
             mergedData.ewDetails?.warrantyAmount ||
