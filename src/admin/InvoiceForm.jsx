@@ -246,13 +246,14 @@ const handleInput = (e) => {
 
  const calculateVehicleDetails = useCallback(() => {
     setInvoiceData((prevState) => {
-      const gstAmount = Number(prevState.vehicleDetails?.gstAmount) || 0;
+   const gstAmount = Number(prevState.vehicleDetails?.gstAmount || 0);
+const updatedGstAmount = gstAmount + (gstAmount * 0.18);
   
       if (!gstAmount) return prevState; // Prevent unnecessary calculations
   
-      const cgst = Number((gstAmount * 0.09).toFixed(2));
-      const sgst = Number((gstAmount * 0.09).toFixed(2));
-      const totalAmount = Number((gstAmount + cgst + sgst).toFixed(2));
+      const cgst = Number((updatedGstAmount * 0.09).toFixed(2));
+      const sgst = Number((updatedGstAmount * 0.09).toFixed(2));
+      const totalAmount = Number((updatedGstAmount + cgst + sgst).toFixed(2));
   
       // Avoid unnecessary re-renders if values are the same
       if (
