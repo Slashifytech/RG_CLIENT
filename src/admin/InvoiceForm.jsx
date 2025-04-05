@@ -424,11 +424,11 @@ const updatedGstAmount = gstAmount - (gstAmount * 0.18);
             mergedData.vehicleDetails?.model ||
             mergedData.vehicleDetails?.vehicleModel ||
             "",
-          gstAmount:
-            mergedData.vehicleDetails?.total ||
-            mergedData.vehicleDetails?.totalPayment ||
-            mergedData.ewDetails?.warrantyAmount ||
-            "",
+         gstAmount:
+            ((mergedData.vehicleDetails?.total ||
+              mergedData.vehicleDetails?.totalPayment ||
+              mergedData.ewDetails?.warrantyAmount ||
+              0) * 0.82),
           rmEmail: mergedData.vehicleDetails?.rmEmail || "",
           rmName: mergedData.vehicleDetails?.rmName || "",
           rmEmployeeId: mergedData.vehicleDetails?.rmEmployeeId || "",
