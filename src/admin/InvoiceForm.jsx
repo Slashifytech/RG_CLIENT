@@ -246,7 +246,7 @@ const handleInput = (e) => {
 
  const calculateVehicleDetails = useCallback(() => {
     setInvoiceData((prevState) => {
-   const gstAmount = Number(prevState.vehicleDetails?.initialGstAmount || 0);
+   const gstAmount = Number(prevState.vehicleDetails?.gstAmount || 0);
 
   
       if (!gstAmount) return prevState; // Prevent unnecessary calculations
