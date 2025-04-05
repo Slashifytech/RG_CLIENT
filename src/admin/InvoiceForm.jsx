@@ -424,13 +424,13 @@ const handleInput = (e) => {
             mergedData.vehicleDetails?.model ||
             mergedData.vehicleDetails?.vehicleModel ||
             "",
-      gstAmount:
-  Number(
+gstAmount:
+  (parseFloat(
     mergedData.vehicleDetails?.total ||
     mergedData.vehicleDetails?.totalPayment ||
     mergedData.ewDetails?.warrantyAmount ||
-    0
-  ) * 0.82,
+    "0"
+  ) * 0.82).toFixed(2), // optional: keeps 2 decimal places
 
           initialGstAmount:  mergedData.vehicleDetails?.total ||
             mergedData.vehicleDetails?.totalPayment ||
