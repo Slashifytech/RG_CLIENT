@@ -225,23 +225,17 @@ const InvoiceForm = () => {
     },
   ];
 
-  const handleInput = (e) => {
-  const { name, value, dataset } = e.target;
-  const section = dataset?.section;
-
-  // Convert value to number if name is gstAmount
-  const updatedValue = name === "gstAmount"
-    ? Number(value) * 0.82  // subtracting 18%
-    : value;
-
-  setInvoiceData((prevState) => ({
-    ...prevState,
-    [section]: {
-      ...prevState[section],
-      [name]: updatedValue,
-    },
-  }));
-};
+const handleInput = (e) => {
+    const { name, value, dataset } = e.target;
+    const section = dataset?.section;
+    setInvoiceData((prevState) => ({
+      ...prevState,
+      [section]: {
+        ...prevState[section],
+        [name]: value,
+      },
+    }));
+  };
   useEffect(() => {
     return () => {
       setInvoiceData({ ...initialInvoiceData });
