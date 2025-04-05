@@ -245,7 +245,8 @@ const InvoiceForm = () => {
 
   const calculateVehicleDetails = useCallback(() => {
     setInvoiceData((prevState) => {
-      const gstAmount = Number(prevState.vehicleDetails?.gstAmount) * 0.82 || 0;
+      const gstAmount = Number(prevState.vehicleDetails?.gstAmount || 0);
+const updatedGstAmount = gstAmount - (gstAmount * 0.18);
   
       if (!gstAmount) return prevState; // Prevent unnecessary calculations
   
