@@ -218,7 +218,7 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
       <div className="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-10 pb-4">
         Extended Warranty Policy Details
       </div>
-      <div className="flex items-center mt-11">
+      <div className="flex items-center mt-5">
         <span className="font-semibold w-44 "> Policy Number :</span>{" "}
         <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-11 mt-4">
           {data?.customId}
