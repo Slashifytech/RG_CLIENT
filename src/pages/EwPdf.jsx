@@ -284,7 +284,7 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
       </div>
       <div
         className={`flex items-center  ${
-          location.pathname === "/ew-view" ? "mt-6" : "mt-[60%] "
+          location.pathname === "/ew-view" ? "mt-6" : "mt-[55%] "
         }`}
       >
         <span className="font-semibold w-44  ">Registration Number :</span>{" "}
