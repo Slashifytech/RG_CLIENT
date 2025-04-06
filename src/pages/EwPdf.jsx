@@ -160,13 +160,13 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
         <div className="grid grid-cols-1 gap-4">
           <div className="flex items-center">
             <span className="font-semibold w-44 ">Name :</span>{" "}
-            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
+            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-11 mt-4">
               {data?.customerDetails?.customerName}
             </span>
           </div>
           <div className="flex items-center">
             <span className="font-semibold w-44 ">Address :</span>{" "}
-            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
+            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-11 mt-4">
               {data?.customerDetails?.address}
             </span>
           </div>
@@ -181,19 +181,19 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
 
           <div className="flex items-center w-full">
             <span className="font-semibold w-44 ">State :</span>
-            <span className="border border-gray-400 p-1  bg-blue-100 h-10  mt-3 flex-1 w-3/4">
+            <span className="border border-gray-400 p-1  bg-blue-100 h-11 mt-4 flex-1 w-3/4">
               {data?.customerDetails?.state}
             </span>
           </div>
           <div className="flex items-center w-full">
             <span className="font-semibold w-44 ">Pin Code :</span>
-            <span className="border border-gray-400 p-1  bg-blue-100 h-10  mt-3 flex-1 w-3/4">
+            <span className="border border-gray-400 p-1  bg-blue-100 h-11 mt-4 flex-1 w-3/4">
               {data?.customerDetails?.zipCode}
             </span>
           </div>
           <div className="flex items-center w-full">
             <span className="font-semibold w-44 ">Mobile No. :</span>
-            <span className="border border-gray-400 p-1  bg-blue-100 h-10  mt-3 flex-1 w-3/4">
+            <span className="border border-gray-400 p-1  bg-blue-100 h-11 mt-4 flex-1 w-3/4">
               {data?.customerDetails?.contact}
             </span>
           </div>
@@ -202,13 +202,13 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-center">
             <span className="font-semibold w-44 ">Email :</span>{" "}
-            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
+            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-11 mt-4">
               {data?.customerDetails?.email}
             </span>
           </div>
           <div className="flex items-center">
             <span className="font-semibold w-44 ">DOB :</span>
-            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
+            <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-11 mt-4">
               {data?.customerDetails?.dob}
             </span>
           </div>
@@ -220,7 +220,7 @@ console.log(pageTypeAData, pageTypeBData, "dataCheck");
       </div>
       <div className="flex items-center mt-11">
         <span className="font-semibold w-44 "> Policy Number :</span>{" "}
-        <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-10  mt-3">
+        <span className="flex-1 border border-gray-400 p-1  bg-blue-100 h-11 mt-4">
           {data?.customId}
         </span>
       </div>
