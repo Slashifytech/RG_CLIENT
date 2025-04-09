@@ -243,10 +243,7 @@ const PdfPage = forwardRef(({ id }, ref) => {
                   <tr>
                     <td style={{ border: "1px solid black", padding: "5px" }}>
                       Vehicle: {policyData?.vehicleModel}
-                    </td>
-                      <td style={{ border: "1px solid black", padding: "5px" }}>
-                      Model/Variant: {policyData?.mbModel}
-                    </td>
+                    
                   </tr>
                   <tr>
                     <td style={{ border: "1px solid black", padding: "5px" }}>
