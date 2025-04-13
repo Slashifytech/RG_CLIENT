@@ -57,4 +57,8 @@ export const invoiceOption = [
       { id: 1, value: "Private", label: "Private" },
 
     ];
-    
+      export const amcType = [
+      { id: 1, value: "AMC", label: "AMC" },
+      { id: 2, value: "AMC Assured", label: "AMC Assured" },
+
+    ];
