@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Card, Typography } from "@material-tailwind/react";
 import { formatDate, getRelativeTime } from "../helper/commonHelperFunc";
 import { ToggleButton } from "./Input";
-import PdfPage from "./pdfPage";
+// import PdfPage from "./pdfPage";
 import MgPdf from "./Mgpdf";
 import { TbPencilCancel } from "react-icons/tb";
 import InvoiceView from "../pages/InvoiceView";
