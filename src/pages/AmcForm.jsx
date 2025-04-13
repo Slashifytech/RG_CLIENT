@@ -8,7 +8,7 @@ import { addNewAMC, updateAMC } from "../features/AMCapi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchamcDataById } from "../features/amcSlice";
 import { createdDate, formatDate } from "../helper/commonHelperFunc";
-import { fuelType, locationOption, modelOption } from "../data";
+import { amcType, fuelType, locationOption, modelOption } from "../data";
 import Header from "../Components/Header";
 const AMCForm = () => {
   const location = useLocation();
@@ -28,6 +28,7 @@ const AMCForm = () => {
       email: "",
       pan: "",
       zipCode: "",
+       amcType: "",
     },
     vehicleDetails: {
       model: "",
@@ -97,6 +98,14 @@ const AMCForm = () => {
       type: "text",
       placeholder: "State Code",
       label: "State Code",
+    },
+     {
+      name: "amcType",
+      type: "select",
+      options: amcType,
+      placeholder: "Select Amc Type",
+      label: "Amc Type",
+      required: true
     },
   ];
   const rightVehicleFields = [
