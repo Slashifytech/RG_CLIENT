@@ -12,7 +12,7 @@ import ProtectedAdmin from "./Components/ProtectedAdmin";
 import Approval from "./pages/Approval";
 import AgentForm from "./pages/AgentForm";
 import AdminDashboard from "./pages/AdminDashboard";
-import AgentDashboard from "./pages/AgentDashboard";
+// import AgentDashboard from "./pages/AgentDashboard";
 import ProtectedAgent from "./Components/ProtectedAgent"  
 import InvoiceForm from "./admin/InvoiceForm";
 import InvoiceList from "./admin/InvoiceList";
@@ -295,14 +295,14 @@ const router = createBrowserRouter([
     path: "/policy",
     element: <ViewPolicy></ViewPolicy>,
   },  
-  {
-    path: "/agent-dashboard",
-    element: (
-      <ProtectedAgent>
-        <AgentDashboard/>
-      </ProtectedAgent>
-    ),
-  },
+  // {
+  //   path: "/agent-dashboard",
+  //   element: (
+  //     <ProtectedAgent>
+  //       <AgentDashboard/>
+  //     </ProtectedAgent>
+  //   ),
+  // },
  
   {
     path: "/admin/invoice-form",
