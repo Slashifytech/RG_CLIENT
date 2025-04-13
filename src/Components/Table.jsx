@@ -400,265 +400,265 @@ export function CustomTableTwo({
   );
 }
 
-export function CustomTableThree({
-  tableHead = [],
-  tableRows = [],
-  action,
-  icon,
-  link,
-  handleResubmit,
-  cancelPolicyRequest,
-  brandName,
-  customClass,
-  SecondLink,
-  secondCustomState,
-  SecondAction,
-}) {
-  const pdfRef = useRef();
-  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
-  const [isId, setIsId] = useState();
+// export function CustomTableThree({
+//   tableHead = [],
+//   tableRows = [],
+//   action,
+//   icon,
+//   link,
+//   handleResubmit,
+//   cancelPolicyRequest,
+//   brandName,
+//   customClass,
+//   SecondLink,
+//   secondCustomState,
+//   SecondAction,
+// }) {
+//   const pdfRef = useRef();
+//   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+//   const [isId, setIsId] = useState();
 
-  const openPopUp = useCallback((id) => {
-    setIsId(id);
-    setIsPopUpOpen(true);
-  }, []);
+//   const openPopUp = useCallback((id) => {
+//     setIsId(id);
+//     setIsPopUpOpen(true);
+//   }, []);
 
-  const closePopUp = useCallback(() => setIsPopUpOpen(false), []);
+//   const closePopUp = useCallback(() => setIsPopUpOpen(false), []);
 
-  const handleDownloadClick = (id) => {
-    if (pdfRef.current[id]) {
-      // Check if ref for this ID exists
-      pdfRef.current[id].handleDownloadPDF();
-    }
-  };
+//   const handleDownloadClick = (id) => {
+//     if (pdfRef.current[id]) {
+//       // Check if ref for this ID exists
+//       pdfRef.current[id].handleDownloadPDF();
+//     }
+//   };
 
-  return (
-    <>
-      <Card className="h-full w-full overflow-scroll scrollbar-hide font-poppins">
-        <table className="w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {tableHead.map((head) => (
-                <th
-                  key={head}
-                  className="border-b border-blue-gray-100 bg-input p-4"
-                >
-                  <Typography
-                    variant="small"
-                    color="sidebar"
-                    className="font-medium leading-none opacity-70 "
-                  >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {tableRows.map((row, index) => (
-              <tr key={index} className="even:bg-blue-gray-50/50">
-                {/* Render only the values you want to display */}
-                <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {row?.sno || "NA"}
-                  </Typography>
-                </td>
+//   return (
+//     <>
+//       <Card className="h-full w-full overflow-scroll scrollbar-hide font-poppins">
+//         <table className="w-full min-w-max table-auto text-left">
+//           <thead>
+//             <tr>
+//               {tableHead.map((head) => (
+//                 <th
+//                   key={head}
+//                   className="border-b border-blue-gray-100 bg-input p-4"
+//                 >
+//                   <Typography
+//                     variant="small"
+//                     color="sidebar"
+//                     className="font-medium leading-none opacity-70 "
+//                   >
+//                     {head}
+//                   </Typography>
+//                 </th>
+//               ))}
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {tableRows.map((row, index) => (
+//               <tr key={index} className="even:bg-blue-gray-50/50">
+//                 {/* Render only the values you want to display */}
+//                 <td className="p-4">
+//                   <Typography
+//                     variant="small"
+//                     color="blue-gray"
+//                     className="font-normal"
+//                   >
+//                     {row?.sno || "NA"}
+//                   </Typography>
+//                 </td>
 
-                <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {row.data?.customerName}
-                  </Typography>
-                </td>
-                <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {row.data.email || "Waiting"}
-                  </Typography>
-                </td>
-                <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {row.data.policyId || "Waiting"}
-                  </Typography>
-                </td>
+//                 <td className="p-4">
+//                   <Typography
+//                     variant="small"
+//                     color="blue-gray"
+//                     className="font-normal"
+//                   >
+//                     {row.data?.customerName}
+//                   </Typography>
+//                 </td>
+//                 <td className="p-4">
+//                   <Typography
+//                     variant="small"
+//                     color="blue-gray"
+//                     className="font-normal"
+//                   >
+//                     {row.data.email || "Waiting"}
+//                   </Typography>
+//                 </td>
+//                 <td className="p-4">
+//                   <Typography
+//                     variant="small"
+//                     color="blue-gray"
+//                     className="font-normal"
+//                   >
+//                     {row.data.policyId || "Waiting"}
+//                   </Typography>
+//                 </td>
 
-                <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {formatDate(row.data.createdAt)}
-                  </Typography>
-                </td>
-                <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    <span className="flex flex-row items-center gap-3">
-                      <Link
-                        to="/policy"
-                        state={{ id: row?.data?._id }}
-                        className="border border-primary text-primary px-6 py-1 rounded-md cursor-pointer"
-                      >
-                        View
-                      </Link>
-                      <span
-                        onClick={() => handleDownloadClick(row?.data?._id)}
-                        className="bg-primary text-white px-6 py-1.5 rounded-md cursor-pointer"
-                      >
-                        Download
-                      </span>
-                    </span>
-                  </Typography>
-                </td>
+//                 <td className="p-4">
+//                   <Typography
+//                     variant="small"
+//                     color="blue-gray"
+//                     className="font-normal"
+//                   >
+//                     {formatDate(row.data.createdAt)}
+//                   </Typography>
+//                 </td>
+//                 <td className="p-4">
+//                   <Typography
+//                     variant="small"
+//                     color="blue-gray"
+//                     className="font-normal"
+//                   >
+//                     <span className="flex flex-row items-center gap-3">
+//                       <Link
+//                         to="/policy"
+//                         state={{ id: row?.data?._id }}
+//                         className="border border-primary text-primary px-6 py-1 rounded-md cursor-pointer"
+//                       >
+//                         View
+//                       </Link>
+//                       <span
+//                         onClick={() => handleDownloadClick(row?.data?._id)}
+//                         className="bg-primary text-white px-6 py-1.5 rounded-md cursor-pointer"
+//                       >
+//                         Download
+//                       </span>
+//                     </span>
+//                   </Typography>
+//                 </td>
 
-                <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className={`font-normal text-[13px]   px-2 py-[3px] text-center `}
-                  >
-                    {row?.data?.isCancelReq === "reqCancel" ? (
-                      <span className="">Pending</span>
-                    ) : row?.data?.isCancelReq === "approvedReq" ? (
-                      <span className="">Approved</span>
-                    ) : row?.data?.isDisabled === true ? (
-                      <span className="">Approved</span>
-                    ) : row?.data?.policyStatus === "rejected" ? (
-                      <span className="">Rejected</span>
-                    ) : row?.data?.policyStatus === "approved" ? (
-                      <>
-                        <span className="flex items-center gap-3">
-                          <span className="text-[20px]  text-red-500">
-                            <TbPencilCancel />
-                          </span>
-                          <span
-                            className="cursor-pointer text-[15px]"
-                            onClick={() => openPopUp(row?.data?._id)}
-                          >
-                            Request
-                          </span>
-                        </span>
-                      </>
-                    ) : null}
-                  </Typography>
-                </td>
-                <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className={`font-normal text-[13px]   px-2 py-[3px] text-center `}
-                  >
-                    {row?.data?.isDisabled === true &&
-                    row?.data?.policyStatus === "approved" ? (
-                      <span className="bg-red-500 text-white rounded-md py-2 px-2">
-                        Cancelled
-                      </span>
-                    ) : row?.data?.policyStatus === "approved" ? (
-                      <span className="bg-green-500 text-white rounded-md py-2 px-3">
-                        Approved
-                      </span>
-                    ) : row?.data?.policyStatus === "rejected" ? (
-                      <span className="flex items-center gap-3">
-                        <Link
-                          to="/update-policies"
-                          state={{
-                            id: row?.data?._id,
-                            update: "update",
-                          }}
-                          className="text-primary text-[15px]"
-                        >
-                          Edit
-                        </Link>
-                        <span className="bg-red-500 text-white rounded-md py-2 px-3">
-                          Rejected
-                        </span>
-                      </span>
-                    ) : (
-                      <span className="bg-yellow-500  text-white rounded-md py-2 px-3">
-                        Pending
-                      </span>
-                    )}
-                  </Typography>
-                </td>
+//                 <td className="p-4">
+//                   <Typography
+//                     variant="small"
+//                     color="blue-gray"
+//                     className={`font-normal text-[13px]   px-2 py-[3px] text-center `}
+//                   >
+//                     {row?.data?.isCancelReq === "reqCancel" ? (
+//                       <span className="">Pending</span>
+//                     ) : row?.data?.isCancelReq === "approvedReq" ? (
+//                       <span className="">Approved</span>
+//                     ) : row?.data?.isDisabled === true ? (
+//                       <span className="">Approved</span>
+//                     ) : row?.data?.policyStatus === "rejected" ? (
+//                       <span className="">Rejected</span>
+//                     ) : row?.data?.policyStatus === "approved" ? (
+//                       <>
+//                         <span className="flex items-center gap-3">
+//                           <span className="text-[20px]  text-red-500">
+//                             <TbPencilCancel />
+//                           </span>
+//                           <span
+//                             className="cursor-pointer text-[15px]"
+//                             onClick={() => openPopUp(row?.data?._id)}
+//                           >
+//                             Request
+//                           </span>
+//                         </span>
+//                       </>
+//                     ) : null}
+//                   </Typography>
+//                 </td>
+//                 <td className="p-4">
+//                   <Typography
+//                     variant="small"
+//                     color="blue-gray"
+//                     className={`font-normal text-[13px]   px-2 py-[3px] text-center `}
+//                   >
+//                     {row?.data?.isDisabled === true &&
+//                     row?.data?.policyStatus === "approved" ? (
+//                       <span className="bg-red-500 text-white rounded-md py-2 px-2">
+//                         Cancelled
+//                       </span>
+//                     ) : row?.data?.policyStatus === "approved" ? (
+//                       <span className="bg-green-500 text-white rounded-md py-2 px-3">
+//                         Approved
+//                       </span>
+//                     ) : row?.data?.policyStatus === "rejected" ? (
+//                       <span className="flex items-center gap-3">
+//                         <Link
+//                           to="/update-policies"
+//                           state={{
+//                             id: row?.data?._id,
+//                             update: "update",
+//                           }}
+//                           className="text-primary text-[15px]"
+//                         >
+//                           Edit
+//                         </Link>
+//                         <span className="bg-red-500 text-white rounded-md py-2 px-3">
+//                           Rejected
+//                         </span>
+//                       </span>
+//                     ) : (
+//                       <span className="bg-yellow-500  text-white rounded-md py-2 px-3">
+//                         Pending
+//                       </span>
+//                     )}
+//                   </Typography>
+//                 </td>
 
-                <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {row?.data?.policyStatus === "rejected" ? (
-                      <span
-                        onClick={() => handleResubmit(row?.data?._id)}
-                        className="bg-primary text-white px-6 py-2 rounded-md cursor-pointer"
-                      >
-                        Resubmit
-                      </span>
-                    ) : (
-                      "_"
-                    )}
-                  </Typography>
-                </td>
-                {brandName === "MB" ? (
-                  <span className="hidden">
-                    <PdfPage
-                      ref={(el) => {
-                        // Initialize pdfRefs.current if it's undefined
-                        if (!pdfRef.current) {
-                          pdfRef.current = {};
-                        }
-                        pdfRef.current[row?.data?._id] = el; // Store the reference
-                      }}
-                      id={row?.data?._id}
-                    />
-                  </span>
-                ) : brandName === "MG" ? (
-                  <span className="hidden">
-                    <MgPdf
-                      ref={(el) => {
-                        // Initialize pdfRefs.current if it's undefined
-                        if (!pdfRef.current) {
-                          pdfRef.current = {};
-                        }
-                        pdfRef.current[row?.data?._id] = el; // Store the reference
-                      }}
-                      id={row?.data?._id}
-                    />
-                  </span>
-                ) : null}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </Card>
+//                 <td className="p-4">
+//                   <Typography
+//                     variant="small"
+//                     color="blue-gray"
+//                     className="font-normal"
+//                   >
+//                     {row?.data?.policyStatus === "rejected" ? (
+//                       <span
+//                         onClick={() => handleResubmit(row?.data?._id)}
+//                         className="bg-primary text-white px-6 py-2 rounded-md cursor-pointer"
+//                       >
+//                         Resubmit
+//                       </span>
+//                     ) : (
+//                       "_"
+//                     )}
+//                   </Typography>
+//                 </td>
+//                 {brandName === "MB" ? (
+//                   <span className="hidden">
+//                     <PdfPage
+//                       ref={(el) => {
+//                         // Initialize pdfRefs.current if it's undefined
+//                         if (!pdfRef.current) {
+//                           pdfRef.current = {};
+//                         }
+//                         pdfRef.current[row?.data?._id] = el; // Store the reference
+//                       }}
+//                       id={row?.data?._id}
+//                     />
+//                   </span>
+//                 ) : brandName === "MG" ? (
+//                   <span className="hidden">
+//                     <MgPdf
+//                       ref={(el) => {
+//                         // Initialize pdfRefs.current if it's undefined
+//                         if (!pdfRef.current) {
+//                           pdfRef.current = {};
+//                         }
+//                         pdfRef.current[row?.data?._id] = el; // Store the reference
+//                       }}
+//                       id={row?.data?._id}
+//                     />
+//                   </span>
+//                 ) : null}
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </Card>
 
-      <CancelReqPopUp
-        closePopUp={closePopUp}
-        isPopUpOpen={isPopUpOpen}
-        item={isId}
-        cancelPolicyRequest={cancelPolicyRequest}
-      />
-    </>
-  );
-}
+//       <CancelReqPopUp
+//         closePopUp={closePopUp}
+//         isPopUpOpen={isPopUpOpen}
+//         item={isId}
+//         cancelPolicyRequest={cancelPolicyRequest}
+//       />
+//     </>
+//   );
+// }
 
 export function CustomTableFour({
   tableHead = [],
