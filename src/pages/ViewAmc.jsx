@@ -1445,7 +1445,7 @@ data?.customerDetails?.amcType !== "AMC Assured" &&
         <li style={paragraphStyle}>c) Force Majeure will not relieve any party from obligations not affected by such events, including contractual payments that are due unless payment is directly hindered by Force Majeure.</li>
     </ul>
 <br />
-    <p>By enrolling in the RG Assured AMC Plan or availing its benefits, Customer acknowledges that he/she has read, understood, and agrees to be bound by the above Terms and Conditions.</p>
+    <p>By enrolling in the RG Assured AMC Plan or availing its benefits, Customer acknowledge that he/she has read, understood, and agree to be bound by the above Terms and Conditions.</p>
 <br />
     <img src={stamp} alt="stamp" className="mt-9 w-[30%]" />
         </>
