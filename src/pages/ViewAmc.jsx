@@ -71,12 +71,20 @@ const ViewAmc = forwardRef(({ id }, ref) => {
           >
              {
           data?.customerDetails?.amcType === "AMC Assured" ?  "RG ASSURED AMC"  : "RG AMC AGREEMENT"}
-          </h2>
+          </h2>{
+            data?.customerDetails?.amcType !== "AMC Assured" ?
+          
           <h3 className=" pt-3 text-start" style={{ margin: 0 }}>
             This RG Annual Maintenance Contract Agreement <b>(“Agreement”)</b>{" "}
             is between the dealer,<b> Raam 4 Wheelers LLP(Raam) </b> and the{" "}
             <b> Customer/owner of the below mentioned MG Car.</b>
           </h3>
+          :
+          <h3 className=" pt-3 text-start" style={{ margin: 0 }}>
+          This RG Assured Maintenance Contract Agreement <b>(“Agreement”)</b>{" "}
+          is between the dealer,<b> Raam 4 Wheelers LLP(Raam/RG) </b> and the{" "}
+          <b> Customer/owner of the below mentioned MG Car.</b>
+        </h3>}
           <h3 className="pt-3" style={{ margin: 0 }}>
             The Dealer and the Customer hereinafter individually called "the
             Party" and collectively called the Parties”.
@@ -163,13 +171,14 @@ data?.customerDetails?.customerName
           <p className="font-semibold underline">Details of the Agreement</p>
           {
 data?.customerDetails?.amcType !== "AMC Assured" &&
+<>
           <p>
             The service package has been named as “RG Annual Maintenance
             Contract”;
-          </p>}
+          </p>
           <p>
             Fuel Type: {data?.vehicleDetails?.fuelType || "NA"}
-          </p>
+          </p></>}
           <p>
             Agreement Period: {data?.vehicleDetails?.agreementPeriod || "NA"}
           </p>
@@ -201,14 +210,20 @@ data?.customerDetails?.amcType !== "AMC Assured" &&
      {
           data?.customerDetails?.amcType === "AMC Assured" && 
         
-   <p> <br />AMC Amount: ________________ (Refundable only if the vehicle is sold to Raam within the Agreement Period) <br />  <br />
-   Assured AMC Premium Amount: INR ______________ (Refundable only if Raam is unable to match the price offered to you in the market before selling the vehicle, and Raam is unable or unwilling to match the offer within the Agreement Period).</p>}
+   <p> <br />AMC Amount:<span style={{ textDecoration: "underline" }}>{(parseFloat(data?.vehicleDetails?.total) / 1.3).toFixed(2)}</span>(Refundable only if the vehicle is sold to Raam within the Agreement Period) <br />  <br />
+   Assured AMC Premium Amount: INR <span style={{ textDecoration: "underline" }}>{((parseFloat(data.vehicleDetails.total) / 1.3) - parseFloat(data.vehicleDetails.total)).toFixed(2)}</span>(Refundable only if Raam is unable to match the price offered to you in the market before selling the vehicle, and Raam is unable or unwilling to match the offer within the Agreement Period).</p>}
+       {
+         data?.customerDetails?.amcType === "AMC Assured" ?
         <p className=" italic mt-4">
           By enrolling in the RG AMC or availing its benefits, you acknowledge
           that you have read, understood, and agree to be bound by the following
           Terms and Conditions. If you do not agree, please revert on the email
           within 7 days from the date of policy generation
-        </p>
+        </p> :
+        <p className=" italic mt-4">
+       By enrolling in the RG Assured AMC or availing its benefits, you acknowledge that you have read, understood, and agree to be bound by the following Terms and Conditions. If you do not agree, please revert on the email within 7 days from the date of policy generation.
+
+        </p>}
 
         {!(location?.pathname === "/amc-view" ) && (data?.customerDetails?.amcType === "AMC" ) ?(
           <>
