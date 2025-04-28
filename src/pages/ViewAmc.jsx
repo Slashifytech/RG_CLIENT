@@ -212,9 +212,7 @@ data?.customerDetails?.amcType !== "AMC Assured" &&
         
    <p> <br />AMC Amount: <span style={{ textDecoration: "underline" }}>{(parseFloat(data?.vehicleDetails?.total) / 1.3).toFixed(2)}</span> (Refundable only if the vehicle is sold to Raam within the Agreement Period) <br />  <br />
    Assured AMC Premium Amount: INR <span style={{ textDecoration: "underline" }}>
-  {(parseFloat(data.vehicleDetails.total) - (parseFloat(data.vehicleDetails.total) / 1.3)).toFixed(2)}
-</span> 
- (Refundable only if Raam is unable to match the price offered to you in the market before selling the vehicle, and Raam is unable or unwilling to match the offer within the Agreement Period).</p>}
+  {(parseFloat(data.vehicleDetails.total) - (parseFloat(data.vehicleDetails.total) / 1.3)).toFixed(2)} </span>  (Refundable only if Raam is unable to match the price offered to you in the market before selling the vehicle, and Raam is unable or unwilling to match the offer within the Agreement Period).</p>}
        {
          data?.customerDetails?.amcType !== "AMC Assured" ?
         <p className=" italic mt-4">
