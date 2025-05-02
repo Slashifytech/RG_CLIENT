@@ -24,7 +24,7 @@ export const invoiceOption = [
   ];
     export const locationOption = [
       { id: 0, value: "Kukatpally", label: "Kukatpally" },
-      { id: 1, value: "Bajara Hills", label: "Bajara Hills" },
+      { id: 1, value: "Banjara Hills", label: "Banjara Hills" },
       { id: 2, value: "Attapur", label: "Attapur" },
       { id: 3, value: "Kondapur", label: "Kondapur" },
       { id: 4, value: "Gachibowli", label: "Gachibowli" },
