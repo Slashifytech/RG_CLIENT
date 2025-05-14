@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { GroupedInput } from "../Components/Input";
 import { createdDate } from "../helper/commonHelperFunc";
@@ -244,18 +245,20 @@ const handleInput = (e) => {
     };
   }, []);
 
- const calculateVehicleDetails = useCallback(() => {
+  const calculateVehicleDetails = useCallback(() => {
     setInvoiceData((prevState) => {
-   const gstAmount = Number(prevState.vehicleDetails?.initialGstAmount || 0);
- 
-     const preGst = Number(prevState.vehicleDetails?.gstAmount || 0);
-      if (!gstAmount) return prevState; // Prevent unnecessary calculations
+      const inputGst = Number(prevState.vehicleDetails?.initialGstAmount || 0);
   
-      const cgst = Number((gstAmount * 0.09).toFixed(2));
-      const sgst = Number((gstAmount * 0.09).toFixed(2));
-      const totalAmount = Number((preGst + cgst + sgst).toFixed(2));
+      if (!inputGst) return prevState; // No input, don't calculate
   
-      // Avoid unnecessary re-renders if values are the same
+      // Compute base amount and taxes
+      const baseAmount = Number((inputGst / 1.18).toFixed(2));
+      const totalGst = Number((inputGst - baseAmount).toFixed(2));
+      const cgst = Number((totalGst / 2).toFixed(2));
+      const sgst = Number((totalGst - cgst).toFixed(2));
+      const totalAmount = Number((baseAmount + cgst + sgst).toFixed(2));
+  
+      // Avoid unnecessary updates
       if (
         prevState.vehicleDetails?.cgst === cgst &&
         prevState.vehicleDetails?.sgst === sgst &&
@@ -264,20 +267,19 @@ const handleInput = (e) => {
         return prevState;
       }
   
-      const reducedGstAmount = gstAmount - (gstAmount * 0.18);
-
       return {
         ...prevState,
         vehicleDetails: {
           ...prevState.vehicleDetails,
-          gstAmount: reducedGstAmount,  // Ensure gstAmount is stored as a number
           cgst,
           sgst,
           totalAmount,
+          gstAmount: baseAmount
         },
       };
     });
   }, []);
+  
   
   useEffect(() => {
     if (invoiceData.vehicleDetails?.gstAmount) {
